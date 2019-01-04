@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomographySharp", "HomographySharp\HomographySharp.csproj", "{947D0404-5AC9-4D18-AD8F-3895C23289C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomographySharpTest", "HomographySharpTest\HomographySharpTest.csproj", "{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{947D0404-5AC9-4D18-AD8F-3895C23289C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{947D0404-5AC9-4D18-AD8F-3895C23289C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{947D0404-5AC9-4D18-AD8F-3895C23289C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
