@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomographySharp", "HomographySharp\HomographySharp.csproj", "{947D0404-5AC9-4D18-AD8F-3895C23289C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomographySharp", "HomographySharp\HomographySharp.csproj", "{947D0404-5AC9-4D18-AD8F-3895C23289C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomographySharpTest", "HomographySharpTest\HomographySharpTest.csproj", "{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HomographyMakeInCpp", "HomographyMakeInCpp\HomographyMakeInCpp.vcxproj", "{E812FE95-3052-430D-84F3-DDEC8161636B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomographySharpTest", "HomographySharpTest\HomographySharpTest.csproj", "{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,16 +41,6 @@ Global
 		{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}.Release|x64.Build.0 = Release|Any CPU
 		{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}.Release|x86.ActiveCfg = Release|Any CPU
 		{77492EA2-3D5E-4123-B378-7F0D3E7C8F0A}.Release|x86.Build.0 = Release|Any CPU
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Debug|x64.ActiveCfg = Debug|x64
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Debug|x64.Build.0 = Debug|x64
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Debug|x86.ActiveCfg = Debug|Win32
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Debug|x86.Build.0 = Debug|Win32
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Release|Any CPU.ActiveCfg = Release|Win32
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Release|x64.ActiveCfg = Release|x64
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Release|x64.Build.0 = Release|x64
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Release|x86.ActiveCfg = Release|Win32
-		{E812FE95-3052-430D-84F3-DDEC8161636B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
