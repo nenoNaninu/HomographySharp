@@ -13,12 +13,12 @@ namespace HomographySharp
         /// <param name="srcPoints">変換前の4点</param>
         /// <param name="dstPoints">変換後の4点</param>
         /// <returns>3x3の射影変換行列</returns>
-        public static Matrix FindHomography(List<Vector> srcPoints, List<Vector> dstPoints)
+        public static DenseMatrix FindHomography(List<DenseVector> srcPoints, List<DenseVector> dstPoints)
         {
             //q(dstのベクトル) = A(作成するべき8x8行列) * P(射影変換のパラメータ)
             //P = A^-1 * q
             //でパラメータが求まる。
-            Matrix a = DenseMatrix.Create(8, 8, 0);
+            DenseMatrix a = DenseMatrix.Create(8, 8, 0);
 
             for (int i = 0; i < 4; i++)
             {
@@ -55,7 +55,7 @@ namespace HomographySharp
             });
         }
 
-        public static (double x, double y) Translate(Matrix homography, double x, double y)
+        public static (double x, double y) Translate(DenseMatrix homography, double x, double y)
         {
             var vec = DenseVector.OfArray(new double[] {x, y, 1});
             var dst = homography * vec;
