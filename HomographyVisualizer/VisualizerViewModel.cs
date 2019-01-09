@@ -28,7 +28,7 @@ namespace HomographyVisualizer
         public event PropertyChangedEventHandler PropertyChanged;
 
         private DenseMatrix _homo;
-        Ellipse _cacheEllipse;
+        private Ellipse _cacheEllipse;
 
         public enum DrawingState
         {
