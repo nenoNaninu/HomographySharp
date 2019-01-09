@@ -1,0 +1,22 @@
+﻿<Window x:Class="HomographyVisualizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HomographyVisualizer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Background="#FFA9ACAC">
+            <Button Content="入力領域設定" Height="20" VerticalAlignment="Bottom" Command="{Binding DrawSrcAreaCommand}" Margin="5,5,5,5" Background="White"/>
+            <Button Content="出力矩形設定" Height="20" VerticalAlignment="Bottom" Command="{Binding DrawDstAreaCommand}" Margin="5,0,5,5" Background="White"/>
+        </StackPanel>
+
+        <Canvas Grid.Row="1" x:Name="drawCanvas" Background="Transparent"/>
+    </Grid>
+</Window>
