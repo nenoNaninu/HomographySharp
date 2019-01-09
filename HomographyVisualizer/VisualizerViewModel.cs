@@ -54,17 +54,14 @@ namespace HomographyVisualizer
 
             CreateTranslatePointCommand.Subscribe(() =>
             {
-                if (_srcPoints.Count != 4 && _dstPoints.Count != 4)
+                try
                 {
-                    MessageBox.Show("4点とって");
-                    return;
+                    _homo = HomographySharp.HomographyHelper.FindHomography(_srcPoints, _dstPoints);
                 }
-
-                _homo = HomographySharp.HomographyHelper.FindHomography(_srcPoints, _dstPoints);
-
-                foreach (var s in _srcPoints)
+                catch (Exception e)
                 {
-                    Console.WriteLine($"X:{s[0]} Y:{s[1]}");
+                    MessageBox.Show(e.Message);
+                    return;
                 }
 
                 var pointX = _srcPoints.Select(v => v[0]).Mean();
@@ -100,7 +97,6 @@ namespace HomographyVisualizer
                 _drawCanvas.Children.Add(elipse1);
                 _drawCanvas.Children.Add(elipse2);
 
-
                 elipse1.MouseDown += (sender, args) =>
                 {
                     _cacheEllipse = elipse1;
@@ -111,8 +107,8 @@ namespace HomographyVisualizer
                 {
                     if(_cacheEllipse == null) return;
                     var newPoint = args.GetPosition(_drawCanvas);
-                    Canvas.SetLeft(elipse1, newPoint.X - _cacheEllipse.Width / 2);
-                    Canvas.SetTop(elipse1, newPoint.Y - _cacheEllipse.Height / 2);
+                    Canvas.SetLeft(elipse1, newPoint.X - elipse1.Width / 2);
+                    Canvas.SetTop(elipse1, newPoint.Y - elipse1.Height / 2);
                     (var newTranslateX, var newTranslateY) = HomographySharp.HomographyHelper.Translate(_homo, newPoint.X, newPoint.Y);
                     Canvas.SetLeft(elipse2, newTranslateX - elipse1.Width / 2);
                     Canvas.SetTop(elipse2, newTranslateY - elipse1.Height / 2);

@@ -15,6 +15,11 @@ namespace HomographySharp
         /// <returns>3x3の射影変換行列</returns>
         public static DenseMatrix FindHomography(List<DenseVector> srcPoints, List<DenseVector> dstPoints)
         {
+            if (srcPoints.Count != 4 || dstPoints.Count != 4)
+            {
+                throw new ArgumentException("srcPointsもしくはdstPointsはそれぞれ4点必要です。");
+            }
+
             //q(dstのベクトル) = A(作成するべき8x8行列) * P(射影変換のパラメータ)
             //P = A^-1 * q
             //でパラメータが求まる。
