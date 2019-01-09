@@ -14,7 +14,7 @@
 
         <StackPanel Orientation="Horizontal" Background="#FFA9ACAC">
             <Button Content="入力領域設定" Height="20" VerticalAlignment="Bottom" Command="{Binding DrawSrcAreaCommand}" Margin="5,5,5,5" Background="White"/>
-            <Button Content="出力矩形設定" Height="20" VerticalAlignment="Bottom" Command="{Binding DrawDstAreaCommand}" Margin="5,0,5,5" Background="White"/>
+            <Button Content="出力領域設定" Height="20" VerticalAlignment="Bottom" Command="{Binding DrawDstAreaCommand}" Margin="5,0,5,5" Background="White"/>
             <Button Content="変換する点を作る" Height="20" VerticalAlignment="Bottom" Command="{Binding CreateTranslatePointCommand}" Margin="5,0,5,5" Background="White"/>
         </StackPanel>
 

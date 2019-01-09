@@ -38,6 +38,7 @@ namespace HomographySharp
 
                 var row1 = DenseVector.OfArray(new double[] { srcX, srcY, 1, 0, 0, 0, -dstX * srcX, -dstX * srcY });
                 var row2 = DenseVector.OfArray(new double[] { 0, 0, 0, srcX, srcY, 1, -dstY * srcX, -dstY * srcY });
+
                 a.SetRow(i, row1);
                 a.SetRow(i + 4, row2);
             }

@@ -70,7 +70,7 @@ namespace HomographyVisualizer
                 Console.WriteLine(pointX);
                 Console.WriteLine(pointY);
 
-                var elipse1 = new Ellipse
+                var srcEllipse = new Ellipse
                 {
                     Name = "SrcTarget",
                     Width = 10,
@@ -78,7 +78,7 @@ namespace HomographyVisualizer
                     Fill = Brushes.DarkViolet,
                 };
 
-                var elipse2 = new Ellipse
+                var dstEllipse = new Ellipse
                 {
                     Name = "DstTarget",
                     Width = 10,
@@ -86,38 +86,38 @@ namespace HomographyVisualizer
                     Fill = Brushes.DarkSlateBlue,
                 };
 
-                Canvas.SetLeft(elipse1, pointX - elipse1.Width / 2);
-                Canvas.SetTop(elipse1, pointY - elipse1.Height / 2);
+                Canvas.SetLeft(srcEllipse, pointX - srcEllipse.Width / 2);
+                Canvas.SetTop(srcEllipse, pointY - srcEllipse.Height / 2);
 
                 (var translateX, var translateY) = HomographySharp.HomographyHelper.Translate(_homo, pointX, pointY);
 
-                Canvas.SetLeft(elipse2, translateX - elipse1.Width / 2);
-                Canvas.SetTop(elipse2, translateY - elipse1.Height / 2);
+                Canvas.SetLeft(dstEllipse, translateX - srcEllipse.Width / 2);
+                Canvas.SetTop(dstEllipse, translateY - srcEllipse.Height / 2);
 
-                _drawCanvas.Children.Add(elipse1);
-                _drawCanvas.Children.Add(elipse2);
+                _drawCanvas.Children.Add(srcEllipse);
+                _drawCanvas.Children.Add(dstEllipse);
 
-                elipse1.MouseDown += (sender, args) =>
+                srcEllipse.MouseDown += (sender, args) =>
                 {
-                    _cacheEllipse = elipse1;
-                    elipse1.CaptureMouse();
+                    _cacheEllipse = srcEllipse;
+                    srcEllipse.CaptureMouse();
                 };
 
-                elipse1.MouseMove += (sender, args) =>
+                srcEllipse.MouseMove += (sender, args) =>
                 {
                     if(_cacheEllipse == null) return;
                     var newPoint = args.GetPosition(_drawCanvas);
-                    Canvas.SetLeft(elipse1, newPoint.X - elipse1.Width / 2);
-                    Canvas.SetTop(elipse1, newPoint.Y - elipse1.Height / 2);
+                    Canvas.SetLeft(srcEllipse, newPoint.X - srcEllipse.Width / 2);
+                    Canvas.SetTop(srcEllipse, newPoint.Y - srcEllipse.Height / 2);
                     (var newTranslateX, var newTranslateY) = HomographySharp.HomographyHelper.Translate(_homo, newPoint.X, newPoint.Y);
-                    Canvas.SetLeft(elipse2, newTranslateX - elipse1.Width / 2);
-                    Canvas.SetTop(elipse2, newTranslateY - elipse1.Height / 2);
+                    Canvas.SetLeft(dstEllipse, newTranslateX - srcEllipse.Width / 2);
+                    Canvas.SetTop(dstEllipse, newTranslateY - srcEllipse.Height / 2);
                 };
 
-                elipse1.MouseUp += (sender, args) =>
+                srcEllipse.MouseUp += (sender, args) =>
                 {
                     _cacheEllipse = null; 
-                    elipse1.ReleaseMouseCapture();
+                    srcEllipse.ReleaseMouseCapture();
                 };
             });
         }
