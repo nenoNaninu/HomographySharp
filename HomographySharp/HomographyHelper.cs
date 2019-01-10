@@ -61,9 +61,9 @@ namespace HomographySharp
             });
         }
 
-        public static (double x, double y) Translate(DenseMatrix homography, double x, double y)
+        public static (double dstX, double dstY) Translate(DenseMatrix homography, double srcX, double srcY)
         {
-            var vec = DenseVector.OfArray(new double[] {x, y, 1});
+            var vec = DenseVector.OfArray(new double[] {srcX, srcY, 1});
             var dst = homography * vec;
             return (dst[0] / dst[2], dst[1] / dst[2]);
         }
