@@ -14,12 +14,12 @@ namespace HomographyVisualizer
 {
     public class VisualizerViewModel : INotifyPropertyChanged
     {
-        public ReactiveCommand DrawSrcAreaCommand { get; set; } = new ReactiveCommand();
-        public ReactiveCommand DrawDstAreaCommand { get; set; } = new ReactiveCommand();
-        public ReactiveCommand CreateTranslatePointCommand { get; set; } = new ReactiveCommand();
+        public ReactiveCommand DrawSrcAreaCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand DrawDstAreaCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand CreateTranslatePointCommand { get; } = new ReactiveCommand();
 
-        private List<DenseVector> _srcPoints { get; set; } = new List<DenseVector>();
-        private List<DenseVector> _dstPoints { get; set; } = new List<DenseVector>();
+        private readonly List<DenseVector> _srcPoints = new List<DenseVector>();
+        private readonly List<DenseVector> _dstPoints = new List<DenseVector>();
 
         private Line _cacheLine;
         private readonly Canvas _drawCanvas;
@@ -104,7 +104,7 @@ namespace HomographyVisualizer
 
                 srcEllipse.MouseMove += (sender, args) =>
                 {
-                    if(_cacheEllipse == null) return;
+                    if (_cacheEllipse == null) return;
                     var newPoint = args.GetPosition(_drawCanvas);
                     Canvas.SetLeft(srcEllipse, newPoint.X - srcEllipse.Width / 2);
                     Canvas.SetTop(srcEllipse, newPoint.Y - srcEllipse.Height / 2);
@@ -115,7 +115,7 @@ namespace HomographyVisualizer
 
                 srcEllipse.MouseUp += (sender, args) =>
                 {
-                    _cacheEllipse = null; 
+                    _cacheEllipse = null;
                     srcEllipse.ReleaseMouseCapture();
                 };
             });
