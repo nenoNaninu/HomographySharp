@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MathNet.Numerics.LinearAlgebra.Double;
+using Reactive.Bindings;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,9 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using MathNet.Numerics.LinearAlgebra.Double;
-using MathNet.Numerics.Statistics;
-using Reactive.Bindings;
 
 namespace HomographyVisualizer
 {
@@ -64,8 +63,8 @@ namespace HomographyVisualizer
                     return;
                 }
 
-                var pointX = _srcPoints.Select(v => v[0]).Mean();
-                var pointY = _srcPoints.Select(v => v[1]).Mean();
+                var pointX = _srcPoints.Average(v => v[0]);
+                var pointY = _srcPoints.Average(v => v[1]);
 
                 Console.WriteLine(pointX);
                 Console.WriteLine(pointY);
@@ -130,7 +129,6 @@ namespace HomographyVisualizer
         public void SrcMouseMove(object obj, MouseEventArgs e)
         {
             MouseMove(e, _srcPoints, Brushes.Aqua);
-
         }
 
         public void DstMouseDown(object obj, MouseButtonEventArgs e)
