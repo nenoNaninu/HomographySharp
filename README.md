@@ -4,11 +4,11 @@ HomographySharp is a (C#/.NET Standard2.0) class library for finding and using h
 # Install
 Package Manager
 ```
-PM > Install-Package HomographySharp -Version 1.0.2
+PM > Install-Package HomographySharp -Version 1.0.3
 ```
 .NET CLI
 ```
-dotnet add package HomographySharp --version 1.0.2
+dotnet add package HomographySharp --version 1.0.3
 ```
 
 # How to use
