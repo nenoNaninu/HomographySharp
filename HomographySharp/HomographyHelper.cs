@@ -18,7 +18,7 @@ namespace HomographySharp
         {
             if (srcPoints.Count != 4 || dstPoints.Count != 4)
             {
-                throw new ArgumentException("srcPoints and dstPoints need 4points");
+                throw new ArgumentException("srcPoints and dstPoints need just 4 points");
             }
 
             if (srcPoints.Any(x => x.Count != 2) || dstPoints.Any(x => x.Count != 2))
@@ -70,14 +70,14 @@ namespace HomographySharp
 
         /// <summary>
         /// </summary>
-        /// <param name="srcPoints">need 4 points before translate</param>
+        /// <param name="srcPoints">need 4 points in the area before translate </param>
         /// <param name="dstPoints">need 4 points after translate</param>
         /// <returns>Homography Matrix</returns>
         public static DenseMatrix FindHomography(List<PointF> srcPoints, List<PointF> dstPoints)
         {
             if (srcPoints.Count != 4 || dstPoints.Count != 4)
             {
-                throw new ArgumentException("srcPoints and dstPoints need 4points");
+                throw new ArgumentException("srcPoints and dstPoints need just 4 points");
             }
 
             //q(dstのベクトル) = A(作成するべき8x8行列) * P(射影変換のパラメータ)
@@ -117,7 +117,7 @@ namespace HomographySharp
 
         public static (double dstX, double dstY) Translate(DenseMatrix homography, double srcX, double srcY)
         {
-            var vec = DenseVector.OfArray(new double[] {srcX, srcY, 1});
+            var vec = DenseVector.OfArray(new double[] { srcX, srcY, 1 });
             var dst = homography * vec;
             return (dst[0] / dst[2], dst[1] / dst[2]);
         }
