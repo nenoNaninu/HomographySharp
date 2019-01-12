@@ -13,6 +13,28 @@ dotnet add package HomographySharp --version 1.0.2
 
 # How to use
 ```c#
+var srcList = new List<PointF>(4);
+var dstList = new List<PointF>(4);
+
+srcList.Add(new PointF { X = -152, Y = 394 });
+srcList.Add(new PointF { X = 218, Y = 521 });
+srcList.Add(new PointF { X = 223, Y = -331 });
+srcList.Add(new PointF { X = -163, Y = -219 });
+
+dstList.Add(new PointF { X = -666, Y = 431 });
+dstList.Add(new PointF { X = 500, Y = 300 });
+dstList.Add(new PointF { X = 480, Y = -308 });
+dstList.Add(new PointF { X = -580, Y = -280 });
+
+var homo = HomographyHelper.FindHomography(srcList, dstList);
+
+(double x, double y) = HomographyHelper.Translate(homo, -152, 394);
+Assert.IsTrue(Math.Abs(x - -666) < 0.001);
+Assert.IsTrue(Math.Abs(y - 431) < 0.001);
+            
+```
+or
+```c#
 var srcList = new List<DenseVector>(4);
 var dstList = new List<DenseVector>(4);
 
