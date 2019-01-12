@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using MathNet.Numerics.LinearAlgebra.Double;
 using NUnit.Framework;
 using HomographySharp;
@@ -12,7 +13,6 @@ namespace Tests
         public void Setup()
         {
         }
-
 
         [Test]
         public void FindHomographyTest1()
@@ -49,9 +49,9 @@ namespace Tests
 
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, (100+10) / 2.0, (150+10) / 2.0);
-                double dstx = (500.0+11) / 2.0;
-                double dsty = (200+11) / 2.0;
+                (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
+                double dstx = (500.0 + 11) / 2.0;
+                double dsty = (200 + 11) / 2.0;
                 Console.WriteLine("x" + x);
                 Console.WriteLine("y" + y);
 
@@ -115,5 +115,93 @@ namespace Tests
             Console.WriteLine(homo);
         }
 
+        [Test]
+        public void FindHomographyTest3()
+        {
+            var srcList = new List<PointF>(4);
+            var dstList = new List<PointF>(4);
+
+            srcList.Add(new PointF { X = 10, Y = 10 });
+            srcList.Add(new PointF { X = 100, Y = 10 });
+            srcList.Add(new PointF { X = 100, Y = 150 });
+            srcList.Add(new PointF { X = 10, Y = 150 });
+
+            dstList.Add(new PointF { X = 11, Y = 11 });
+            dstList.Add(new PointF { X = 500, Y = 11 });
+            dstList.Add(new PointF { X = 500, Y = 200 });
+            dstList.Add(new PointF { X = 11, Y = 200 });
+
+            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            Console.WriteLine("=====test3=====");
+
+            Console.WriteLine(homo);
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 100, 10);
+                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 11) < 0.001);
+            }
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 100, 150);
+                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 200) < 0.001);
+            }
+
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
+                double dstx = (500.0 + 11) / 2.0;
+                double dsty = (200 + 11) / 2.0;
+                Console.WriteLine("x" + x);
+                Console.WriteLine("y" + y);
+
+                Console.WriteLine("dstx" + dstx);
+                Console.WriteLine("dsty" + dsty);
+
+                Assert.IsTrue(Math.Abs(x - dstx) < 0.001);
+                Assert.IsTrue(Math.Abs(y - dsty) < 0.001);
+            }
+        }
+
+        [Test]
+        public void FindHomographyTest4()
+        {
+            var srcList = new List<PointF>(4);
+            var dstList = new List<PointF>(4);
+
+            srcList.Add(new PointF { X = -152, Y = 394 });
+            srcList.Add(new PointF { X = 218, Y = 521 });
+            srcList.Add(new PointF { X = 223, Y = -331 });
+            srcList.Add(new PointF { X = -163, Y = -219 });
+
+            dstList.Add(new PointF { X = -666, Y = 431 });
+            dstList.Add(new PointF { X = 500, Y = 300 });
+            dstList.Add(new PointF { X = 480, Y = -308 });
+            dstList.Add(new PointF { X = -580, Y = -280 });
+
+            var homo = HomographyHelper.FindHomography(srcList, dstList);
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, -152, 394);
+                Assert.IsTrue(Math.Abs(x - -666) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 431) < 0.001);
+            }
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 218, 521);
+                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 300) < 0.001);
+            }
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 223, -331);
+                Assert.IsTrue(Math.Abs(x - 480) < 0.001);
+                Assert.IsTrue(Math.Abs(y - -308) < 0.001);
+            }
+
+            Console.WriteLine("=====test4=====");
+            Console.WriteLine(homo);
+        }
     }
 }

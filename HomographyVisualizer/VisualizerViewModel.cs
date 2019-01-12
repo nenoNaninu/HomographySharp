@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,9 +15,13 @@ namespace HomographyVisualizer
 {
     public class VisualizerViewModel : INotifyPropertyChanged
     {
-        public ReactiveCommand DrawSrcAreaCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand DrawDstAreaCommand { get; } = new ReactiveCommand();
+        private ReactiveProperty<bool> _drawingSrc = new ReactiveProperty<bool>(false);
+        private ReactiveProperty<bool> _drawingDst = new ReactiveProperty<bool>(false);
+
+        public ReactiveCommand DrawSrcAreaCommand { get; } 
+        public ReactiveCommand DrawDstAreaCommand { get; } 
         public ReactiveCommand CreateTranslatePointCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand ClearCommand { get; } = new ReactiveCommand();
 
         private readonly List<DenseVector> _srcPoints = new List<DenseVector>();
         private readonly List<DenseVector> _dstPoints = new List<DenseVector>();
@@ -39,16 +44,37 @@ namespace HomographyVisualizer
         {
             _drawCanvas = draCanvas;
 
+            DrawSrcAreaCommand = _drawingSrc.Select(x => x == false).ToReactiveCommand();
+            DrawDstAreaCommand = _drawingDst.Select(x => x == false).ToReactiveCommand();
+
             DrawSrcAreaCommand.Subscribe(() =>
             {
+                _drawingSrc.Value = true;
                 _drawCanvas.MouseDown += SrcMouseDown;
                 _drawCanvas.MouseMove += SrcMouseMove;
             });
 
             DrawDstAreaCommand.Subscribe(() =>
             {
+                _drawingDst.Value = true;
                 _drawCanvas.MouseDown += DstMouseDown;
                 _drawCanvas.MouseMove += DstMouseMove;
+            });
+
+            ClearCommand.Subscribe(() =>
+            {
+                _drawCanvas.Children.RemoveRange(0, _drawCanvas.Children.Count);
+                _drawingDst.Value = false;
+                _drawingSrc.Value = false;
+                _cacheEllipse = null;
+                _cacheLine = null;
+                _srcPoints.Clear();
+                _dstPoints.Clear();
+                _homo = null;
+                _drawCanvas.MouseDown -= SrcMouseDown;
+                _drawCanvas.MouseMove -= SrcMouseMove;
+                _drawCanvas.MouseDown -= DstMouseDown;
+                _drawCanvas.MouseMove -= DstMouseMove;
             });
 
             CreateTranslatePointCommand.Subscribe(() =>
