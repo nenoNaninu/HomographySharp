@@ -42,4 +42,4 @@ https://github.com/nenoNaninu/HomographySharp/tree/master/HomographyVisualizer
 # External Library 
 - [Math.NET Numerics](https://github.com/mathnet/mathnet-numerics)  
   - Copyright (c) 2002-2018 Math.NET  
-  - Released under the [Math.NET Numerics License](https://github.com/mathnet/mathnet-numerics/blob/master/LICENSE.md)
+  - Released under the [Math.NET Numerics License(MIT/X11)](https://github.com/mathnet/mathnet-numerics/blob/master/LICENSE.md)
