@@ -20,27 +20,15 @@ namespace Tests
             var srcList = new List<DenseVector>(4);
             var dstList = new List<DenseVector>(4);
 
-            {
-                var v0 = DenseVector.OfArray(new double[] { 10, 10 });
-                var v1 = DenseVector.OfArray(new double[] { 100, 10 });
-                var v2 = DenseVector.OfArray(new double[] { 100, 150 });
-                var v3 = DenseVector.OfArray(new double[] { 10, 150 });
-                srcList.Add(v0);
-                srcList.Add(v1);
-                srcList.Add(v2);
-                srcList.Add(v3);
-            }
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
 
-            {
-                var v0 = DenseVector.OfArray(new double[] { 11,11 });
-                var v1 = DenseVector.OfArray(new double[] { 500, 11 });
-                var v2 = DenseVector.OfArray(new double[] { 500, 200 });
-                var v3 = DenseVector.OfArray(new double[] { 11, 200 });
-                dstList.Add(v0);
-                dstList.Add(v1);
-                dstList.Add(v2);
-                dstList.Add(v3);
-            }
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
             Console.WriteLine("=====test1=====");
@@ -122,20 +110,6 @@ namespace Tests
                 Assert.IsTrue(Math.Abs(x - 480) < 0.001);
                 Assert.IsTrue(Math.Abs(y - -308) < 0.001);
             }
-
-            //{
-            //    (double x, double y) = HomographyHelper.Translate(homo, (-152.0 + 218.0) / 2.0, (394.0 + 521.0) / 2.0);
-            //    double dstx = (-666.0 + 500.0) / 2.0;
-            //    double dsty = (300 + 431) / 2.0;
-            //    Console.WriteLine("x" + x);
-            //    Console.WriteLine("y" + y);
-
-            //    Console.WriteLine("dstx" + dstx);
-            //    Console.WriteLine("dsty" + dsty);
-
-            //    Assert.IsTrue(Math.Abs(x - dstx) < 0.001);
-            //    Assert.IsTrue(Math.Abs(y - dsty) < 0.001);
-            //}
 
             Console.WriteLine("=====test2=====");
             Console.WriteLine(homo);
