@@ -11,11 +11,16 @@ namespace HomographySharp
         /// <summary>
         /// All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).
         /// </summary>
-        /// <param name="srcPoints">変換前の最低4点(need least 4points)</param>
-        /// <param name="dstPoints">変換後の最低4点(need least 4points)</param>
+        /// <param name="srcPoints">need 4 or more points before translate</param>
+        /// <param name="dstPoints">need 4 or more points after translate</param>
         /// <returns>Homography Matrix</returns>
         public static DenseMatrix FindHomography(List<DenseVector> srcPoints, List<DenseVector> dstPoints)
         {
+            if (srcPoints.Count < 4 || dstPoints.Count < 4)
+            {
+                throw new ArgumentException("srcPoints and dstPoints must require 4 or more points");
+            }
+
             if (srcPoints.Count != dstPoints.Count)
             {
                 throw new ArgumentException("srcPoints and dstPoints must same num");
@@ -73,12 +78,16 @@ namespace HomographySharp
 
         /// <summary>
         /// </summary>
-        /// <param name="srcPoints">need least 4 points before translate </param>
-        /// <param name="dstPoints">need least 4 points after translate</param>
+        /// <param name="srcPoints">need 4 or more points before translate </param>
+        /// <param name="dstPoints">need 4 or more points after translate</param>
         /// <returns>Homography Matrix</returns>
         public static DenseMatrix FindHomography(List<PointF> srcPoints, List<PointF> dstPoints)
         {
-            if (srcPoints.Count != 4)
+            if (srcPoints.Count < 4 || dstPoints.Count < 4)
+            {
+                throw new ArgumentException("srcPoints and dstPoints must require 4 or more points");
+            }
+            if (srcPoints.Count != dstPoints.Count)
             {
                 throw new ArgumentException("srcPoints and dstPoints must same num");
             }
