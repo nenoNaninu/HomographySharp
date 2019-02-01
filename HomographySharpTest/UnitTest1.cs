@@ -14,9 +14,57 @@ namespace Tests
         {
         }
 
+        //00と01は実行速度確認のために雑に置いている。
+        //遅いのはJITだから初回コンパイルで実行時間かかるからかなー。
+
         [Test]
-        public void FindHomographyTest1()
+        public void FindHomographyTest00()
         {
+
+            var srcList = new List<PointF>(4);
+            var dstList = new List<PointF>(4);
+
+            srcList.Add(new PointF { X = -152, Y = 394 });
+            srcList.Add(new PointF { X = 218, Y = 521 });
+            srcList.Add(new PointF { X = 223, Y = -331 });
+            srcList.Add(new PointF { X = -163, Y = -219 });
+
+            dstList.Add(new PointF { X = -666, Y = 431 });
+            dstList.Add(new PointF { X = 500, Y = 300 });
+            dstList.Add(new PointF { X = 480, Y = -308 });
+            dstList.Add(new PointF { X = -580, Y = -280 });
+
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+
+            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, -152, 394);
+                Assert.IsTrue(Math.Abs(x - -666) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 431) < 0.001);
+            }
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 218, 521);
+                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 300) < 0.001);
+            }
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 223, -331);
+                Assert.IsTrue(Math.Abs(x - 480) < 0.001);
+                Assert.IsTrue(Math.Abs(y - -308) < 0.001);
+            }
+
+            Console.WriteLine(homo);
+        }
+
+        [Test]
+        public void FindHomographyTest01()
+        {
+
             var srcList = new List<DenseVector>(4);
             var dstList = new List<DenseVector>(4);
 
@@ -30,8 +78,63 @@ namespace Tests
             dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
             dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
 
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
             var homo = HomographyHelper.FindHomography(srcList, dstList);
-            Console.WriteLine("=====test1=====");
+            stopWatch.Stop();
+            Console.WriteLine($"=====test1 stop{stopWatch.ElapsedMilliseconds}=====");
+
+            Console.WriteLine(homo);
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 100, 10);
+                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 11) < 0.001);
+            }
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 100, 150);
+                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 200) < 0.001);
+            }
+
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
+                double dstx = (500.0 + 11) / 2.0;
+                double dsty = (200 + 11) / 2.0;
+                Console.WriteLine("x" + x);
+                Console.WriteLine("y" + y);
+
+                Console.WriteLine("dstx" + dstx);
+                Console.WriteLine("dsty" + dsty);
+
+                Assert.IsTrue(Math.Abs(x - dstx) < 0.001);
+                Assert.IsTrue(Math.Abs(y - dsty) < 0.001);
+            }
+        }
+        [Test]
+        public void FindHomographyTest1()
+        {
+
+            var srcList = new List<DenseVector>(4);
+            var dstList = new List<DenseVector>(4);
+
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
+
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 11   }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 11  }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 200  }));
+
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            stopWatch.Stop();
+            Console.WriteLine($"=====test1 stop{stopWatch.ElapsedMilliseconds}=====");
 
             Console.WriteLine(homo);
 
@@ -66,6 +169,9 @@ namespace Tests
         [Test]
         public void FindHomographyTest2()
         {
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+
             var srcList = new List<DenseVector>(4);
             var dstList = new List<DenseVector>(4);
 
@@ -93,6 +199,9 @@ namespace Tests
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
 
+            stopWatch.Stop();
+            Console.WriteLine($"=====test2 stop{stopWatch.ElapsedMilliseconds}=====");
+
             {
                 (double x, double y) = HomographyHelper.Translate(homo, -152, 394);
                 Assert.IsTrue(Math.Abs(x - -666) < 0.001);
@@ -111,13 +220,15 @@ namespace Tests
                 Assert.IsTrue(Math.Abs(y - -308) < 0.001);
             }
 
-            Console.WriteLine("=====test2=====");
             Console.WriteLine(homo);
         }
 
         [Test]
         public void FindHomographyTest3()
         {
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+
             var srcList = new List<PointF>(4);
             var dstList = new List<PointF>(4);
 
@@ -132,7 +243,8 @@ namespace Tests
             dstList.Add(new PointF { X = 11, Y = 200 });
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
-            Console.WriteLine("=====test3=====");
+            stopWatch.Stop();
+            Console.WriteLine($"=====test3 stop{stopWatch.ElapsedMilliseconds}=====");
 
             Console.WriteLine(homo);
 
@@ -167,6 +279,9 @@ namespace Tests
         [Test]
         public void FindHomographyTest4()
         {
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+
             var srcList = new List<PointF>(4);
             var dstList = new List<PointF>(4);
 
@@ -181,6 +296,7 @@ namespace Tests
             dstList.Add(new PointF { X = -580, Y = -280 });
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
+            Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
             {
                 (double x, double y) = HomographyHelper.Translate(homo, -152, 394);
@@ -200,7 +316,6 @@ namespace Tests
                 Assert.IsTrue(Math.Abs(y - -308) < 0.001);
             }
 
-            Console.WriteLine("=====test4=====");
             Console.WriteLine(homo);
         }
     }
