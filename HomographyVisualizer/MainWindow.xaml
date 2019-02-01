@@ -17,6 +17,9 @@
             <Button Content="出力領域設定" Height="20" VerticalAlignment="Bottom" Command="{Binding DrawDstAreaCommand}" Margin="5,0,5,5" Background="White"/>
             <Button Content="変換する点を作る" Height="20" VerticalAlignment="Bottom" Command="{Binding CreateTranslatePointCommand}" Margin="5,0,5,5" Background="White"/>
             <Button Content="クリア" Height="20" VerticalAlignment="Bottom" Command="{Binding ClearCommand}" Margin="5,0,5,5" Background="White"/>
+            <TextBox Margin="0,0,0,-0.286" Width="100" Height="20" Text="{Binding PointNumString.Value}" IsEnabled="{Binding EnableTextBox.Value}"/>
+            <!---->
+            <!---->
         </StackPanel>
 
         <Canvas Grid.Row="1" x:Name="drawCanvas" Background="Transparent"/>

@@ -3,6 +3,7 @@ using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
@@ -10,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Point = System.Drawing.Point;
 
 namespace HomographyVisualizer
 {
@@ -18,8 +20,11 @@ namespace HomographyVisualizer
         private ReactiveProperty<bool> _drawingSrc = new ReactiveProperty<bool>(false);
         private ReactiveProperty<bool> _drawingDst = new ReactiveProperty<bool>(false);
 
-        public ReactiveCommand DrawSrcAreaCommand { get; } 
-        public ReactiveCommand DrawDstAreaCommand { get; } 
+        public ReactiveProperty<string> PointNumString { get; }
+
+        public ReactiveProperty<bool> EnableTextBox { get; } = new ReactiveProperty<bool>(true);
+        public ReactiveCommand DrawSrcAreaCommand { get; }
+        public ReactiveCommand DrawDstAreaCommand { get; }
         public ReactiveCommand CreateTranslatePointCommand { get; } = new ReactiveCommand();
         public ReactiveCommand ClearCommand { get; } = new ReactiveCommand();
 
@@ -33,6 +38,7 @@ namespace HomographyVisualizer
 
         private DenseMatrix _homo;
         private Ellipse _cacheEllipse;
+        private int _pointNum;
 
         public enum DrawingState
         {
@@ -47,11 +53,27 @@ namespace HomographyVisualizer
             DrawSrcAreaCommand = _drawingSrc.Select(x => x == false).ToReactiveCommand();
             DrawDstAreaCommand = _drawingDst.Select(x => x == false).ToReactiveCommand();
 
+            PointNumString = new ReactiveProperty<string>("4");
+            //PointNumString.SetValidateAttribute(() => PointNumString);
+            //PointNumString.
+            PointNumString.Subscribe(s =>
+            {
+                var success = int.TryParse(s?.ToString(), out var result);
+
+                if (success && 4 <= result)
+                {
+                    _pointNum = result;
+                    return;
+                }
+                PointNumString.Value = "4";
+            });
+
             DrawSrcAreaCommand.Subscribe(() =>
             {
                 _drawingSrc.Value = true;
                 _drawCanvas.MouseDown += SrcMouseDown;
                 _drawCanvas.MouseMove += SrcMouseMove;
+                EnableTextBox.Value = false;
             });
 
             DrawDstAreaCommand.Subscribe(() =>
@@ -59,6 +81,7 @@ namespace HomographyVisualizer
                 _drawingDst.Value = true;
                 _drawCanvas.MouseDown += DstMouseDown;
                 _drawCanvas.MouseMove += DstMouseMove;
+                EnableTextBox.Value = false;
             });
 
             ClearCommand.Subscribe(() =>
@@ -75,6 +98,7 @@ namespace HomographyVisualizer
                 _drawCanvas.MouseMove -= SrcMouseMove;
                 _drawCanvas.MouseDown -= DstMouseDown;
                 _drawCanvas.MouseMove -= DstMouseMove;
+                EnableTextBox.Value = true;
             });
 
             CreateTranslatePointCommand.Subscribe(() =>
@@ -191,7 +215,7 @@ namespace HomographyVisualizer
 
             _drawCanvas.Children.Add(elipse);
 
-            if (pointsList.Count == 4)
+            if (pointsList.Count == _pointNum)
             {
                 if (state == DrawingState.Src)
                 {
