@@ -9,10 +9,24 @@ namespace HomographySharp
     public static class HomographyHelper
     {
         /// <summary>
+        /// return DenseVector.OfArray(new double[] { x, y })
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns>DenseVector.OfArray(new double[] { x, y })</returns>
+        public static DenseVector CreateVector2(double x, double y)
+        {
+            return DenseVector.OfArray(new double[] { x, y });
+        }
+
+        /// <summary>
         /// All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).
         /// </summary>
         /// <param name="srcPoints">need 4 or more points before translate</param>
         /// <param name="dstPoints">need 4 or more points after translate</param>
+        /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
+        /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
+        /// <exception cref="ArgumentException">All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).</exception>
         /// <returns>Homography Matrix</returns>
         public static DenseMatrix FindHomography(List<DenseVector> srcPoints, List<DenseVector> dstPoints)
         {
@@ -80,6 +94,8 @@ namespace HomographySharp
         /// </summary>
         /// <param name="srcPoints">need 4 or more points before translate </param>
         /// <param name="dstPoints">need 4 or more points after translate</param>
+        /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
+        /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <returns>Homography Matrix</returns>
         public static DenseMatrix FindHomography(List<PointF> srcPoints, List<PointF> dstPoints)
         {

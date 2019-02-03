@@ -4,11 +4,11 @@ HomographySharp is a (C#/.NET Standard2.0) class library for finding and using h
 # Install
 Package Manager
 ```
-PM > Install-Package HomographySharp -Version 1.1.0
+PM > Install-Package HomographySharp -Version 1.1.1
 ```
 .NET CLI
 ```
-dotnet add package HomographySharp --version 1.1.0
+dotnet add package HomographySharp --version 1.1.1
 ```
 
 # How to use
@@ -43,10 +43,10 @@ srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
 srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
 srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
 
-dstList.Add(DenseVector.OfArray(new double[] { 11,11 }));
-dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
-dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
-dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
+dstList.Add(HomographyHelper.CreateVector2(11, 11 ));
+dstList.Add(HomographyHelper.CreateVector2(500, 11 ));
+dstList.Add(HomographyHelper.CreateVector2(500, 200 ));
+dstList.Add(HomographyHelper.CreateVector2(11, 200 ));
 
 var homo = HomographyHelper.FindHomography(srcList, dstList);// <-
 

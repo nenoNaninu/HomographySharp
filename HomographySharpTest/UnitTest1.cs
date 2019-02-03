@@ -125,10 +125,10 @@ namespace Tests
             srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
             srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
 
-            dstList.Add(DenseVector.OfArray(new double[] { 11, 11   }));
-            dstList.Add(DenseVector.OfArray(new double[] { 500, 11  }));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
             dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 11, 200  }));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
@@ -180,6 +180,7 @@ namespace Tests
                 var v1 = DenseVector.OfArray(new double[] { 218, 521 });
                 var v2 = DenseVector.OfArray(new double[] { 223, -331 });
                 var v3 = DenseVector.OfArray(new double[] { -163, -219 });
+
                 srcList.Add(v0);
                 srcList.Add(v1);
                 srcList.Add(v2);
@@ -187,10 +188,14 @@ namespace Tests
             }
 
             {
-                var v0 = DenseVector.OfArray(new double[] { -666, 431 });
-                var v1 = DenseVector.OfArray(new double[] { 500, 300 });
-                var v2 = DenseVector.OfArray(new double[] { 480, -308 });
-                var v3 = DenseVector.OfArray(new double[] { -580, -280 });
+                var v0 = HomographyHelper.CreateVector2(-666, 431);
+                var v1 = HomographyHelper.CreateVector2(500, 300);
+                var v2 = HomographyHelper.CreateVector2(480, -308);
+                var v3 = HomographyHelper.CreateVector2(-580, -280);
+                //var v0 = DenseVector.OfArray(new double[] {-666, 431});
+                //var v1 = DenseVector.OfArray(new double[] { 500, 300 });
+                //var v2 = DenseVector.OfArray(new double[] { 480, -308 });
+                //var v3 = DenseVector.OfArray(new double[] { -580, -280 });
                 dstList.Add(v0);
                 dstList.Add(v1);
                 dstList.Add(v2);
