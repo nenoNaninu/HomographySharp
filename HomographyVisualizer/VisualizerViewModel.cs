@@ -40,11 +40,7 @@ namespace HomographyVisualizer
         private Ellipse _cacheEllipse;
         private int _pointNum;
 
-        public enum DrawingState
-        {
-            Src,
-            Dst,
-        }
+
 
         public VisualizerViewModel(Canvas draCanvas)
         {
