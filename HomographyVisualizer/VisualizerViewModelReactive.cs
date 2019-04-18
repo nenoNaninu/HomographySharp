@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using MathNet.Numerics.LinearAlgebra.Double;
 using Reactive.Bindings;
@@ -18,103 +19,157 @@ namespace HomographyVisualizer
     {
         private Canvas _drawCanvas;
 
-        public ReactiveCommand DrawSrcAreaCommand { get; set; } = new ReactiveCommand();
-        public ReactiveCommand DrawDstAreaCommand { get; set; } = new ReactiveCommand();
+        private ReactiveProperty<bool> _drawingSrc = new ReactiveProperty<bool>(false);
+        private ReactiveProperty<bool> _drawingDst = new ReactiveProperty<bool>(false);
 
-        private List<DenseVector> _srcPoints { get; set; } = new List<DenseVector>();
-        private List<DenseVector> _dstPoints { get; set; } = new List<DenseVector>();
+        public ReactiveProperty<string> PointNumString { get; }
 
-        private ReactiveProperty<bool> _isDrawingSrcArea = new ReactiveProperty<bool>(false);
-        private ReactiveProperty<bool> _isDrawingDstArea = new ReactiveProperty<bool>(false);
+        public ReactiveProperty<bool> EnableTextBox { get; } = new ReactiveProperty<bool>(true);
+        public ReactiveCommand DrawSrcAreaCommand { get; }
+        public ReactiveCommand DrawDstAreaCommand { get; }
+        public ReactiveCommand CreateTranslatePointCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand ClearCommand { get; } = new ReactiveCommand();
 
-        private Line _cacheLine;
+        private readonly List<DenseVector> _srcPoints = new List<DenseVector>();
+        private readonly List<DenseVector> _dstPoints = new List<DenseVector>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public VisualizerViewModelReactive(Canvas draCanvas)
+        private DenseMatrix _homo;
+        private Ellipse _cacheEllipse;
+        private int _pointNum;
+
+        private IObservable<MouseButtonEventArgs> _mouseDown;
+        private IObservable<MouseEventArgs> _mouseMove;
+        private IObservable<MouseButtonEventArgs> _mouseUp;
+
+        List<Line> _srcLines = new List<Line>(4);
+        List<Line> _dstLines = new List<Line>(4);
+
+        public VisualizerViewModelReactive(Canvas drawCanvas)
         {
-            _drawCanvas = draCanvas;
+            _drawCanvas = drawCanvas;
 
-            DrawSrcAreaCommand = _isDrawingSrcArea.Select(x => x == false).ToReactiveCommand();
-            DrawDstAreaCommand = _isDrawingDstArea.Select(x => x == false).ToReactiveCommand();
+            DrawSrcAreaCommand = _drawingSrc.Select(x => x == false).ToReactiveCommand();
+            DrawDstAreaCommand = _drawingDst.Select(x => x == false).ToReactiveCommand();
 
-            DrawSrcAreaCommand.Subscribe(() => { _isDrawingSrcArea.Value = true; });
-            DrawDstAreaCommand.Subscribe(() => { _isDrawingDstArea.Value = true; });
+            PointNumString = new ReactiveProperty<string>("4");
 
-            var mouseDown = Observable.FromEvent<MouseButtonEventHandler, MouseButtonEventArgs>(
+            _mouseDown = Observable.FromEvent<MouseButtonEventHandler, MouseButtonEventArgs>(
                 h => (s, e) => h(e),
                 h => _drawCanvas.MouseDown += h,
                 h => _drawCanvas.MouseDown -= h);
 
-            var mouseMove = Observable.FromEvent<MouseEventHandler, MouseEventArgs>(
+            _mouseMove = Observable.FromEvent<MouseEventHandler, MouseEventArgs>(
                 h => (s, e) => h(e),
                 h => _drawCanvas.MouseMove += h,
                 h => _drawCanvas.MouseMove -= h);
 
-            var mouseUp = Observable.FromEvent<MouseButtonEventHandler, MouseButtonEventArgs>(
+            _mouseUp = Observable.FromEvent<MouseButtonEventHandler, MouseButtonEventArgs>(
                 h => (s, e) => h(e),
                 h => _drawCanvas.MouseUp += h,
                 h => _drawCanvas.MouseUp -= h);
 
-            var srcClick = mouseDown.SkipWhile(_ => _isDrawingSrcArea.Value)
-                .Repeat(4).Finally(() => _isDrawingSrcArea.Value = false);
 
-            var srcDrag = mouseMove.SkipUntil(srcClick)
-                .TakeUntil(mouseUp).Repeat(3)
-                .Finally(() =>
-                {
-                    var start = _srcPoints.First();
-                    var end = _srcPoints.Last();
-                    var line = new Line
-                    {
-                        X1 = start[0],
-                        Y1 = start[1],
-                        X2 = end[0],
-                        Y2 = end[1],
-                        Width = 2
-                    };
-                    _drawCanvas.Children.Add(line);
-                });
+            PointNumString.Subscribe(s =>
+            {
+                var success = int.TryParse(s?.ToString(), out var result);
 
-            srcClick.Select(x => x.GetPosition(_drawCanvas))
-                .Subscribe(p =>
+                if (success && 4 <= result)
                 {
+                    _pointNum = result;
+                    return;
+                }
+                PointNumString.Value = "4";
+            });
+
+            DrawSrcAreaCommand.Subscribe(() =>
+            {
+                _drawingSrc.Value = true;
+                EnableTextBox.Value = false;
+                CreateDrawingStream(_srcPoints, _srcLines, Brushes.Blue, Brushes.Aqua);
+            });
+
+            DrawDstAreaCommand.Subscribe(() =>
+            {
+                _drawingDst.Value = true;
+                EnableTextBox.Value = false;
+                CreateDrawingStream(_dstPoints, _dstLines, Brushes.Crimson, Brushes.Coral);
+            });
+        }
+
+        private Line CreateLine(double x0, double y0, double x1, double y1, double strokeThickness, Brush strokeBrush)
+        {
+            return new Line
+            {
+                X1 = x0,
+                Y1 = y0,
+                X2 = x1,
+                Y2 = y1,
+                StrokeThickness = strokeThickness,
+                Stroke = strokeBrush,
+            };
+        }
+
+        public void CreateDrawingStream(List<DenseVector> pointsList, List<Line> lineList, Brush pointBrush, Brush strokeBrush)
+        {
+
+            _mouseDown.Take(_pointNum)
+                .Subscribe(x =>
+                {
+                    var point = x.GetPosition(_drawCanvas);
+
+                    var v = DenseVector.OfArray(new double[] { point.X, point.Y });
+                    pointsList.Add(v);
+
                     var elipse = new Ellipse
                     {
-                        Width = 3,
-                        Height = 3
+                        Width = 7,
+                        Height = 7,
+                        Fill = pointBrush
                     };
-                    Canvas.SetTop(elipse, p.Y);
-                    Canvas.SetLeft(elipse, p.X);
-                    var v = DenseVector.OfArray(new double[] { p.X, p.Y });
-                    _srcPoints.Add(v);
+
+                    Canvas.SetLeft(elipse, point.X - elipse.Width / 2);
+                    Canvas.SetTop(elipse, point.Y - elipse.Height / 2);
+
                     _drawCanvas.Children.Add(elipse);
-                    _cacheLine = null;
+
+                    var line = CreateLine(point.X, point.Y, point.X + 10, point.Y + 10, 3, strokeBrush);
+                    
+                    lineList.Add(line);
+                    _drawCanvas.Children.Add(line);
+                },
+                () =>
+                {
+                    var firstPoint = pointsList.First();
+                    var lastPoint = pointsList.Last();
+
+                    var latestLine = lineList.Last();
+
+                    latestLine.X2 = firstPoint[0];
+                    latestLine.Y2 = firstPoint[1];
                 });
 
-            //srcDrag.Select(x => x.GetPosition(_drawCanvas))
-            //    .Subscribe(p =>
-            //    {
-            //        if (_cacheLine == null)
-            //        {
-            //            if (_srcPoints.Any())
-            //            {
-            //                var startPoint = _srcPoints.Last();
-            //                _cacheLine = new Line
-            //                {
-            //                    Width = 2,
-            //                    X1 = startPoint[0],
-            //                    Y1 = startPoint[1],
-            //                    X2 = startPoint[0],
-            //                    Y2 = startPoint[1]
-            //                };
-            //                _drawCanvas.Children.Add(_cacheLine);
-            //            }
-            //        }
+            //ドラッグする時の描画
+            _mouseDown
+                .SelectMany(_mouseMove)
+                .TakeUntil(_mouseDown.Skip(1))
+                .Repeat(_pointNum)
+                .Subscribe(x =>
+                {
+                    if (!lineList.Any()) return;
 
-            //        _cacheLine.X2 = p.X;
-            //        _cacheLine.Y2 = p.Y;
-            //    });
+                    var point = x.GetPosition(_drawCanvas);
+
+                    var latestLine = lineList.Last();
+
+                    latestLine.X2 = point.X;
+                    latestLine.Y2 = point.Y;
+                },
+                () =>
+                {
+                    Console.WriteLine("Complete Dracking");
+                });
         }
     }
 }

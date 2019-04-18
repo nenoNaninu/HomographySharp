@@ -9,12 +9,12 @@ namespace HomographyVisualizer
     {
         public MainWindow()
         {
-            //var vm = new VisualizerViewModelReactive(DrawCanvas);
+
             InitializeComponent();
 
-            var vm = new VisualizerViewModel(drawCanvas);
+            //var vm = new VisualizerViewModel(drawCanvas);
+            var vm = new VisualizerViewModelReactive(drawCanvas);
             DataContext = vm;
-
         }
     }
 }

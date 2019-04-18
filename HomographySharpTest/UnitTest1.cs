@@ -12,6 +12,7 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
+            
         }
 
         //00と01は実行速度確認のために雑に置いている。

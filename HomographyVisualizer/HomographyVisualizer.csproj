@@ -85,6 +85,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DrawingState.cs" />
     <Compile Include="VisualizerViewModel.cs" />
     <Compile Include="VisualizerViewModelReactive.cs" />
     <Page Include="MainWindow.xaml">
