@@ -21,15 +21,18 @@ namespace HomographyVisualizer
     {
         private Canvas _drawCanvas;
 
-        private ReactiveProperty<bool> _drawingSrc = new ReactiveProperty<bool>(false);
-        private ReactiveProperty<bool> _drawingDst = new ReactiveProperty<bool>(false);
+        /// <summary>
+        /// なにか汚されていたらtrue,まっさらだとfalse
+        /// </summary>
+        private ReactiveProperty<bool> _srcAreaDirty = new ReactiveProperty<bool>(false);
+        private ReactiveProperty<bool> _dstAreaDirty = new ReactiveProperty<bool>(false);
 
         public ReactiveProperty<string> PointNumString { get; }
 
         public ReactiveProperty<bool> EnableTextBox { get; } = new ReactiveProperty<bool>(true);
         public ReactiveCommand DrawSrcAreaCommand { get; }
         public ReactiveCommand DrawDstAreaCommand { get; }
-        public ReactiveCommand CreateTranslatePointCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand CreateTranslatePointCommand { get; }
         public ReactiveCommand ClearCommand { get; } = new ReactiveCommand();
 
         private readonly List<DenseVector> _srcPoints = new List<DenseVector>();
@@ -50,8 +53,10 @@ namespace HomographyVisualizer
         {
             _drawCanvas = drawCanvas;
 
-            DrawSrcAreaCommand = _drawingSrc.Select(x => x == false).ToReactiveCommand();
-            DrawDstAreaCommand = _drawingDst.Select(x => x == false).ToReactiveCommand();
+            DrawSrcAreaCommand = _srcAreaDirty.Select(x => x == false).ToReactiveCommand();
+            DrawDstAreaCommand = _dstAreaDirty.Select(x => x == false).ToReactiveCommand();
+
+            CreateTranslatePointCommand = _srcAreaDirty.CombineLatest(_dstAreaDirty, (x, y) => x == true && y == true).ToReactiveCommand();
 
             PointNumString = new ReactiveProperty<string>("4");
 
@@ -79,14 +84,14 @@ namespace HomographyVisualizer
 
             DrawSrcAreaCommand.Subscribe(() =>
             {
-                _drawingSrc.Value = true;
+                _srcAreaDirty.Value = true;
                 EnableTextBox.Value = false;
                 CreateDrawingStream(_srcPoints, _srcLines, Brushes.Blue, Brushes.Aqua);
             });
 
             DrawDstAreaCommand.Subscribe(() =>
             {
-                _drawingDst.Value = true;
+                _dstAreaDirty.Value = true;
                 EnableTextBox.Value = false;
                 CreateDrawingStream(_dstPoints, _dstLines, Brushes.Crimson, Brushes.Coral);
             });
@@ -99,8 +104,8 @@ namespace HomographyVisualizer
             ClearCommand.Subscribe(() =>
             {
                 _drawCanvas.Children.RemoveRange(0, _drawCanvas.Children.Count);
-                _drawingDst.Value = false;
-                _drawingSrc.Value = false;
+                _dstAreaDirty.Value = false;
+                _srcAreaDirty.Value = false;
                 _srcPoints.Clear();
                 _dstPoints.Clear();
                 _srcLines.Clear();
@@ -163,27 +168,25 @@ namespace HomographyVisualizer
                 });
 
             //ドラッグする時の描画
+            //一度hot変換してrepeatしないと、マウスダウンを待ち受けるところからリピートしてしまう。
             var dragStream = _mouseDown
                 .SelectMany(_mouseMove).Publish();
             dragStream.Connect();
 
-            dragStream.TakeUntil(_mouseDown)
-            .Repeat(_pointNum)
-            .Subscribe(x =>
-            {
-                if (!lineList.Any()) return;
+            dragStream
+                .TakeUntil(_mouseDown)
+                .Repeat(_pointNum)
+                .Subscribe(x =>
+                {
+                    if (!lineList.Any()) return;
 
-                var point = x.GetPosition(_drawCanvas);
+                    var point = x.GetPosition(_drawCanvas);
 
-                var latestLine = lineList.Last();
+                    var latestLine = lineList.Last();
 
-                latestLine.X2 = point.X;
-                latestLine.Y2 = point.Y;
-            },
-            () =>
-            {
-                Console.WriteLine("Complete Dracking");
-            });
+                    latestLine.X2 = point.X;
+                    latestLine.Y2 = point.Y;
+                });
         }
 
         public void CreateTranslatePoint()
