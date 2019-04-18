@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -14,6 +15,7 @@ namespace HomographyVisualizer
 {
     /// <summary>
     /// Rxらいくに書こうとして断念。Rx難しい。。。
+    /// ↑成長したのでRxとすこし友達になった。
     /// </summary>
     public class VisualizerViewModelReactive : INotifyPropertyChanged
     {
@@ -36,12 +38,10 @@ namespace HomographyVisualizer
         public event PropertyChangedEventHandler PropertyChanged;
 
         private DenseMatrix _homo;
-        private Ellipse _cacheEllipse;
         private int _pointNum;
 
         private IObservable<MouseButtonEventArgs> _mouseDown;
         private IObservable<MouseEventArgs> _mouseMove;
-        private IObservable<MouseButtonEventArgs> _mouseUp;
 
         List<Line> _srcLines = new List<Line>(4);
         List<Line> _dstLines = new List<Line>(4);
@@ -64,12 +64,6 @@ namespace HomographyVisualizer
                 h => (s, e) => h(e),
                 h => _drawCanvas.MouseMove += h,
                 h => _drawCanvas.MouseMove -= h);
-
-            _mouseUp = Observable.FromEvent<MouseButtonEventHandler, MouseButtonEventArgs>(
-                h => (s, e) => h(e),
-                h => _drawCanvas.MouseUp += h,
-                h => _drawCanvas.MouseUp -= h);
-
 
             PointNumString.Subscribe(s =>
             {
@@ -95,6 +89,24 @@ namespace HomographyVisualizer
                 _drawingDst.Value = true;
                 EnableTextBox.Value = false;
                 CreateDrawingStream(_dstPoints, _dstLines, Brushes.Crimson, Brushes.Coral);
+            });
+
+            CreateTranslatePointCommand.Subscribe(() =>
+            {
+                CreateTranslatePoint();
+            });
+
+            ClearCommand.Subscribe(() =>
+            {
+                _drawCanvas.Children.RemoveRange(0, _drawCanvas.Children.Count);
+                _drawingDst.Value = false;
+                _drawingSrc.Value = false;
+                _srcPoints.Clear();
+                _dstPoints.Clear();
+                _srcLines.Clear();
+                _dstLines.Clear();
+                _homo = null;
+                EnableTextBox.Value = true;
             });
         }
 
@@ -135,7 +147,7 @@ namespace HomographyVisualizer
                     _drawCanvas.Children.Add(elipse);
 
                     var line = CreateLine(point.X, point.Y, point.X + 10, point.Y + 10, 3, strokeBrush);
-                    
+
                     lineList.Add(line);
                     _drawCanvas.Children.Add(line);
                 },
@@ -151,24 +163,102 @@ namespace HomographyVisualizer
                 });
 
             //ドラッグする時の描画
-            _mouseDown
-                .SelectMany(_mouseMove)
-                .TakeUntil(_mouseDown.Skip(1))
-                .Repeat(_pointNum)
+            var dragStream = _mouseDown
+                .SelectMany(_mouseMove).Publish();
+            dragStream.Connect();
+
+            dragStream.TakeUntil(_mouseDown)
+            .Repeat(_pointNum)
+            .Subscribe(x =>
+            {
+                if (!lineList.Any()) return;
+
+                var point = x.GetPosition(_drawCanvas);
+
+                var latestLine = lineList.Last();
+
+                latestLine.X2 = point.X;
+                latestLine.Y2 = point.Y;
+            },
+            () =>
+            {
+                Console.WriteLine("Complete Dracking");
+            });
+        }
+
+        public void CreateTranslatePoint()
+        {
+            try
+            {
+                _homo = HomographySharp.HomographyHelper.FindHomography(_srcPoints, _dstPoints);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return;
+            }
+
+            var pointX = _srcPoints.Average(v => v[0]);
+            var pointY = _srcPoints.Average(v => v[1]);
+
+            Console.WriteLine(pointX);
+            Console.WriteLine(pointY);
+
+            var srcEllipse = new Ellipse
+            {
+                Name = "SrcTarget",
+                Width = 10,
+                Height = 10,
+                Fill = Brushes.DarkViolet,
+            };
+
+            var dstEllipse = new Ellipse
+            {
+                Name = "DstTarget",
+                Width = 10,
+                Height = 10,
+                Fill = Brushes.DarkSlateBlue,
+            };
+
+            Canvas.SetLeft(srcEllipse, pointX - srcEllipse.Width / 2);
+            Canvas.SetTop(srcEllipse, pointY - srcEllipse.Height / 2);
+
+            (var translateX, var translateY) = HomographySharp.HomographyHelper.Translate(_homo, pointX, pointY);
+
+            Canvas.SetLeft(dstEllipse, translateX - srcEllipse.Width / 2);
+            Canvas.SetTop(dstEllipse, translateY - srcEllipse.Height / 2);
+
+            _drawCanvas.Children.Add(srcEllipse);
+            _drawCanvas.Children.Add(dstEllipse);
+
+            var ellipseDown = Observable.FromEvent<MouseButtonEventHandler, MouseButtonEventArgs>(
+                h => (s, e) => h(e),
+                h => srcEllipse.MouseDown += h,
+                h => srcEllipse.MouseDown -= h);
+
+            var ellipseMove = Observable.FromEvent<MouseEventHandler, MouseEventArgs>(
+                h => (s, e) => h(e),
+                h => srcEllipse.MouseMove += h,
+                h => srcEllipse.MouseMove -= h);
+
+            var ellipseUp = Observable.FromEvent<MouseButtonEventHandler, MouseEventArgs>(
+                h => (s, e) => h(e),
+                h => srcEllipse.MouseUp += h,
+                h => srcEllipse.MouseUp -= h);
+
+            ellipseDown
+                .Do(_ => srcEllipse.CaptureMouse())
+                .SelectMany(ellipseMove)
+                .TakeUntil(ellipseUp.Do(_ => srcEllipse.ReleaseMouseCapture()))
+                .Repeat()
                 .Subscribe(x =>
                 {
-                    if (!lineList.Any()) return;
-
-                    var point = x.GetPosition(_drawCanvas);
-
-                    var latestLine = lineList.Last();
-
-                    latestLine.X2 = point.X;
-                    latestLine.Y2 = point.Y;
-                },
-                () =>
-                {
-                    Console.WriteLine("Complete Dracking");
+                    var newPoint = x.GetPosition(_drawCanvas);
+                    Canvas.SetLeft(srcEllipse, newPoint.X - srcEllipse.Width / 2);
+                    Canvas.SetTop(srcEllipse, newPoint.Y - srcEllipse.Height / 2);
+                    (var newTranslateX, var newTranslateY) = HomographySharp.HomographyHelper.Translate(_homo, newPoint.X, newPoint.Y);
+                    Canvas.SetLeft(dstEllipse, newTranslateX - srcEllipse.Width / 2);
+                    Canvas.SetTop(dstEllipse, newTranslateY - srcEllipse.Height / 2);
                 });
         }
     }
