@@ -159,7 +159,6 @@ namespace HomographyVisualizer
                 () =>
                 {
                     var firstPoint = pointsList.First();
-                    var lastPoint = pointsList.Last();
 
                     var latestLine = lineList.Last();
 
@@ -171,7 +170,7 @@ namespace HomographyVisualizer
             //一度hot変換してrepeatしないと、マウスダウンを待ち受けるところからリピートしてしまう。
             var dragStream = _mouseDown
                 .SelectMany(_mouseMove).Publish();
-            dragStream.Connect();
+            var disposable = dragStream.Connect();
 
             dragStream
                 .TakeUntil(_mouseDown)
@@ -186,7 +185,8 @@ namespace HomographyVisualizer
 
                     latestLine.X2 = point.X;
                     latestLine.Y2 = point.Y;
-                });
+                },
+                () => disposable.Dispose());
         }
 
         public void CreateTranslatePoint()
