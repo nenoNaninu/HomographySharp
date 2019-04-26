@@ -2,6 +2,8 @@
 HomographySharp is a (C#/.NET Standard2.0) class library for finding and using homography matrics.
 
 # Install
+NuGet: [HomographySharp](https://www.nuget.org/packages/HomographySharp/)
+
 Package Manager
 ```
 PM > Install-Package HomographySharp -Version 1.1.1
