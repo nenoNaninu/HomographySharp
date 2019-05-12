@@ -6,11 +6,11 @@ NuGet: [HomographySharp](https://www.nuget.org/packages/HomographySharp/)
 
 Package Manager
 ```
-PM > Install-Package HomographySharp -Version 1.1.1
+PM > Install-Package HomographySharp -Version 1.1.2
 ```
 .NET CLI
 ```
-dotnet add package HomographySharp --version 1.1.1
+dotnet add package HomographySharp --version 1.1.2
 ```
 
 # How to use
