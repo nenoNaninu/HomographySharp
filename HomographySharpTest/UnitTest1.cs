@@ -12,7 +12,7 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            
+            FindHomographyTestForSetUp();
         }
 
         //00と01は実行速度確認のために雑に置いている。
@@ -302,6 +302,7 @@ namespace Tests
             dstList.Add(new PointF { X = -580, Y = -280 });
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
+            stopWatch.Stop();
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
             {
@@ -380,6 +381,50 @@ namespace Tests
                 Assert.IsTrue(Math.Abs(x - dstx) < 0.001);
                 Assert.IsTrue(Math.Abs(y - dsty) < 0.001);
             }
+        }
+
+        public void FindHomographyTestForSetUp()
+        {
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+
+            var srcList = new List<PointF>(4);
+            var dstList = new List<PointF>(4);
+
+            srcList.Add(new PointF { X = -152, Y = 394 });
+            srcList.Add(new PointF { X = 218, Y = 521 });
+            srcList.Add(new PointF { X = 223, Y = -331 });
+            srcList.Add(new PointF { X = -163, Y = -219 });
+
+            dstList.Add(new PointF { X = -666, Y = 431 });
+            dstList.Add(new PointF { X = 500, Y = 300 });
+            dstList.Add(new PointF { X = 480, Y = -308 });
+            dstList.Add(new PointF { X = -580, Y = -280 });
+
+            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            stopWatch.Stop();
+            Console.WriteLine("setup!!!!!!!");
+            //Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, -152, 394);
+                Assert.IsTrue(Math.Abs(x - -666) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 431) < 0.001);
+            }
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 218, 521);
+                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 300) < 0.001);
+            }
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 223, -331);
+                Assert.IsTrue(Math.Abs(x - 480) < 0.001);
+                Assert.IsTrue(Math.Abs(y - -308) < 0.001);
+            }
+
+            //Console.WriteLine(homo);
         }
     }
 }

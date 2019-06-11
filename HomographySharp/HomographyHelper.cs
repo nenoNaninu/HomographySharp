@@ -20,6 +20,50 @@ namespace HomographySharp
         }
 
         /// <summary>
+        /// dstXの方の係数行列の設定。
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <param name="srcX"></param>
+        /// <param name="srcY"></param>
+        /// <param name="dstX"></param>
+        /// <param name="rowIndex"></param>
+        private static void SetCoefficientMatrixParametersForDstX(DenseMatrix matrix, double srcX, double srcY, double dstX, int rowIndex)
+        {
+            matrix[rowIndex, 0] = srcX;
+            matrix[rowIndex, 1] = srcY;
+            matrix[rowIndex, 2] = 1;
+
+            matrix[rowIndex, 3] = 0;
+            matrix[rowIndex, 4] = 0;
+            matrix[rowIndex, 5] = 0;
+
+            matrix[rowIndex, 6] = -dstX * srcX;
+            matrix[rowIndex, 7] = -dstX * srcY;
+        }
+
+        /// <summary>
+        /// dstYの方の係数行列の設定。
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <param name="srcX"></param>
+        /// <param name="srcY"></param>
+        /// <param name="dstY"></param>
+        /// <param name="rowIndex"></param>
+        private static void SetCoefficientMatrixParametersForDstY(DenseMatrix matrix, double srcX, double srcY, double dstY, int rowIndex)
+        {
+            matrix[rowIndex, 0] = 0;
+            matrix[rowIndex, 1] = 0;
+            matrix[rowIndex, 2] = 0;
+
+            matrix[rowIndex, 3] = srcX;
+            matrix[rowIndex, 4] = srcY;
+            matrix[rowIndex, 5] = 1;
+
+            matrix[rowIndex, 6] = -dstY * srcX;
+            matrix[rowIndex, 7] = -dstY * srcY;
+        }
+
+        /// <summary>
         /// All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).
         /// </summary>
         /// <param name="srcPoints">need 4 or more points before translate</param>
@@ -62,11 +106,8 @@ namespace HomographySharp
                 var srcY = src[1];
                 var dstY = dst[1];
 
-                var row1 = DenseVector.OfArray(new double[] { srcX, srcY, 1, 0, 0, 0, -dstX * srcX, -dstX * srcY });
-                var row2 = DenseVector.OfArray(new double[] { 0, 0, 0, srcX, srcY, 1, -dstY * srcX, -dstY * srcY });
-
-                a.SetRow(2 * i, row1);
-                a.SetRow(2 * i + 1, row2);
+                SetCoefficientMatrixParametersForDstX(a, srcX, srcY, dstX, 2 * i);
+                SetCoefficientMatrixParametersForDstY(a, srcX, srcY, dstY, 2 * i + 1);
             }
 
             var dstVec = DenseVector.Create(pointNum * 2, 0);
@@ -118,11 +159,8 @@ namespace HomographySharp
                 var src = srcPoints[i];
                 var dst = dstPoints[i];
 
-                var row1 = DenseVector.OfArray(new double[] { src.X, src.Y, 1, 0, 0, 0, -dst.X * src.X, -dst.X * src.Y });
-                var row2 = DenseVector.OfArray(new double[] { 0, 0, 0, src.X, src.Y, 1, -dst.Y * src.X, -dst.Y * src.Y });
-
-                a.SetRow(i * 2, row1);
-                a.SetRow(i * 2 + 1, row2);
+                SetCoefficientMatrixParametersForDstX(a, src.X, src.Y, dst.X, 2 * i);
+                SetCoefficientMatrixParametersForDstY(a, src.X, src.Y, dst.Y, 2 * i + 1);
             }
 
             var dstVec = DenseVector.Create(pointNum * 2, 0);
