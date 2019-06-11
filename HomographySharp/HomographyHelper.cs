@@ -27,16 +27,7 @@ namespace HomographySharp
         /// <returns></returns>
         private static DenseMatrix InverseAndMultiplicate(DenseMatrix matrix, DenseVector dstVector, int pointNum)
         {
-            MathNet.Numerics.LinearAlgebra.Matrix<double> inverseA;
-
-            if (pointNum == 4)
-            {
-                inverseA = matrix.Inverse();
-            }
-            else
-            {
-                inverseA = matrix.PseudoInverse();
-            }
+            var inverseA = pointNum == 4 ? matrix.Inverse() : matrix.PseudoInverse();
 
             var parameterVec = inverseA * dstVector;
 
