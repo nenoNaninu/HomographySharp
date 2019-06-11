@@ -20,6 +20,35 @@ namespace HomographySharp
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="matrix">(疑似)逆行列にされる行列</param>
+        /// <param name="dstVector"></param>
+        /// <param name="pointNum">対応点の数</param>
+        /// <returns></returns>
+        private static DenseMatrix InverseAndMultiplicate(DenseMatrix matrix, DenseVector dstVector, int pointNum)
+        {
+            MathNet.Numerics.LinearAlgebra.Matrix<double> inverseA;
+
+            if (pointNum == 4)
+            {
+                inverseA = matrix.Inverse();
+            }
+            else
+            {
+                inverseA = matrix.PseudoInverse();
+            }
+
+            var parameterVec = inverseA * dstVector;
+
+            return DenseMatrix.OfArray(new double[,]
+            {
+                {parameterVec[0], parameterVec[1], parameterVec[2]},
+                {parameterVec[3], parameterVec[4], parameterVec[5]},
+                {parameterVec[6], parameterVec[7], 1}
+            });
+        }
+
+        /// <summary>
         /// All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).
         /// </summary>
         /// <param name="srcPoints">need 4 or more points before translate</param>
@@ -69,8 +98,6 @@ namespace HomographySharp
                 a.SetRow(2 * i + 1, row2);
             }
 
-            var inverseA = a.PseudoInverse();
-
             var dstVec = DenseVector.Create(pointNum * 2, 0);
 
             for (int i = 0; i < pointNum; i++)
@@ -79,16 +106,8 @@ namespace HomographySharp
                 dstVec[i * 2 + 1] = dstPoints[i][1];
             }
 
-            var parameterVec = inverseA * dstVec;
-
-            return DenseMatrix.OfArray(new double[,]
-            {
-                {parameterVec[0], parameterVec[1], parameterVec[2]},
-                {parameterVec[3], parameterVec[4], parameterVec[5]},
-                {parameterVec[6], parameterVec[7], 1}
-            });
+            return InverseAndMultiplicate(a, dstVec, pointNum);
         }
-
 
         /// <summary>
         /// </summary>
@@ -126,8 +145,6 @@ namespace HomographySharp
                 a.SetRow(i * 2 + 1, row2);
             }
 
-            var inverseA = a.PseudoInverse();
-
             var dstVec = DenseVector.Create(pointNum * 2, 0);
 
             for (int i = 0; i < pointNum; i++)
@@ -136,14 +153,7 @@ namespace HomographySharp
                 dstVec[i * 2 + 1] = dstPoints[i].Y;
             }
 
-            var parameterVec = inverseA * dstVec;
-
-            return DenseMatrix.OfArray(new double[,]
-            {
-                {parameterVec[0], parameterVec[1], parameterVec[2]},
-                {parameterVec[3], parameterVec[4], parameterVec[5]},
-                {parameterVec[6], parameterVec[7], 1}
-            });
+            return InverseAndMultiplicate(a, dstVec, pointNum);
         }
 
         public static (double dstX, double dstY) Translate(DenseMatrix homography, double srcX, double srcY)

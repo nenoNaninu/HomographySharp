@@ -324,5 +324,62 @@ namespace Tests
 
             Console.WriteLine(homo);
         }
+
+        [Test]
+        public void FindHomographySpeed()
+        {
+
+            var srcList = new List<DenseVector>(4);
+            var dstList = new List<DenseVector>(4);
+
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
+
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
+
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            DenseMatrix homo = null;
+            stopWatch.Start();
+            for (int i = 0; i < 1000; i++)
+            {
+                homo = HomographyHelper.FindHomography(srcList, dstList);
+            }
+            stopWatch.Stop();
+            Console.WriteLine($"=====test1 stop{stopWatch.ElapsedMilliseconds}=====");
+
+            Console.WriteLine(homo);
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 100, 10);
+                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 11) < 0.001);
+            }
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, 100, 150);
+                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(y - 200) < 0.001);
+            }
+
+
+            {
+                (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
+                double dstx = (500.0 + 11) / 2.0;
+                double dsty = (200 + 11) / 2.0;
+                Console.WriteLine("x" + x);
+                Console.WriteLine("y" + y);
+
+                Console.WriteLine("dstx" + dstx);
+                Console.WriteLine("dsty" + dsty);
+
+                Assert.IsTrue(Math.Abs(x - dstx) < 0.001);
+                Assert.IsTrue(Math.Abs(y - dsty) < 0.001);
+            }
+        }
     }
 }
