@@ -20,26 +20,6 @@ namespace HomographySharp
         }
 
         /// <summary>
-        /// </summary>
-        /// <param name="matrix">(疑似)逆行列にされる行列</param>
-        /// <param name="dstVector"></param>
-        /// <param name="pointNum">対応点の数</param>
-        /// <returns></returns>
-        private static DenseMatrix InverseAndMultiplicate(DenseMatrix matrix, DenseVector dstVector, int pointNum)
-        {
-            var inverseA = pointNum == 4 ? matrix.Inverse() : matrix.PseudoInverse();
-
-            var parameterVec = inverseA * dstVector;
-
-            return DenseMatrix.OfArray(new double[,]
-            {
-                {parameterVec[0], parameterVec[1], parameterVec[2]},
-                {parameterVec[3], parameterVec[4], parameterVec[5]},
-                {parameterVec[6], parameterVec[7], 1}
-            });
-        }
-
-        /// <summary>
         /// All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).
         /// </summary>
         /// <param name="srcPoints">need 4 or more points before translate</param>
@@ -97,7 +77,16 @@ namespace HomographySharp
                 dstVec[i * 2 + 1] = dstPoints[i][1];
             }
 
-            return InverseAndMultiplicate(a, dstVec, pointNum);
+            var inverseA = pointNum == 4 ? a.Inverse() : a.PseudoInverse();
+
+            var parameterVec = inverseA * dstVec;
+
+            return DenseMatrix.OfArray(new double[,]
+            {
+                {parameterVec[0], parameterVec[1], parameterVec[2]},
+                {parameterVec[3], parameterVec[4], parameterVec[5]},
+                {parameterVec[6], parameterVec[7], 1}
+            });
         }
 
         /// <summary>
@@ -144,7 +133,16 @@ namespace HomographySharp
                 dstVec[i * 2 + 1] = dstPoints[i].Y;
             }
 
-            return InverseAndMultiplicate(a, dstVec, pointNum);
+            var inverseA = pointNum == 4 ? a.Inverse() : a.PseudoInverse();
+
+            var parameterVec = inverseA * dstVec;
+
+            return DenseMatrix.OfArray(new double[,]
+            {
+                {parameterVec[0], parameterVec[1], parameterVec[2]},
+                {parameterVec[3], parameterVec[4], parameterVec[5]},
+                {parameterVec[6], parameterVec[7], 1}
+            });
         }
 
         public static (double dstX, double dstY) Translate(DenseMatrix homography, double srcX, double srcY)
