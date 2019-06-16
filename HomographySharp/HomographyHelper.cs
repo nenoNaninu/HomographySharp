@@ -72,7 +72,7 @@ namespace HomographySharp
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <exception cref="ArgumentException">All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).</exception>
         /// <returns>Homography Matrix</returns>
-        public static DenseMatrix FindHomography(List<DenseVector> srcPoints, List<DenseVector> dstPoints)
+        public static DenseMatrix FindHomography(IReadOnlyList<DenseVector> srcPoints, IReadOnlyList<DenseVector> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {
@@ -137,7 +137,7 @@ namespace HomographySharp
         /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <returns>Homography Matrix</returns>
-        public static DenseMatrix FindHomography(List<PointF> srcPoints, List<PointF> dstPoints)
+        public static DenseMatrix FindHomography(IReadOnlyList<PointF> srcPoints, IReadOnlyList<PointF> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {
