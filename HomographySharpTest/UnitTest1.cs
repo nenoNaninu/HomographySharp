@@ -346,7 +346,7 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             DenseMatrix homo = null;
             stopWatch.Start();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100000; i++)
             {
                 homo = HomographyHelper.FindHomography(srcList, dstList);
             }
@@ -354,33 +354,39 @@ namespace Tests
             Console.WriteLine($"=====test1 stop{stopWatch.ElapsedMilliseconds}=====");
 
             Console.WriteLine(homo);
+            stopWatch.Restart();
 
+            for (int i = 0; i < 100000; i++)
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 100, 10);
-                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
-                Assert.IsTrue(Math.Abs(y - 11) < 0.001);
+                {
+                    (double x, double y) = HomographyHelper.Translate(homo, 100, 10);
+                    Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                    Assert.IsTrue(Math.Abs(y - 11) < 0.001);
+                }
+
+                {
+                    (double x, double y) = HomographyHelper.Translate(homo, 100, 150);
+                    Assert.IsTrue(Math.Abs(x - 500) < 0.001);
+                    Assert.IsTrue(Math.Abs(y - 200) < 0.001);
+                }
+
+                {
+                    (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
+                    double dstx = (500.0 + 11) / 2.0;
+                    double dsty = (200 + 11) / 2.0;
+                    //Console.WriteLine("x" + x);
+                    //Console.WriteLine("y" + y);
+
+                    //Console.WriteLine("dstx" + dstx);
+                    //Console.WriteLine("dsty" + dsty);
+
+                    Assert.IsTrue(Math.Abs(x - dstx) < 0.001);
+                    Assert.IsTrue(Math.Abs(y - dsty) < 0.001);
+                }
             }
 
-            {
-                (double x, double y) = HomographyHelper.Translate(homo, 100, 150);
-                Assert.IsTrue(Math.Abs(x - 500) < 0.001);
-                Assert.IsTrue(Math.Abs(y - 200) < 0.001);
-            }
-
-
-            {
-                (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
-                double dstx = (500.0 + 11) / 2.0;
-                double dsty = (200 + 11) / 2.0;
-                Console.WriteLine("x" + x);
-                Console.WriteLine("y" + y);
-
-                Console.WriteLine("dstx" + dstx);
-                Console.WriteLine("dsty" + dsty);
-
-                Assert.IsTrue(Math.Abs(x - dstx) < 0.001);
-                Assert.IsTrue(Math.Abs(y - dsty) < 0.001);
-            }
+            stopWatch.Stop();
+            Console.WriteLine($"=====translate test{stopWatch.ElapsedMilliseconds}=====");
         }
 
         public void FindHomographyTestForSetUp()

@@ -189,7 +189,7 @@ namespace HomographySharp
             //var vec = DenseVector.OfArray(new double[] { srcX, srcY, 1 });
             //var dst = homography * vec;
             //return (dst[0] / dst[2], dst[1] / dst[2]);
-            
+
             var rawArray = homography.Values;
 
             if (rawArray.Length != 9)
@@ -197,9 +197,9 @@ namespace HomographySharp
                 throw new ArgumentException("The shape of homography matrix must be 3x3");
             }
 
-            var dst1 = rawArray[0] * srcX + rawArray[1] * srcY + rawArray[2];
-            var dst2 = rawArray[3] * srcX + rawArray[4] * srcY + rawArray[5];
-            var dst3 = rawArray[6] * srcX + rawArray[7] * srcY + rawArray[8];
+            var dst1 = rawArray[0] * srcX + rawArray[3] * srcY + rawArray[6];
+            var dst2 = rawArray[1] * srcX + rawArray[4] * srcY + rawArray[7];
+            var dst3 = rawArray[2] * srcX + rawArray[5] * srcY + rawArray[8];
             return (dst1 / dst3, dst2 / dst3);
         }
     }
