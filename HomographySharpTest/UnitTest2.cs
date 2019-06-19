@@ -1,13 +1,13 @@
+Ôªøusing NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using MathNet.Numerics.LinearAlgebra.Double;
-using NUnit.Framework;
-using HomographySharp.Double;
+using MathNet.Numerics.LinearAlgebra.Single;
+using HomographySharp.Single;
 
 namespace Tests
 {
-    public class Tests
+    public class UnitTest2
     {
         [SetUp]
         public void Setup()
@@ -15,8 +15,8 @@ namespace Tests
             FindHomographyTestForSetUp();
         }
 
-        //00Ç∆01ÇÕé¿çsë¨ìxämîFÇÃÇΩÇﬂÇ…éGÇ…íuÇ¢ÇƒÇ¢ÇÈÅB
-        //íxÇ¢ÇÃÇÕJITÇæÇ©ÇÁèââÒÉRÉìÉpÉCÉãÇ≈é¿çséûä‘Ç©Ç©ÇÈÇ©ÇÁÇ©Ç»Å[ÅB
+        //00„Å®01„ÅØÂÆüË°åÈÄüÂ∫¶Á¢∫Ë™ç„ÅÆ„Åü„ÇÅ„Å´Èõë„Å´ÁΩÆ„ÅÑ„Å¶„ÅÑ„Çã„ÄÇ
+        //ÈÅÖ„ÅÑ„ÅÆ„ÅØJIT„Å†„Åã„ÇâÂàùÂõû„Ç≥„É≥„Éë„Ç§„É´„ÅßÂÆüË°åÊôÇÈñì„Åã„Åã„Çã„Åã„Çâ„Åã„Å™„Éº„ÄÇ
 
         [Test]
         public void FindHomographyTest00()
@@ -42,19 +42,19 @@ namespace Tests
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, -152, 394);
+                (float x, float y) = HomographyHelper.Translate(homo, -152, 394);
                 Assert.IsTrue(Math.Abs(x - -666) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 431) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 218, 521);
+                (float x, float y) = HomographyHelper.Translate(homo, 218, 521);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 300) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 223, -331);
+                (float x, float y) = HomographyHelper.Translate(homo, 223, -331);
                 Assert.IsTrue(Math.Abs(x - 480) < 0.001);
                 Assert.IsTrue(Math.Abs(y - -308) < 0.001);
             }
@@ -69,15 +69,15 @@ namespace Tests
             var srcList = new List<DenseVector>(4);
             var dstList = new List<DenseVector>(4);
 
-            srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
-            srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
-            srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
-            srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 10, 10 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 100, 10 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 100, 150 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 10, 150 }));
 
-            dstList.Add(DenseVector.OfArray(new double[] { 11, 11 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 11, 11 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 500, 11 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 500, 200 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 11, 200 }));
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
@@ -88,22 +88,22 @@ namespace Tests
             Console.WriteLine(homo);
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 100, 10);
+                (float x, float y) = HomographyHelper.Translate(homo, 100, 10);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 11) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 100, 150);
+                (float x, float y) = HomographyHelper.Translate(homo, 100, 150);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 200) < 0.001);
             }
 
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
-                double dstx = (500.0 + 11) / 2.0;
-                double dsty = (200 + 11) / 2.0;
+                (float x, float y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0f, (150 + 10) / 2.0f);
+                float dstx = (500.0f + 11) / 2.0f;
+                float dsty = (200 + 11) / 2.0f;
                 Console.WriteLine("x" + x);
                 Console.WriteLine("y" + y);
 
@@ -121,15 +121,15 @@ namespace Tests
             var srcList = new List<DenseVector>(4);
             var dstList = new List<DenseVector>(4);
 
-            srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
-            srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
-            srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
-            srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 10, 10 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 100, 10 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 100, 150 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 10, 150 }));
 
-            dstList.Add(DenseVector.OfArray(new double[] { 11, 11 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 11, 11 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 500, 11 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 500, 200 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 11, 200 }));
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
@@ -140,22 +140,22 @@ namespace Tests
             Console.WriteLine(homo);
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 100, 10);
+                (float x, float y) = HomographyHelper.Translate(homo, 100, 10);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 11) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 100, 150);
+                (float x, float y) = HomographyHelper.Translate(homo, 100, 150);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 200) < 0.001);
             }
 
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
-                double dstx = (500.0 + 11) / 2.0;
-                double dsty = (200 + 11) / 2.0;
+                (float x, float y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0f, (150 + 10) / 2.0f);
+                float dstx = (500.0f + 11) / 2.0f;
+                float dsty = (200 + 11) / 2.0f;
                 Console.WriteLine("x" + x);
                 Console.WriteLine("y" + y);
 
@@ -177,10 +177,10 @@ namespace Tests
             var dstList = new List<DenseVector>(4);
 
             {
-                var v0 = DenseVector.OfArray(new double[] { -152, 394 });
-                var v1 = DenseVector.OfArray(new double[] { 218, 521 });
-                var v2 = DenseVector.OfArray(new double[] { 223, -331 });
-                var v3 = DenseVector.OfArray(new double[] { -163, -219 });
+                var v0 = DenseVector.OfArray(new float[] { -152, 394 });
+                var v1 = DenseVector.OfArray(new float[] { 218, 521 });
+                var v2 = DenseVector.OfArray(new float[] { 223, -331 });
+                var v3 = DenseVector.OfArray(new float[] { -163, -219 });
 
                 srcList.Add(v0);
                 srcList.Add(v1);
@@ -193,10 +193,10 @@ namespace Tests
                 var v1 = HomographyHelper.CreateVector2(500, 300);
                 var v2 = HomographyHelper.CreateVector2(480, -308);
                 var v3 = HomographyHelper.CreateVector2(-580, -280);
-                //var v0 = DenseVector.OfArray(new double[] {-666, 431});
-                //var v1 = DenseVector.OfArray(new double[] { 500, 300 });
-                //var v2 = DenseVector.OfArray(new double[] { 480, -308 });
-                //var v3 = DenseVector.OfArray(new double[] { -580, -280 });
+                //var v0 = DenseVector.OfArray(new float[] {-666, 431});
+                //var v1 = DenseVector.OfArray(new float[] { 500, 300 });
+                //var v2 = DenseVector.OfArray(new float[] { 480, -308 });
+                //var v3 = DenseVector.OfArray(new float[] { -580, -280 });
                 dstList.Add(v0);
                 dstList.Add(v1);
                 dstList.Add(v2);
@@ -209,19 +209,19 @@ namespace Tests
             Console.WriteLine($"=====test2 stop{stopWatch.ElapsedMilliseconds}=====");
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, -152, 394);
+                (float x, float y) = HomographyHelper.Translate(homo, -152, 394);
                 Assert.IsTrue(Math.Abs(x - -666) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 431) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 218, 521);
+                (float x, float y) = HomographyHelper.Translate(homo, 218, 521);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 300) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 223, -331);
+                (float x, float y) = HomographyHelper.Translate(homo, 223, -331);
                 Assert.IsTrue(Math.Abs(x - 480) < 0.001);
                 Assert.IsTrue(Math.Abs(y - -308) < 0.001);
             }
@@ -255,22 +255,22 @@ namespace Tests
             Console.WriteLine(homo);
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 100, 10);
+                (float x, float y) = HomographyHelper.Translate(homo, 100, 10);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 11) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 100, 150);
+                (float x, float y) = HomographyHelper.Translate(homo, 100, 150);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 200) < 0.001);
             }
 
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
-                double dstx = (500.0 + 11) / 2.0;
-                double dsty = (200 + 11) / 2.0;
+                (float x, float y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0f, (150 + 10) / 2.0f);
+                float dstx = (500 + 11) / 2.0f;
+                float dsty = (200 + 11) / 2.0f;
                 Console.WriteLine("x" + x);
                 Console.WriteLine("y" + y);
 
@@ -306,19 +306,19 @@ namespace Tests
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, -152, 394);
+                (float x, float y) = HomographyHelper.Translate(homo, -152, 394);
                 Assert.IsTrue(Math.Abs(x - -666) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 431) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 218, 521);
+                (float x, float y) = HomographyHelper.Translate(homo, 218, 521);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 300) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 223, -331);
+                (float x, float y) = HomographyHelper.Translate(homo, 223, -331);
                 Assert.IsTrue(Math.Abs(x - 480) < 0.001);
                 Assert.IsTrue(Math.Abs(y - -308) < 0.001);
             }
@@ -333,15 +333,15 @@ namespace Tests
             var srcList = new List<DenseVector>(4);
             var dstList = new List<DenseVector>(4);
 
-            srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
-            srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
-            srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
-            srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 10, 10 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 100, 10 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 100, 150 }));
+            srcList.Add(DenseVector.OfArray(new float[] { 10, 150 }));
 
-            dstList.Add(DenseVector.OfArray(new double[] { 11, 11 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
-            dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 11, 11 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 500, 11 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 500, 200 }));
+            dstList.Add(DenseVector.OfArray(new float[] { 11, 200 }));
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             DenseMatrix homo = null;
@@ -359,21 +359,21 @@ namespace Tests
             for (int i = 0; i < 100000; i++)
             {
                 {
-                    (double x, double y) = HomographyHelper.Translate(homo, 100, 10);
+                    (float x, float y) = HomographyHelper.Translate(homo, 100, 10);
                     Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                     Assert.IsTrue(Math.Abs(y - 11) < 0.001);
                 }
 
                 {
-                    (double x, double y) = HomographyHelper.Translate(homo, 100, 150);
+                    (float x, float y) = HomographyHelper.Translate(homo, 100, 150);
                     Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                     Assert.IsTrue(Math.Abs(y - 200) < 0.001);
                 }
 
                 {
-                    (double x, double y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0, (150 + 10) / 2.0);
-                    double dstx = (500.0 + 11) / 2.0;
-                    double dsty = (200 + 11) / 2.0;
+                    (float x, float y) = HomographyHelper.Translate(homo, (100 + 10) / 2.0f, (150 + 10) / 2.0f);
+                    float dstx = (500 + 11) / 2f;
+                    float dsty = (200 + 11) / 2f;
                     //Console.WriteLine("x" + x);
                     //Console.WriteLine("y" + y);
 
@@ -413,19 +413,19 @@ namespace Tests
             //Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, -152, 394);
+                (float x, float y) = HomographyHelper.Translate(homo, -152, 394);
                 Assert.IsTrue(Math.Abs(x - -666) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 431) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 218, 521);
+                (float x, float y) = HomographyHelper.Translate(homo, 218, 521);
                 Assert.IsTrue(Math.Abs(x - 500) < 0.001);
                 Assert.IsTrue(Math.Abs(y - 300) < 0.001);
             }
 
             {
-                (double x, double y) = HomographyHelper.Translate(homo, 223, -331);
+                (float x, float y) = HomographyHelper.Translate(homo, 223, -331);
                 Assert.IsTrue(Math.Abs(x - 480) < 0.001);
                 Assert.IsTrue(Math.Abs(y - -308) < 0.001);
             }
@@ -433,4 +433,6 @@ namespace Tests
             //Console.WriteLine(homo);
         }
     }
+
+
 }

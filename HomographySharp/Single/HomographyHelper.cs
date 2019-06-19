@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Numerics.LinearAlgebra.Single;
 
-namespace HomographySharp
+namespace HomographySharp.Single
 {
     public static class HomographyHelper
     {
         /// <summary>
-        /// return DenseVector.OfArray(new double[] { x, y })
+        /// return DenseVector.OfArray(new float[] { x, y })
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        /// <returns>DenseVector.OfArray(new double[] { x, y })</returns>
-        public static DenseVector CreateVector2(double x, double y)
+        /// <returns>DenseVector.OfArray(new float[] { x, y })</returns>
+        public static DenseVector CreateVector2(float x, float y)
         {
-            return DenseVector.OfArray(new double[] { x, y });
+            return DenseVector.OfArray(new float[] { x, y });
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace HomographySharp
         /// <param name="srcY"></param>
         /// <param name="dstX"></param>
         /// <param name="rowIndex"></param>
-        private static void SetCoefficientMatrixParametersForDstX(DenseMatrix matrix, double srcX, double srcY, double dstX, int rowIndex)
+        private static void SetCoefficientMatrixParametersForDstX(DenseMatrix matrix, float srcX, float srcY, float dstX, int rowIndex)
         {
             matrix[rowIndex, 0] = srcX;
             matrix[rowIndex, 1] = srcY;
@@ -49,7 +49,7 @@ namespace HomographySharp
         /// <param name="srcY"></param>
         /// <param name="dstY"></param>
         /// <param name="rowIndex"></param>
-        private static void SetCoefficientMatrixParametersForDstY(DenseMatrix matrix, double srcX, double srcY, double dstY, int rowIndex)
+        private static void SetCoefficientMatrixParametersForDstY(DenseMatrix matrix, float srcX, float srcY, float dstY, int rowIndex)
         {
             matrix[rowIndex, 0] = 0;
             matrix[rowIndex, 1] = 0;
@@ -122,7 +122,7 @@ namespace HomographySharp
 
             var parameterVec = inverseA * dstVec;
 
-            return DenseMatrix.OfArray(new double[,]
+            return DenseMatrix.OfArray(new float[,]
             {
                 {parameterVec[0], parameterVec[1], parameterVec[2]},
                 {parameterVec[3], parameterVec[4], parameterVec[5]},
@@ -175,7 +175,7 @@ namespace HomographySharp
 
             var parameterVec = inverseA * dstVec;
 
-            return DenseMatrix.OfArray(new double[,]
+            return DenseMatrix.OfArray(new float[,]
             {
                 {parameterVec[0], parameterVec[1], parameterVec[2]},
                 {parameterVec[3], parameterVec[4], parameterVec[5]},
@@ -183,10 +183,10 @@ namespace HomographySharp
             });
         }
 
-        public static (double dstX, double dstY) Translate(DenseMatrix homography, double srcX, double srcY)
+        public static (float dstX, float dstY) Translate(DenseMatrix homography, float srcX, float srcY)
         {
             // ↓ in this case, allocation occurs
-            //var vec = DenseVector.OfArray(new double[] { srcX, srcY, 1 });
+            //var vec = DenseVector.OfArray(new float[] { srcX, srcY, 1 });
             //var dst = homography * vec;
             //return (dst[0] / dst[2], dst[1] / dst[2]);
 
