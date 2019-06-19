@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using MathNet.Numerics.LinearAlgebra.Double;
 using NUnit.Framework;
-using HomographySharp;
+using HomographySharp.Double;
 
 namespace Tests
 {
