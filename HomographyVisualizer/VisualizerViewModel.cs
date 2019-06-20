@@ -1,9 +1,9 @@
-﻿using MathNet.Numerics.LinearAlgebra.Double;
+﻿using HomographySharp.Double;
+using MathNet.Numerics.LinearAlgebra.Double;
 using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
@@ -11,8 +11,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using HomographySharp.Double;
-using Point = System.Drawing.Point;
 
 namespace HomographyVisualizer
 {
