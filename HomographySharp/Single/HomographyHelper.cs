@@ -190,7 +190,7 @@ namespace HomographySharp.Single
             //var dst = homography * vec;
             //return (dst[0] / dst[2], dst[1] / dst[2]);
 
-            if (homography.RowCount != 3 && homography.ColumnCount != 3)
+            if (homography.RowCount != 3 || homography.ColumnCount != 3)
             {
                 throw new ArgumentException("The shape of homography matrix must be 3x3");
             }
