@@ -30,7 +30,7 @@ namespace BenchmarkSpace
             for (int i = 0; i < 100000; i++)
             {
                 var homo = HomographyHelper.FindHomography(srcList, dstList);
-                (double x, double y) = HomographyHelper.Translate(homo, -152f, 394f);
+               (float x, float y) = HomographyHelper.Translate(homo, -152f, 394f);
             }
         }
     }

@@ -10,4 +10,4 @@ Intel Core i7-8850H CPU 2.60GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 ```
 | Method |     Mean |    Error |   StdDev |      Gen 0 | Gen 1 | Gen 2 | Allocated |
 |------- |---------:|---------:|---------:|-----------:|------:|------:|----------:|
-|  Bench | 238.0 ms | 1.300 ms | 1.152 ms | 55333.3333 |     - |     - | 249.48 MB |
+|  Bench | 237.3 ms | 1.961 ms | 1.738 ms | 55333.3333 |     - |     - | 249.48 MB |
