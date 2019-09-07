@@ -192,7 +192,7 @@ namespace HomographySharp.Double
 
             return answerMatrix;
                 
-//            ↓余計なAllocが起きるので↑ベタが書きに。
+//            ↓余計なAllocが起きるので↑ベタが書きに。Doubleには効果があるがSingleには効果があまりない。
 //            return DenseMatrix.OfArray(new double[,]
 //            {
 //                {parameterVec[0], parameterVec[1], parameterVec[2]},
