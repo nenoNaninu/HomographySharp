@@ -122,12 +122,22 @@ namespace HomographySharp.Double
 
             var parameterVec = inverseA * dstVec;
 
-            return DenseMatrix.OfArray(new double[,]
-            {
-                {parameterVec[0], parameterVec[1], parameterVec[2]},
-                {parameterVec[3], parameterVec[4], parameterVec[5]},
-                {parameterVec[6], parameterVec[7], 1}
-            });
+            var answerMatrix = new DenseMatrix(3, 3);
+            var rawAnswerArray = answerMatrix.Values;
+            
+            rawAnswerArray[0] = parameterVec[0];
+            rawAnswerArray[3] = parameterVec[1];
+            rawAnswerArray[6] = parameterVec[2];
+            
+            rawAnswerArray[1] = parameterVec[3];
+            rawAnswerArray[4] = parameterVec[4];
+            rawAnswerArray[7] = parameterVec[5];
+            
+            rawAnswerArray[2] = parameterVec[6];
+            rawAnswerArray[5] = parameterVec[7];
+            rawAnswerArray[8] = 1;
+
+            return answerMatrix;
         }
 
         /// <summary>
