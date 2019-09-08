@@ -123,7 +123,6 @@ namespace HomographySharp.Single
             var parameterVec = inverseA * dstVec;
             
             var answerMatrix = new DenseMatrix(3, 3);
-
             var rawAnswerArray = answerMatrix.Values;
             
             rawAnswerArray[0] = parameterVec[0];
