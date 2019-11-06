@@ -6,11 +6,11 @@ NuGet: [HomographySharp](https://www.nuget.org/packages/HomographySharp/)
 
 Package Manager
 ```
-PM > Install-Package HomographySharp -Version 1.3.6
+PM > Install-Package HomographySharp
 ```
 .NET CLI
 ```
-dotnet add package HomographySharp --version 1.3.6
+dotnet add package HomographySharp
 ```
 
 # How to use
@@ -30,7 +30,7 @@ dstList.Add(new PointF { X = -580, Y = -280 });
 
 var homo = HomographyHelper.FindHomography(srcList, dstList);
 
-(double x, double y) = HomographyHelper.Translate(homo, -152, 394);
+(double x, double y) = homo.Translate(homo, -152, 394);
 Assert.IsTrue(Math.Abs(x - -666) < 0.001);
 Assert.IsTrue(Math.Abs(y - 431) < 0.001);
             
@@ -52,7 +52,7 @@ dstList.Add(HomographyHelper.CreateVector2(11, 200));
 
 var homo = HomographyHelper.FindHomography(srcList, dstList);// <-
 
-(double dstX, double dstY) = HomographyHelper.Translate(homo, 100, 10);// <-
+(double dstX, double dstY) = homo.Translate(homo, 100, 10);// <-
 
 Assert.IsTrue(Math.Abs(dstX - 500) < 0.001);//true
 Assert.IsTrue(Math.Abs(dstY - 11) < 0.001); //true

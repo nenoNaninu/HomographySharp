@@ -6,6 +6,10 @@ using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace HomographySharp.Double
 {
+    
+    /// <summary>
+    /// 
+    /// </summary>
     public static class HomographyHelper
     {
         /// <summary>
@@ -72,7 +76,7 @@ namespace HomographySharp.Double
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <exception cref="ArgumentException">All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).</exception>
         /// <returns>Homography Matrix</returns>
-        public static DenseMatrix FindHomography(IReadOnlyList<DenseVector> srcPoints, IReadOnlyList<DenseVector> dstPoints)
+        public static HomographyMatrix FindHomography(IReadOnlyList<DenseVector> srcPoints, IReadOnlyList<DenseVector> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {
@@ -137,7 +141,7 @@ namespace HomographySharp.Double
             rawAnswerArray[5] = parameterVec[7];
             rawAnswerArray[8] = 1;
 
-            return answerMatrix;
+            return new HomographyMatrix(answerMatrix);
         }
 
         /// <summary>
@@ -147,7 +151,7 @@ namespace HomographySharp.Double
         /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <returns>Homography Matrix</returns>
-        public static DenseMatrix FindHomography(IReadOnlyList<PointF> srcPoints, IReadOnlyList<PointF> dstPoints)
+        public static HomographyMatrix FindHomography(IReadOnlyList<PointF> srcPoints, IReadOnlyList<PointF> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {
@@ -200,7 +204,7 @@ namespace HomographySharp.Double
             rawAnswerArray[5] = parameterVec[7];
             rawAnswerArray[8] = 1;
 
-            return answerMatrix;
+            return new HomographyMatrix(answerMatrix);
                 
 //            ↓余計なAllocが起きるので↑ベタが書きに。
 //            return DenseMatrix.OfArray(new double[,]
@@ -211,6 +215,14 @@ namespace HomographySharp.Double
 //            });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="homography"></param>
+        /// <param name="srcX"></param>
+        /// <param name="srcY"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static (double dstX, double dstY) Translate(DenseMatrix homography, double srcX, double srcY)
         {
             // ↓ in this case, allocation occurs

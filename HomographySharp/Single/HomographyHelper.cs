@@ -6,6 +6,9 @@ using MathNet.Numerics.LinearAlgebra.Single;
 
 namespace HomographySharp.Single
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class HomographyHelper
     {
         /// <summary>
@@ -72,7 +75,7 @@ namespace HomographySharp.Single
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <exception cref="ArgumentException">All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).</exception>
         /// <returns>Homography Matrix</returns>
-        public static DenseMatrix FindHomography(IReadOnlyList<DenseVector> srcPoints, IReadOnlyList<DenseVector> dstPoints)
+        public static HomographyMatrix FindHomography(IReadOnlyList<DenseVector> srcPoints, IReadOnlyList<DenseVector> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {
@@ -137,7 +140,7 @@ namespace HomographySharp.Single
             rawAnswerArray[5] = parameterVec[7];
             rawAnswerArray[8] = 1;
 
-            return answerMatrix;
+            return new HomographyMatrix(answerMatrix);
         }
 
         /// <summary>
@@ -147,7 +150,7 @@ namespace HomographySharp.Single
         /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <returns>Homography Matrix</returns>
-        public static DenseMatrix FindHomography(IReadOnlyList<PointF> srcPoints, IReadOnlyList<PointF> dstPoints)
+        public static HomographyMatrix FindHomography(IReadOnlyList<PointF> srcPoints, IReadOnlyList<PointF> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {
@@ -200,9 +203,17 @@ namespace HomographySharp.Single
             rawAnswerArray[5] = parameterVec[7];
             rawAnswerArray[8] = 1;
 
-            return answerMatrix;
+            return new HomographyMatrix(answerMatrix);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="homography"></param>
+        /// <param name="srcX"></param>
+        /// <param name="srcY"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static (float dstX, float dstY) Translate(DenseMatrix homography, float srcX, float srcY)
         {
             // ↓ in this case, allocation occurs
