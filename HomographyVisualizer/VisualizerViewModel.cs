@@ -133,7 +133,7 @@ namespace HomographyVisualizer
                 Canvas.SetLeft(srcEllipse, pointX - srcEllipse.Width / 2);
                 Canvas.SetTop(srcEllipse, pointY - srcEllipse.Height / 2);
 
-                (var translateX, var translateY) = HomographyHelper.Translate(_homo, pointX, pointY);
+                (var translateX, var translateY) = _homo.Translate( pointX, pointY);
 
                 Canvas.SetLeft(dstEllipse, translateX - srcEllipse.Width / 2);
                 Canvas.SetTop(dstEllipse, translateY - srcEllipse.Height / 2);
@@ -153,7 +153,7 @@ namespace HomographyVisualizer
                     var newPoint = args.GetPosition(_drawCanvas);
                     Canvas.SetLeft(srcEllipse, newPoint.X - srcEllipse.Width / 2);
                     Canvas.SetTop(srcEllipse, newPoint.Y - srcEllipse.Height / 2);
-                    (var newTranslateX, var newTranslateY) = HomographyHelper.Translate(_homo, newPoint.X, newPoint.Y);
+                    (var newTranslateX, var newTranslateY) = _homo.Translate(newPoint.X, newPoint.Y);
                     Canvas.SetLeft(dstEllipse, newTranslateX - srcEllipse.Width / 2);
                     Canvas.SetTop(dstEllipse, newTranslateY - srcEllipse.Height / 2);
                 };
