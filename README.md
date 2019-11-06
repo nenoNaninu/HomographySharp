@@ -30,7 +30,7 @@ dstList.Add(new PointF { X = -580, Y = -280 });
 
 var homo = HomographyHelper.FindHomography(srcList, dstList);
 
-(double x, double y) = homo.Translate(homo, -152, 394);
+(double x, double y) = homo.Translate(-152, 394);
 Assert.IsTrue(Math.Abs(x - -666) < 0.001);
 Assert.IsTrue(Math.Abs(y - 431) < 0.001);
             
@@ -52,7 +52,7 @@ dstList.Add(HomographyHelper.CreateVector2(11, 200));
 
 var homo = HomographyHelper.FindHomography(srcList, dstList);// <-
 
-(double dstX, double dstY) = homo.Translate(homo, 100, 10);// <-
+(double dstX, double dstY) = homo.Translate(100, 10);// <-
 
 Assert.IsTrue(Math.Abs(dstX - 500) < 0.001);//true
 Assert.IsTrue(Math.Abs(dstY - 11) < 0.001); //true
