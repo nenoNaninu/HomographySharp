@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using MathNet.Numerics.LinearAlgebra.Single;
 
 namespace HomographySharp.Single
@@ -17,6 +18,7 @@ namespace HomographySharp.Single
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns>DenseVector.OfArray(new float[] { x, y })</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DenseVector CreateVector2(float x, float y)
         {
             return DenseVector.OfArray(new float[] { x, y });
@@ -30,6 +32,7 @@ namespace HomographySharp.Single
         /// <param name="srcY"></param>
         /// <param name="dstX"></param>
         /// <param name="rowIndex"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void SetCoefficientMatrixParametersForDstX(DenseMatrix matrix, float srcX, float srcY, float dstX, int rowIndex)
         {
             matrix[rowIndex, 0] = srcX;
@@ -52,6 +55,7 @@ namespace HomographySharp.Single
         /// <param name="srcY"></param>
         /// <param name="dstY"></param>
         /// <param name="rowIndex"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void SetCoefficientMatrixParametersForDstY(DenseMatrix matrix, float srcX, float srcY, float dstY, int rowIndex)
         {
             matrix[rowIndex, 0] = 0;
