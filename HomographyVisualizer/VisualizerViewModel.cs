@@ -35,7 +35,7 @@ namespace HomographyVisualizer
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private DenseMatrix _homo;
+        private HomographyMatrix _homo;
         private Ellipse _cacheEllipse;
         private int _pointNum;
 

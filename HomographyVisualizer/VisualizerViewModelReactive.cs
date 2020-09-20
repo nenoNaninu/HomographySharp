@@ -41,7 +41,7 @@ namespace HomographyVisualizer
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private DenseMatrix _homo;
+        private HomographyMatrix _homo;
         private int _pointNum;
 
         private IObservable<MouseButtonEventArgs> _mouseDown;
