@@ -1,29 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using MathNet.Numerics.LinearAlgebra.Single;
+#if NETSTANDARD2_1
+using System.Numerics;
+#endif
 
 namespace HomographySharp.Single
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public static class HomographyHelper
+    internal static class SingleHomographyHelper
     {
-        /// <summary>
-        /// return DenseVector.OfArray(new float[] { x, y })
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns>DenseVector.OfArray(new float[] { x, y })</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static DenseVector CreateVector2(float x, float y)
-        {
-            return DenseVector.OfArray(new float[] { x, y });
-        }
-
         /// <summary>
         /// dstXの方の係数行列の設定。
         /// </summary>
@@ -71,90 +57,13 @@ namespace HomographySharp.Single
         }
 
         /// <summary>
-        /// All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).
-        /// </summary>
-        /// <param name="srcPoints">need 4 or more points before translate</param>
-        /// <param name="dstPoints">need 4 or more points after translate</param>
-        /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
-        /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
-        /// <exception cref="ArgumentException">All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).</exception>
-        /// <returns>Homography Matrix</returns>
-        public static HomographyMatrix FindHomography(IReadOnlyList<DenseVector> srcPoints, IReadOnlyList<DenseVector> dstPoints)
-        {
-            if (srcPoints.Count < 4 || dstPoints.Count < 4)
-            {
-                throw new ArgumentException("srcPoints and dstPoints must require 4 or more points");
-            }
-
-            if (srcPoints.Count != dstPoints.Count)
-            {
-                throw new ArgumentException("srcPoints and dstPoints must same num");
-            }
-
-            if (srcPoints.Any(x => x.Count != 2) || dstPoints.Any(x => x.Count != 2))
-            {
-                throw new ArgumentException("All vectors contained in srcPoints and dstPoints must be two dimensional(x and y).");
-            }
-
-            //q(dstのベクトル) = A(作成するべきnx8行列) * P(射影変換のパラメータ)
-            //P = A^-1 * q
-            //でパラメータが求まる。
-            int pointNum = srcPoints.Count;
-            DenseMatrix a = DenseMatrix.Create(pointNum * 2, 8, 0);
-
-            for (int i = 0; i < pointNum; i++)
-            {
-                var src = srcPoints[i];
-                var dst = dstPoints[i];
-
-                var srcX = src[0];
-                var dstX = dst[0];
-
-                var srcY = src[1];
-                var dstY = dst[1];
-
-                SetCoefficientMatrixParametersForDstX(a, srcX, srcY, dstX, 2 * i);
-                SetCoefficientMatrixParametersForDstY(a, srcX, srcY, dstY, 2 * i + 1);
-            }
-
-            var dstVec = DenseVector.Create(pointNum * 2, 0);
-
-            for (int i = 0; i < pointNum; i++)
-            {
-                dstVec[i * 2] = dstPoints[i][0];
-                dstVec[i * 2 + 1] = dstPoints[i][1];
-            }
-
-            var inverseA = pointNum == 4 ? a.Inverse() : a.PseudoInverse();
-
-            var parameterVec = inverseA * dstVec;
-            
-            var answerMatrix = new DenseMatrix(3, 3);
-            var rawAnswerArray = answerMatrix.Values;
-            
-            rawAnswerArray[0] = parameterVec[0];
-            rawAnswerArray[3] = parameterVec[1];
-            rawAnswerArray[6] = parameterVec[2];
-            
-            rawAnswerArray[1] = parameterVec[3];
-            rawAnswerArray[4] = parameterVec[4];
-            rawAnswerArray[7] = parameterVec[5];
-            
-            rawAnswerArray[2] = parameterVec[6];
-            rawAnswerArray[5] = parameterVec[7];
-            rawAnswerArray[8] = 1;
-
-            return new HomographyMatrix(answerMatrix);
-        }
-
-        /// <summary>
         /// </summary>
         /// <param name="srcPoints">need 4 or more points before translate </param>
         /// <param name="dstPoints">need 4 or more points after translate</param>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <returns>Homography Matrix</returns>
-        public static HomographyMatrix FindHomography(IReadOnlyList<PointF> srcPoints, IReadOnlyList<PointF> dstPoints)
+        public static HomographySingleMatrix FindHomography(IReadOnlyList<Vector2<float>> srcPoints, IReadOnlyList<Vector2<float>> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {
@@ -191,52 +100,86 @@ namespace HomographySharp.Single
             var inverseA = pointNum == 4 ? a.Inverse() : a.PseudoInverse();
 
             var parameterVec = inverseA * dstVec;
-            
-            var answerMatrix = new DenseMatrix(3, 3);
-            var rawAnswerArray = answerMatrix.Values;
-            
-            rawAnswerArray[0] = parameterVec[0];
-            rawAnswerArray[3] = parameterVec[1];
-            rawAnswerArray[6] = parameterVec[2];
-            
-            rawAnswerArray[1] = parameterVec[3];
-            rawAnswerArray[4] = parameterVec[4];
-            rawAnswerArray[7] = parameterVec[5];
-            
-            rawAnswerArray[2] = parameterVec[6];
-            rawAnswerArray[5] = parameterVec[7];
-            rawAnswerArray[8] = 1;
 
-            return new HomographyMatrix(answerMatrix);
+            var elements = new float[9];
+
+            elements[0] = parameterVec[0];
+            elements[1] = parameterVec[1];
+            elements[2] = parameterVec[2];
+
+            elements[3] = parameterVec[3];
+            elements[4] = parameterVec[4];
+            elements[5] = parameterVec[5];
+
+            elements[6] = parameterVec[6];
+            elements[7] = parameterVec[7];
+            elements[8] = 1;
+
+            return new HomographySingleMatrix(elements);
         }
 
+#if NETSTANDARD2_1
         /// <summary>
-        /// 
         /// </summary>
-        /// <param name="homography"></param>
-        /// <param name="srcX"></param>
-        /// <param name="srcY"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public static (float dstX, float dstY) Translate(DenseMatrix homography, float srcX, float srcY)
+        /// <param name="srcPoints">need 4 or more points before translate </param>
+        /// <param name="dstPoints">need 4 or more points after translate</param>
+        /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
+        /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
+        /// <returns>Homography Matrix</returns>
+        public static HomographySingleMatrix FindHomography(IReadOnlyList<Vector2> srcPoints, IReadOnlyList<Vector2> dstPoints)
         {
-            // ↓ in this case, allocation occurs
-            //var vec = DenseVector.OfArray(new float[] { srcX, srcY, 1 });
-            //var dst = homography * vec;
-            //return (dst[0] / dst[2], dst[1] / dst[2]);
-
-            if (homography.RowCount != 3 || homography.ColumnCount != 3)
+            if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {
-                throw new ArgumentException("The shape of homography matrix must be 3x3");
+                throw new ArgumentException("srcPoints and dstPoints must require 4 or more points");
+            }
+            if (srcPoints.Count != dstPoints.Count)
+            {
+                throw new ArgumentException("srcPoints and dstPoints must same num");
             }
 
-            var rawArray = homography.Values;
+            //q(dstのベクトル) = A(作成するべきnx8行列) * P(射影変換のパラメータ)
+            //P = A^-1 * q
+            //でパラメータが求まる。
+            int pointNum = srcPoints.Count;
+            DenseMatrix a = DenseMatrix.Create(pointNum * 2, 8, 0);
 
-            var dst1 = rawArray[0] * srcX + rawArray[3] * srcY + rawArray[6];
-            var dst2 = rawArray[1] * srcX + rawArray[4] * srcY + rawArray[7];
-            var dst3 = rawArray[2] * srcX + rawArray[5] * srcY + rawArray[8];
+            for (int i = 0; i < pointNum; i++)
+            {
+                var src = srcPoints[i];
+                var dst = dstPoints[i];
 
-            return (dst1 / dst3, dst2 / dst3);
+                SetCoefficientMatrixParametersForDstX(a, src.X, src.Y, dst.X, 2 * i);
+                SetCoefficientMatrixParametersForDstY(a, src.X, src.Y, dst.Y, 2 * i + 1);
+            }
+
+            var dstVec = DenseVector.Create(pointNum * 2, 0);
+
+            for (int i = 0; i < pointNum; i++)
+            {
+                dstVec[i * 2] = dstPoints[i].X;
+                dstVec[i * 2 + 1] = dstPoints[i].Y;
+            }
+
+            var inverseA = pointNum == 4 ? a.Inverse() : a.PseudoInverse();
+
+            var parameterVec = inverseA * dstVec;
+
+            var elements = new float[9];
+
+            elements[0] = parameterVec[0];
+            elements[1] = parameterVec[1];
+            elements[2] = parameterVec[2];
+
+            elements[3] = parameterVec[3];
+            elements[4] = parameterVec[4];
+            elements[5] = parameterVec[5];
+
+            elements[6] = parameterVec[6];
+            elements[7] = parameterVec[7];
+            elements[8] = 1;
+
+            return new HomographySingleMatrix(elements);
         }
+#endif
     }
 }

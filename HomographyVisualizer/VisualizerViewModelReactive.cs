@@ -41,7 +41,7 @@ namespace HomographyVisualizer
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private HomographyMatrix _homo;
+        private HomographyDoubleMatrix _homo;
         private int _pointNum;
 
         private IObservable<MouseButtonEventArgs> _mouseDown;
@@ -194,7 +194,7 @@ namespace HomographyVisualizer
         {
             try
             {
-                _homo = HomographyHelper.FindHomography(_srcPoints, _dstPoints);
+                _homo = DoubleHomographyHelper.FindHomography(_srcPoints, _dstPoints);
             }
             catch (Exception e)
             {

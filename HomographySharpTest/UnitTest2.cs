@@ -37,7 +37,7 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = SingleHomographyHelper.FindHomography(srcList, dstList);
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
             {
@@ -79,7 +79,7 @@ namespace Tests
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = SingleHomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine($"=====test1 stop{stopWatch.ElapsedMilliseconds}=====");
 
@@ -131,7 +131,7 @@ namespace Tests
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = SingleHomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine($"=====test1 stop{stopWatch.ElapsedMilliseconds}=====");
 
@@ -187,10 +187,10 @@ namespace Tests
             }
 
             {
-                var v0 = HomographyHelper.CreateVector2(-666, 431);
-                var v1 = HomographyHelper.CreateVector2(500, 300);
-                var v2 = HomographyHelper.CreateVector2(480, -308);
-                var v3 = HomographyHelper.CreateVector2(-580, -280);
+                var v0 = SingleHomographyHelper.CreateVector2(-666, 431);
+                var v1 = SingleHomographyHelper.CreateVector2(500, 300);
+                var v2 = SingleHomographyHelper.CreateVector2(480, -308);
+                var v3 = SingleHomographyHelper.CreateVector2(-580, -280);
                 //var v0 = DenseVector.OfArray(new float[] {-666, 431});
                 //var v1 = DenseVector.OfArray(new float[] { 500, 300 });
                 //var v2 = DenseVector.OfArray(new float[] { 480, -308 });
@@ -201,7 +201,7 @@ namespace Tests
                 dstList.Add(v3);
             }
 
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = SingleHomographyHelper.FindHomography(srcList, dstList);
 
             stopWatch.Stop();
             Console.WriteLine($"=====test2 stop{stopWatch.ElapsedMilliseconds}=====");
@@ -246,7 +246,7 @@ namespace Tests
             dstList.Add(new PointF {X = 500, Y = 200});
             dstList.Add(new PointF {X = 11, Y = 200});
 
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = SingleHomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine($"=====test3 stop{stopWatch.ElapsedMilliseconds}=====");
 
@@ -299,7 +299,7 @@ namespace Tests
             dstList.Add(new PointF {X = 480, Y = -308});
             dstList.Add(new PointF {X = -580, Y = -280});
 
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = SingleHomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
@@ -341,11 +341,11 @@ namespace Tests
             dstList.Add(DenseVector.OfArray(new float[] {11, 200}));
 
             var stopWatch = new System.Diagnostics.Stopwatch();
-            HomographyMatrix homo = null;
+            HomographySingleMatrix homo = null;
             stopWatch.Start();
             for (int i = 0; i < 100000; i++)
             {
-                homo = HomographyHelper.FindHomography(srcList, dstList);
+                homo = SingleHomographyHelper.FindHomography(srcList, dstList);
             }
 
             stopWatch.Stop();
@@ -405,7 +405,7 @@ namespace Tests
             dstList.Add(new PointF {X = 480, Y = -308});
             dstList.Add(new PointF {X = -580, Y = -280});
 
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = SingleHomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine("setup!!!!!!!");
             //Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");

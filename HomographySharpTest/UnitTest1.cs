@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using HomographySharp;
 using MathNet.Numerics.LinearAlgebra.Double;
 using NUnit.Framework;
-using HomographySharp.Double;
 
 namespace Tests
 {
@@ -21,18 +21,18 @@ namespace Tests
         [Test]
         public void FindHomographyTest00()
         {
-            var srcList = new List<PointF>(4);
-            var dstList = new List<PointF>(4);
+            var srcList = new List<Vector2<double>>(4);
+            var dstList = new List<Vector2<double>>(4);
 
-            srcList.Add(new PointF {X = -152, Y = 394});
-            srcList.Add(new PointF {X = 218, Y = 521});
-            srcList.Add(new PointF {X = 223, Y = -331});
-            srcList.Add(new PointF {X = -163, Y = -219});
+            srcList.Add(new Vector2<double>(-152, 394));
+            srcList.Add(new Vector2<double>(218, 521));
+            srcList.Add(new Vector2<double>(223, -331));
+            srcList.Add(new Vector2<double>(-163, -219));
 
-            dstList.Add(new PointF {X = -666, Y = 431});
-            dstList.Add(new PointF {X = 500, Y = 300});
-            dstList.Add(new PointF {X = 480, Y = -308});
-            dstList.Add(new PointF {X = -580, Y = -280});
+            dstList.Add(new Vector2<double>(-666, 431));
+            dstList.Add(new Vector2<double>(500, 300));
+            dstList.Add(new Vector2<double>(480, -308));
+            dstList.Add(new Vector2<double>(-580, -280));
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
@@ -67,15 +67,15 @@ namespace Tests
             var srcList = new List<DenseVector>(4);
             var dstList = new List<DenseVector>(4);
 
-            srcList.Add(DenseVector.OfArray(new double[] {10, 10}));
-            srcList.Add(DenseVector.OfArray(new double[] {100, 10}));
-            srcList.Add(DenseVector.OfArray(new double[] {100, 150}));
-            srcList.Add(DenseVector.OfArray(new double[] {10, 150}));
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
 
-            dstList.Add(DenseVector.OfArray(new double[] {11, 11}));
-            dstList.Add(DenseVector.OfArray(new double[] {500, 11}));
-            dstList.Add(DenseVector.OfArray(new double[] {500, 200}));
-            dstList.Add(DenseVector.OfArray(new double[] {11, 200}));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
@@ -119,15 +119,15 @@ namespace Tests
             var srcList = new List<DenseVector>(4);
             var dstList = new List<DenseVector>(4);
 
-            srcList.Add(DenseVector.OfArray(new double[] {10, 10}));
-            srcList.Add(DenseVector.OfArray(new double[] {100, 10}));
-            srcList.Add(DenseVector.OfArray(new double[] {100, 150}));
-            srcList.Add(DenseVector.OfArray(new double[] {10, 150}));
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
 
-            dstList.Add(DenseVector.OfArray(new double[] {11, 11}));
-            dstList.Add(DenseVector.OfArray(new double[] {500, 11}));
-            dstList.Add(DenseVector.OfArray(new double[] {500, 200}));
-            dstList.Add(DenseVector.OfArray(new double[] {11, 200}));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
@@ -175,10 +175,10 @@ namespace Tests
             var dstList = new List<DenseVector>(4);
 
             {
-                var v0 = DenseVector.OfArray(new double[] {-152, 394});
-                var v1 = DenseVector.OfArray(new double[] {218, 521});
-                var v2 = DenseVector.OfArray(new double[] {223, -331});
-                var v3 = DenseVector.OfArray(new double[] {-163, -219});
+                var v0 = DenseVector.OfArray(new double[] { -152, 394 });
+                var v1 = DenseVector.OfArray(new double[] { 218, 521 });
+                var v2 = DenseVector.OfArray(new double[] { 223, -331 });
+                var v3 = DenseVector.OfArray(new double[] { -163, -219 });
 
                 srcList.Add(v0);
                 srcList.Add(v1);
@@ -236,15 +236,15 @@ namespace Tests
             var srcList = new List<PointF>(4);
             var dstList = new List<PointF>(4);
 
-            srcList.Add(new PointF {X = 10, Y = 10});
-            srcList.Add(new PointF {X = 100, Y = 10});
-            srcList.Add(new PointF {X = 100, Y = 150});
-            srcList.Add(new PointF {X = 10, Y = 150});
+            srcList.Add(new PointF { X = 10, Y = 10 });
+            srcList.Add(new PointF { X = 100, Y = 10 });
+            srcList.Add(new PointF { X = 100, Y = 150 });
+            srcList.Add(new PointF { X = 10, Y = 150 });
 
-            dstList.Add(new PointF {X = 11, Y = 11});
-            dstList.Add(new PointF {X = 500, Y = 11});
-            dstList.Add(new PointF {X = 500, Y = 200});
-            dstList.Add(new PointF {X = 11, Y = 200});
+            dstList.Add(new PointF { X = 11, Y = 11 });
+            dstList.Add(new PointF { X = 500, Y = 11 });
+            dstList.Add(new PointF { X = 500, Y = 200 });
+            dstList.Add(new PointF { X = 11, Y = 200 });
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
@@ -289,15 +289,15 @@ namespace Tests
             var srcList = new List<PointF>(4);
             var dstList = new List<PointF>(4);
 
-            srcList.Add(new PointF {X = -152, Y = 394});
-            srcList.Add(new PointF {X = 218, Y = 521});
-            srcList.Add(new PointF {X = 223, Y = -331});
-            srcList.Add(new PointF {X = -163, Y = -219});
+            srcList.Add(new PointF { X = -152, Y = 394 });
+            srcList.Add(new PointF { X = 218, Y = 521 });
+            srcList.Add(new PointF { X = 223, Y = -331 });
+            srcList.Add(new PointF { X = -163, Y = -219 });
 
-            dstList.Add(new PointF {X = -666, Y = 431});
-            dstList.Add(new PointF {X = 500, Y = 300});
-            dstList.Add(new PointF {X = 480, Y = -308});
-            dstList.Add(new PointF {X = -580, Y = -280});
+            dstList.Add(new PointF { X = -666, Y = 431 });
+            dstList.Add(new PointF { X = 500, Y = 300 });
+            dstList.Add(new PointF { X = 480, Y = -308 });
+            dstList.Add(new PointF { X = -580, Y = -280 });
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
@@ -330,18 +330,18 @@ namespace Tests
             var srcList = new List<DenseVector>(4);
             var dstList = new List<DenseVector>(4);
 
-            srcList.Add(DenseVector.OfArray(new double[] {10, 10}));
-            srcList.Add(DenseVector.OfArray(new double[] {100, 10}));
-            srcList.Add(DenseVector.OfArray(new double[] {100, 150}));
-            srcList.Add(DenseVector.OfArray(new double[] {10, 150}));
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
+            srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
 
-            dstList.Add(DenseVector.OfArray(new double[] {11, 11}));
-            dstList.Add(DenseVector.OfArray(new double[] {500, 11}));
-            dstList.Add(DenseVector.OfArray(new double[] {500, 200}));
-            dstList.Add(DenseVector.OfArray(new double[] {11, 200}));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 11 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 500, 200 }));
+            dstList.Add(DenseVector.OfArray(new double[] { 11, 200 }));
 
             var stopWatch = new System.Diagnostics.Stopwatch();
-            HomographyMatrix homo = null;
+            HomographyDoubleMatrix homo = null;
             stopWatch.Start();
             for (int i = 0; i < 100000; i++)
             {
@@ -395,15 +395,15 @@ namespace Tests
             var srcList = new List<PointF>(4);
             var dstList = new List<PointF>(4);
 
-            srcList.Add(new PointF {X = -152, Y = 394});
-            srcList.Add(new PointF {X = 218, Y = 521});
-            srcList.Add(new PointF {X = 223, Y = -331});
-            srcList.Add(new PointF {X = -163, Y = -219});
+            srcList.Add(new PointF { X = -152, Y = 394 });
+            srcList.Add(new PointF { X = 218, Y = 521 });
+            srcList.Add(new PointF { X = 223, Y = -331 });
+            srcList.Add(new PointF { X = -163, Y = -219 });
 
-            dstList.Add(new PointF {X = -666, Y = 431});
-            dstList.Add(new PointF {X = 500, Y = 300});
-            dstList.Add(new PointF {X = 480, Y = -308});
-            dstList.Add(new PointF {X = -580, Y = -280});
+            dstList.Add(new PointF { X = -666, Y = 431 });
+            dstList.Add(new PointF { X = 500, Y = 300 });
+            dstList.Add(new PointF { X = 480, Y = -308 });
+            dstList.Add(new PointF { X = -580, Y = -280 });
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
