@@ -8,9 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using MathNet.Numerics.LinearAlgebra.Double;
+using HomographySharp;
 using Reactive.Bindings;
-using HomographySharp.Double;
 
 namespace HomographyVisualizer
 {
@@ -25,8 +24,8 @@ namespace HomographyVisualizer
         /// <summary>
         /// なにか汚されていたらtrue,まっさらだとfalse
         /// </summary>
-        private ReactiveProperty<bool> _srcAreaDirty = new ReactiveProperty<bool>(false);
-        private ReactiveProperty<bool> _dstAreaDirty = new ReactiveProperty<bool>(false);
+        private readonly ReactiveProperty<bool> _srcAreaDirty = new ReactiveProperty<bool>(false);
+        private readonly ReactiveProperty<bool> _dstAreaDirty = new ReactiveProperty<bool>(false);
 
         public ReactiveProperty<string> PointNumString { get; }
 
@@ -36,16 +35,16 @@ namespace HomographyVisualizer
         public ReactiveCommand CreateTranslatePointCommand { get; }
         public ReactiveCommand ClearCommand { get; } = new ReactiveCommand();
 
-        private readonly List<DenseVector> _srcPoints = new List<DenseVector>();
-        private readonly List<DenseVector> _dstPoints = new List<DenseVector>();
+        private readonly List<Point2<double>> _srcPoints = new List<Point2<double>>();
+        private readonly List<Point2<double>> _dstPoints = new List<Point2<double>>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private HomographyDoubleMatrix _homo;
+        private HomographyMatrix<double> _homo;
         private int _pointNum;
 
-        private IObservable<MouseButtonEventArgs> _mouseDown;
-        private IObservable<MouseEventArgs> _mouseMove;
+        private readonly IObservable<MouseButtonEventArgs> _mouseDown;
+        private readonly IObservable<MouseEventArgs> _mouseMove;
 
         List<Line> _srcLines = new List<Line>(4);
         List<Line> _dstLines = new List<Line>(4);
@@ -129,7 +128,7 @@ namespace HomographyVisualizer
             };
         }
 
-        public void CreateDrawingStream(List<DenseVector> pointsList, List<Line> lineList, Brush pointBrush, Brush strokeBrush)
+        public void CreateDrawingStream(List<Point2<double>> pointsList, List<Line> lineList, Brush pointBrush, Brush strokeBrush)
         {
 
             _mouseDown.Take(_pointNum)
@@ -137,8 +136,7 @@ namespace HomographyVisualizer
                 {
                     var point = x.GetPosition(_drawCanvas);
 
-                    var v = DenseVector.OfArray(new double[] { point.X, point.Y });
-                    pointsList.Add(v);
+                    pointsList.Add(new Point2<double>(point.X, point.Y));
 
                     var elipse = new Ellipse
                     {
@@ -163,8 +161,8 @@ namespace HomographyVisualizer
 
                     var latestLine = lineList.Last();
 
-                    latestLine.X2 = firstPoint[0];
-                    latestLine.Y2 = firstPoint[1];
+                    latestLine.X2 = firstPoint.X;
+                    latestLine.Y2 = firstPoint.Y;
                 });
 
             //ドラッグする時の描画
@@ -194,7 +192,7 @@ namespace HomographyVisualizer
         {
             try
             {
-                _homo = DoubleHomographyHelper.FindHomography(_srcPoints, _dstPoints);
+                _homo = HomographyHelper.FindHomography(_srcPoints, _dstPoints);
             }
             catch (Exception e)
             {
@@ -202,8 +200,8 @@ namespace HomographyVisualizer
                 return;
             }
 
-            var pointX = _srcPoints.Average(v => v[0]);
-            var pointY = _srcPoints.Average(v => v[1]);
+            var pointX = _srcPoints.Average(v => v.X);
+            var pointY = _srcPoints.Average(v => v.Y);
 
             Console.WriteLine(pointX);
             Console.WriteLine(pointY);
@@ -227,10 +225,9 @@ namespace HomographyVisualizer
             Canvas.SetLeft(srcEllipse, pointX - srcEllipse.Width / 2);
             Canvas.SetTop(srcEllipse, pointY - srcEllipse.Height / 2);
 
-            (var translateX, var translateY) = _homo.Translate( pointX, pointY);
-
-            Canvas.SetLeft(dstEllipse, translateX - srcEllipse.Width / 2);
-            Canvas.SetTop(dstEllipse, translateY - srcEllipse.Height / 2);
+            var result = _homo.Translate( pointX, pointY);
+            Canvas.SetLeft(dstEllipse, result.X - srcEllipse.Width / 2);
+            Canvas.SetTop(dstEllipse, result.Y - srcEllipse.Height / 2);
 
             _drawCanvas.Children.Add(srcEllipse);
             _drawCanvas.Children.Add(dstEllipse);
@@ -260,9 +257,9 @@ namespace HomographyVisualizer
                     var newPoint = x.GetPosition(_drawCanvas);
                     Canvas.SetLeft(srcEllipse, newPoint.X - srcEllipse.Width / 2);
                     Canvas.SetTop(srcEllipse, newPoint.Y - srcEllipse.Height / 2);
-                    (var newTranslateX, var newTranslateY) = _homo.Translate(newPoint.X, newPoint.Y);
-                    Canvas.SetLeft(dstEllipse, newTranslateX - srcEllipse.Width / 2);
-                    Canvas.SetTop(dstEllipse, newTranslateY - srcEllipse.Height / 2);
+                    var newResult = _homo.Translate(newPoint.X, newPoint.Y);
+                    Canvas.SetLeft(dstEllipse, newResult.X - srcEllipse.Width / 2);
+                    Canvas.SetTop(dstEllipse, newResult.Y - srcEllipse.Height / 2);
                 });
         }
     }

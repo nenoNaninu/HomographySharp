@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Running;
-using HomographySharp.Double;
+﻿using BenchmarkDotNet.Running;
 
 namespace BenchmarkSpace
 {

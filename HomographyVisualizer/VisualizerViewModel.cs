@@ -1,6 +1,4 @@
-﻿using HomographySharp.Double;
-using MathNet.Numerics.LinearAlgebra.Double;
-using Reactive.Bindings;
+﻿using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using HomographySharp;
 
 namespace HomographyVisualizer
 {
@@ -27,19 +26,17 @@ namespace HomographyVisualizer
         public ReactiveCommand CreateTranslatePointCommand { get; } = new ReactiveCommand();
         public ReactiveCommand ClearCommand { get; } = new ReactiveCommand();
 
-        private readonly List<DenseVector> _srcPoints = new List<DenseVector>();
-        private readonly List<DenseVector> _dstPoints = new List<DenseVector>();
+        private readonly List<Point2<double>> _srcPoints = new List<Point2<double>>();
+        private readonly List<Point2<double>> _dstPoints = new List<Point2<double>>();
 
         private Line _cacheLine;
         private readonly Canvas _drawCanvas;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private HomographyDoubleMatrix _homo;
+        private HomographyMatrix<double> _homo;
         private Ellipse _cacheEllipse;
         private int _pointNum;
-
-
 
         public VisualizerViewModel(Canvas draCanvas)
         {
@@ -100,7 +97,7 @@ namespace HomographyVisualizer
             {
                 try
                 {
-                    _homo = DoubleHomographyHelper.FindHomography(_srcPoints, _dstPoints);
+                    _homo = HomographyHelper.FindHomography(_srcPoints, _dstPoints);
                 }
                 catch (Exception e)
                 {
@@ -108,8 +105,8 @@ namespace HomographyVisualizer
                     return;
                 }
 
-                var pointX = _srcPoints.Average(v => v[0]);
-                var pointY = _srcPoints.Average(v => v[1]);
+                var pointX = _srcPoints.Average(v => v.X);
+                var pointY = _srcPoints.Average(v => v.Y);
 
                 Console.WriteLine(pointX);
                 Console.WriteLine(pointY);
@@ -133,8 +130,8 @@ namespace HomographyVisualizer
                 Canvas.SetLeft(srcEllipse, pointX - srcEllipse.Width / 2);
                 Canvas.SetTop(srcEllipse, pointY - srcEllipse.Height / 2);
 
-                (var translateX, var translateY) = _homo.Translate( pointX, pointY);
-
+                var result = _homo.Translate( pointX, pointY);
+                var (translateX, translateY) = (result.X, result.Y);
                 Canvas.SetLeft(dstEllipse, translateX - srcEllipse.Width / 2);
                 Canvas.SetTop(dstEllipse, translateY - srcEllipse.Height / 2);
 
@@ -153,9 +150,9 @@ namespace HomographyVisualizer
                     var newPoint = args.GetPosition(_drawCanvas);
                     Canvas.SetLeft(srcEllipse, newPoint.X - srcEllipse.Width / 2);
                     Canvas.SetTop(srcEllipse, newPoint.Y - srcEllipse.Height / 2);
-                    (var newTranslateX, var newTranslateY) = _homo.Translate(newPoint.X, newPoint.Y);
-                    Canvas.SetLeft(dstEllipse, newTranslateX - srcEllipse.Width / 2);
-                    Canvas.SetTop(dstEllipse, newTranslateY - srcEllipse.Height / 2);
+                    var result2 = _homo.Translate(newPoint.X, newPoint.Y);
+                    Canvas.SetLeft(dstEllipse, result2.X - srcEllipse.Width / 2);
+                    Canvas.SetTop(dstEllipse, result2.Y - srcEllipse.Height / 2);
                 };
 
                 srcEllipse.MouseUp += (sender, args) =>
@@ -186,14 +183,13 @@ namespace HomographyVisualizer
             MouseMove(e, _dstPoints, Brushes.Coral);
         }
 
-        public void MouseDown(MouseButtonEventArgs e, List<DenseVector> pointsList, Brush pointBrush, Brush strokeBrush, DrawingState state)
+        public void MouseDown(MouseButtonEventArgs e, List<Point2<double>> pointsList, Brush pointBrush, Brush strokeBrush, DrawingState state)
         {
             _cacheLine = null;
 
             var point = e.GetPosition(_drawCanvas);
 
-            var v = DenseVector.OfArray(new double[] { point.X, point.Y });
-            pointsList.Add(v);
+            pointsList.Add(new Point2<double>(point.X, point.Y));
 
             var elipse = new Ellipse
             {
@@ -227,10 +223,10 @@ namespace HomographyVisualizer
                 var end = pointsList.Last();
                 var line = new Line
                 {
-                    X1 = start[0],
-                    Y1 = start[1],
-                    X2 = end[0],
-                    Y2 = end[1],
+                    X1 = start.X,
+                    Y1 = start.Y,
+                    X2 = end.X,
+                    Y2 = end.Y,
                     StrokeThickness = 3,
                     Stroke = strokeBrush
                 };
@@ -238,7 +234,7 @@ namespace HomographyVisualizer
             }
         }
 
-        public void MouseMove(MouseEventArgs e, List<DenseVector> pointsList, Brush strokeBrush)
+        public void MouseMove(MouseEventArgs e, List<Point2<double>> pointsList, Brush strokeBrush)
         {
             if (!pointsList.Any()) return;
             if (_cacheLine == null)
@@ -246,10 +242,10 @@ namespace HomographyVisualizer
                 var startPoint = pointsList.Last();
                 _cacheLine = new Line
                 {
-                    X1 = startPoint[0],
-                    Y1 = startPoint[1],
-                    X2 = startPoint[0],
-                    Y2 = startPoint[1],
+                    X1 = startPoint.X,
+                    Y1 = startPoint.Y,
+                    X2 = startPoint.X,
+                    Y2 = startPoint.Y,
                     StrokeThickness = 3,
                     Stroke = strokeBrush,
                 };

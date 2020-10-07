@@ -60,7 +60,7 @@ namespace HomographySharp.Double
         /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <returns>Homography Matrix</returns>
-        public static HomographyDoubleMatrix FindHomography(IReadOnlyList<Vector2<double>> srcPoints, IReadOnlyList<Vector2<double>> dstPoints)
+        public static HomographyDoubleMatrix FindHomography(IReadOnlyList<Point2<double>> srcPoints, IReadOnlyList<Point2<double>> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {

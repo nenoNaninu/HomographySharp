@@ -63,7 +63,7 @@ namespace HomographySharp.Single
         /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
         /// <returns>Homography Matrix</returns>
-        public static HomographySingleMatrix FindHomography(IReadOnlyList<Vector2<float>> srcPoints, IReadOnlyList<Vector2<float>> dstPoints)
+        public static HomographySingleMatrix FindHomography(IReadOnlyList<Point2<float>> srcPoints, IReadOnlyList<Point2<float>> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
             {
