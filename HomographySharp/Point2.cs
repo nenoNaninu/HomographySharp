@@ -25,9 +25,6 @@ namespace HomographySharp
             return obj is Point2<T> other && Equals(other);
         }
 
-        public static bool operator ==(Point2<T> a, Point2<T> b) => a.Equals(b);
-        public static bool operator !=(Point2<T> a, Point2<T> b) => !a.Equals(b);
-
         public override int GetHashCode()
         {
 #if NETSTANDARD2_1
@@ -36,5 +33,8 @@ namespace HomographySharp
             return EqualityComparer<T>.Default.GetHashCode(X) ^ EqualityComparer<T>.Default.GetHashCode(Y);
 #endif
         }
+
+        public static bool operator ==(Point2<T> a, Point2<T> b) => a.Equals(b);
+        public static bool operator !=(Point2<T> a, Point2<T> b) => !a.Equals(b);
     }
 }
