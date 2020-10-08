@@ -13,10 +13,6 @@ using Reactive.Bindings;
 
 namespace HomographyVisualizer
 {
-    /// <summary>
-    /// Rxらいくに書こうとして断念。Rx難しい。。。
-    /// ↑成長したのでRxとすこし友達になった。
-    /// </summary>
     public class VisualizerViewModelReactive : INotifyPropertyChanged
     {
         private Canvas _drawCanvas;

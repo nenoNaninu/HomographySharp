@@ -30,7 +30,7 @@ namespace HomographySharp
 #if NETSTANDARD2_1
             return HashCode.Combine(X, Y);
 #else
-            return EqualityComparer<T>.Default.GetHashCode(X) ^ EqualityComparer<T>.Default.GetHashCode(Y);
+            return X.GetHashCode() ^ Y.GetHashCode();
 #endif
         }
 
