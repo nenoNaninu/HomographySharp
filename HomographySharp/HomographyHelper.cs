@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Numerics;
+using System.Collections.Generic;
 using HomographySharp.Double;
 using HomographySharp.Single;
-#if NETSTANDARD2_1
-using System.Numerics;
-#endif
 
 namespace HomographySharp
 {
@@ -12,10 +10,8 @@ namespace HomographySharp
         public static HomographyMatrix<float> FindHomography(IReadOnlyList<Point2<float>> srcPoints, IReadOnlyList<Point2<float>> dstPoints)
             => SingleHomographyHelper.FindHomography(srcPoints, dstPoints);
 
-#if NETSTANDARD2_1
         public static HomographyMatrix<float> FindHomography(IReadOnlyList<Vector2> srcPoints, IReadOnlyList<Vector2> dstPoints)
             => SingleHomographyHelper.FindHomography(srcPoints, dstPoints);
-#endif
 
         public static HomographyMatrix<double> FindHomography(IReadOnlyList<Point2<double>> srcPoints, IReadOnlyList<Point2<double>> dstPoints)
             => DoubleHomographyHelper.FindHomography(srcPoints, dstPoints);
@@ -26,8 +22,6 @@ namespace HomographySharp
         public static Point2<double> Translate(HomographyMatrix<double> homographyMatrix, double srcX, double srcY)
             => homographyMatrix.Translate(srcX, srcY);
 
-#if NETSTANDARD2_1
         public static Vector2 AsVector2(this Point2<float> source) => new Vector2(source.X, source.Y);
-#endif
     }
 }

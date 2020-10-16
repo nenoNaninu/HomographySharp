@@ -26,10 +26,10 @@ namespace HomographySharp
 
         public override int GetHashCode()
         {
-#if NETSTANDARD2_1
-            return HashCode.Combine(X, Y);
-#else
+#if NETSTANDARD2_0
             return X.GetHashCode() ^ Y.GetHashCode();
+#else
+            return HashCode.Combine(X, Y);
 #endif
         }
 

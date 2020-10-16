@@ -68,15 +68,14 @@ namespace Tests
             var srcList = new List<Point2<double>>(4);
             var dstList = new List<Point2<double>>(4);
 
-            srcList.Add(new Point2<double> { X = 10, Y = 10 });
-            srcList.Add(new Point2<double> { X = 100, Y = 10 });
-            srcList.Add(new Point2<double> { X = 100, Y = 150 });
-            srcList.Add(new Point2<double> { X = 10, Y = 150 });
-
-            dstList.Add(new Point2<double> { X = 11, Y = 11 });
-            dstList.Add(new Point2<double> { X = 500, Y = 11 });
-            dstList.Add(new Point2<double> { X = 500, Y = 200 });
-            dstList.Add(new Point2<double> { X = 11, Y = 200 });
+            srcList.Add(new Point2<double>(10, 10));
+            srcList.Add(new Point2<double>(100, 10));
+            srcList.Add(new Point2<double>(100, 150));
+            srcList.Add(new Point2<double>(10, 150));
+            dstList.Add(new Point2<double>(11, 11));
+            dstList.Add(new Point2<double>(500, 11));
+            dstList.Add(new Point2<double>(500, 200));
+            dstList.Add(new Point2<double>(11, 200));
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
@@ -121,15 +120,14 @@ namespace Tests
             var srcList = new List<Point2<double>>(4);
             var dstList = new List<Point2<double>>(4);
 
-            srcList.Add(new Point2<double> { X = -152, Y = 394 });
-            srcList.Add(new Point2<double> { X = 218, Y = 521 });
-            srcList.Add(new Point2<double> { X = 223, Y = -331 });
-            srcList.Add(new Point2<double> { X = -163, Y = -219 });
-
-            dstList.Add(new Point2<double> { X = -666, Y = 431 });
-            dstList.Add(new Point2<double> { X = 500, Y = 300 });
-            dstList.Add(new Point2<double> { X = 480, Y = -308 });
-            dstList.Add(new Point2<double> { X = -580, Y = -280 });
+            srcList.Add(new Point2<double>(-152, 394));
+            srcList.Add(new Point2<double>(218, 521));
+            srcList.Add(new Point2<double>(223, -331));
+            srcList.Add(new Point2<double>(-163, -219));
+            dstList.Add(new Point2<double>(-666, 431));
+            dstList.Add(new Point2<double>(500, 300));
+            dstList.Add(new Point2<double>(480, -308));
+            dstList.Add(new Point2<double>(-580, -280));
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
@@ -164,15 +162,14 @@ namespace Tests
             var srcList = new List<Point2<double>>(4);
             var dstList = new List<Point2<double>>(4);
 
-            srcList.Add(new Point2<double> { X = -152, Y = 394 });
-            srcList.Add(new Point2<double> { X = 218, Y = 521 });
-            srcList.Add(new Point2<double> { X = 223, Y = -331 });
-            srcList.Add(new Point2<double> { X = -163, Y = -219 });
-
-            dstList.Add(new Point2<double> { X = -666, Y = 431 });
-            dstList.Add(new Point2<double> { X = 500, Y = 300 });
-            dstList.Add(new Point2<double> { X = 480, Y = -308 });
-            dstList.Add(new Point2<double> { X = -580, Y = -280 });
+            srcList.Add(new Point2<double>(-152, 394));
+            srcList.Add(new Point2<double>(218, 521));
+            srcList.Add(new Point2<double>(223, -331));
+            srcList.Add(new Point2<double>(-163, -219));
+            dstList.Add(new Point2<double>(-666, 431));
+            dstList.Add(new Point2<double>(500, 300));
+            dstList.Add(new Point2<double>(480, -308));
+            dstList.Add(new Point2<double>(-580, -280));
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();

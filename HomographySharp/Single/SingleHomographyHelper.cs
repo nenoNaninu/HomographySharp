@@ -1,10 +1,8 @@
 ﻿using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using MathNet.Numerics.LinearAlgebra.Single;
-#if NETSTANDARD2_1
-using System.Numerics;
-#endif
 
 namespace HomographySharp.Single
 {
@@ -118,7 +116,6 @@ namespace HomographySharp.Single
             return new HomographySingleMatrix(elements);
         }
 
-#if NETSTANDARD2_1
         /// <summary>
         /// </summary>
         /// <param name="srcPoints">need 4 or more points before translate </param>
@@ -180,6 +177,5 @@ namespace HomographySharp.Single
 
             return new HomographySingleMatrix(elements);
         }
-#endif
     }
 }
