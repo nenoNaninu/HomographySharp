@@ -1,5 +1,5 @@
 # HomographySharp
-HomographySharp is a (C#/.NET Standard2.0) class library for finding and using homography matrics.
+HomographySharp is a (C#/.NET Standard2.0,2.1) class library for finding and using homography matrics.
 
 # Install
 NuGet: [HomographySharp](https://www.nuget.org/packages/HomographySharp/)
@@ -13,49 +13,51 @@ PM > Install-Package HomographySharp
 dotnet add package HomographySharp
 ```
 
-# How to use
+# Usage
 ```c#
-var srcList = new List<PointF>(4);
-var dstList = new List<PointF>(4);
+//System.Numerics.Vector2
+var srcList = new List<Vector2>(4);
+var dstList = new List<Vector2>(4);
 
-srcList.Add(new PointF { X = -152, Y = 394 });
-srcList.Add(new PointF { X = 218, Y = 521 });
-srcList.Add(new PointF { X = 223, Y = -331 });
-srcList.Add(new PointF { X = -163, Y = -219 });
+srcList.Add(new Vector2(-152, 394));
+srcList.Add(new Vector2(218, 521));
+srcList.Add(new Vector2(223, -331));
+srcList.Add(new Vector2(-163, -219));
 
-dstList.Add(new PointF { X = -666, Y = 431 });
-dstList.Add(new PointF { X = 500, Y = 300 });
-dstList.Add(new PointF { X = 480, Y = -308 });
-dstList.Add(new PointF { X = -580, Y = -280 });
+dstList.Add(new Vector2(-666, 431));
+dstList.Add(new Vector2(500, 300));
+dstList.Add(new Vector2(480, -308));
+dstList.Add(new Vector2(-580, -280));
 
 var homo = HomographyHelper.FindHomography(srcList, dstList);
 
-(double x, double y) = homo.Translate(-152, 394);
-Assert.IsTrue(Math.Abs(x - -666) < 0.001);
-Assert.IsTrue(Math.Abs(y - 431) < 0.001);
-            
+Point2<float> result = homo.Translate(-152, 394);
+
+Assert.IsTrue(Math.Abs(result.X - -666) < 0.001); //true
+Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);  //true
 ```
 or
 ```c#
-var srcList = new List<DenseVector>(4);
-var dstList = new List<DenseVector>(4);
+//HomographySharp.Point2<T>
+var srcList = new List<Point2<double>>(4); // or Point2<float>
+var dstList = new List<Point2<double>>(4);
 
-srcList.Add(DenseVector.OfArray(new double[] { 10, 10 }));
-srcList.Add(DenseVector.OfArray(new double[] { 100, 10 }));
-srcList.Add(DenseVector.OfArray(new double[] { 100, 150 }));
-srcList.Add(DenseVector.OfArray(new double[] { 10, 150 }));
+srcList.Add(new Point2<double>(10, 10));
+srcList.Add(new Point2<double>(100, 10));
+srcList.Add(new Point2<double>(100, 150));
+srcList.Add(new Point2<double>(10, 150));
 
-dstList.Add(HomographyHelper.CreateVector2(11, 11));
-dstList.Add(HomographyHelper.CreateVector2(500, 11));
-dstList.Add(HomographyHelper.CreateVector2(500, 200));
-dstList.Add(HomographyHelper.CreateVector2(11, 200));
+dstList.Add(new Point2<double>(11, 11));
+dstList.Add(new Point2<double>(500, 11));
+dstList.Add(new Point2<double>(500, 200));
+dstList.Add(new Point2<double>(11, 200));
 
-var homo = HomographyHelper.FindHomography(srcList, dstList);// <-
+var homo = HomographyHelper.FindHomography(srcList, dstList);
 
-(double dstX, double dstY) = homo.Translate(100, 10);// <-
+Point2<double> result = homo.Translate(100, 10);
 
-Assert.IsTrue(Math.Abs(dstX - 500) < 0.001);//true
-Assert.IsTrue(Math.Abs(dstY - 11) < 0.001); //true
+Assert.IsTrue(Math.Abs(result.X - 500) < 0.001); //true
+Assert.IsTrue(Math.Abs(result.Y - 11) < 0.001);  //true
 ```
 
 # Visualize App
@@ -63,7 +65,7 @@ If you want to see how points are transformed by homography matrix, use this app
 https://github.com/nenoNaninu/HomographySharp/tree/master/HomographyVisualizer
 [![youtube](http://img.youtube.com/vi/BNACz1SPbj8/0.jpg)](https://youtu.be/BNACz1SPbj8)
 
-# External Library 
-- [Math.NET Numerics](https://github.com/mathnet/mathnet-numerics)  
+# Dependent Library 
+- [Math.NET Numerics](https://github.com/mathnet/mathnet-numerics)
   - Copyright (c) 2002-2018 Math.NET  
   - Released under the [Math.NET Numerics License(MIT/X11)](https://github.com/mathnet/mathnet-numerics/blob/master/LICENSE.md)
