@@ -9,6 +9,8 @@ namespace HomographySharp
 
         public abstract IReadOnlyList<T> Elements { get; }
 
+        public abstract ReadOnlySpan<T> ElementsAsSpan();
+
         internal HomographyMatrix()
         {
         }

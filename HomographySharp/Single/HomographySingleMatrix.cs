@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace HomographySharp.Single
@@ -12,6 +13,8 @@ namespace HomographySharp.Single
         }
 
         public override IReadOnlyList<float> Elements => _elements;
+
+        public override ReadOnlySpan<float> ElementsAsSpan() => _elements;
 
         public override Point2<float> Translate(float srcX, float srcY)
         {
