@@ -63,7 +63,9 @@ Assert.IsTrue(Math.Abs(result.Y - 11) < 0.001);  //true
 # Visualize App
 If you want to see how points are transformed by homography matrix, use this app.  
 https://github.com/nenoNaninu/HomographySharp/tree/master/HomographyVisualizer
-[![youtube](http://img.youtube.com/vi/BNACz1SPbj8/0.jpg)](https://youtu.be/BNACz1SPbj8)
+
+![https://youtu.be/BNACz1SPbj8](demo.gif)
+
 
 # Dependent Library 
 - [Math.NET Numerics](https://github.com/mathnet/mathnet-numerics)
