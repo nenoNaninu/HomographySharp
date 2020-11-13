@@ -126,7 +126,6 @@ namespace HomographyVisualizer
 
         public void CreateDrawingStream(List<Point2<double>> pointsList, List<Line> lineList, Brush pointBrush, Brush strokeBrush)
         {
-
             _mouseDown.Take(_pointNum)
                 .Subscribe(x =>
                 {
