@@ -3,7 +3,7 @@
 namespace HomographySharp
 {
     public readonly struct Point2<T> : IEquatable<Point2<T>>
-        where T : struct, IEquatable<T>
+        where T : unmanaged, IEquatable<T>
     {
         public readonly T X;
         public readonly T Y;

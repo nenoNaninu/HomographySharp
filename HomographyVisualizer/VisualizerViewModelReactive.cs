@@ -42,8 +42,8 @@ namespace HomographyVisualizer
         private readonly IObservable<MouseButtonEventArgs> _mouseDown;
         private readonly IObservable<MouseEventArgs> _mouseMove;
 
-        List<Line> _srcLines = new List<Line>(4);
-        List<Line> _dstLines = new List<Line>(4);
+        private List<Line> _srcLines = new List<Line>(4);
+        private List<Line> _dstLines = new List<Line>(4);
 
         public VisualizerViewModelReactive(Canvas drawCanvas)
         {
