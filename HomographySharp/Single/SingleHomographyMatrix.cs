@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace HomographySharp.Single
 {
-    internal class HomographySingleMatrix : HomographyMatrix<float>
+    internal class SingleHomographyMatrix : HomographyMatrix<float>
     {
         private readonly float[] _elements;
 
-        internal HomographySingleMatrix(float[] elements)
+        internal SingleHomographyMatrix(float[] elements)
         {
             _elements = elements;
         }
