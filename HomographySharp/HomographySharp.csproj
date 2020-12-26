@@ -10,7 +10,6 @@
     <Title>HomographySharp</Title>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

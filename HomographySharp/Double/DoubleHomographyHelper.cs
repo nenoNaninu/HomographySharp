@@ -47,7 +47,6 @@ namespace HomographySharp.Double
         /// <param name="dstPoints">need 4 or more points after translate</param>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
-        /// <returns>Homography Matrix</returns>
         public static DoubleHomographyMatrix FindHomography(IReadOnlyList<Point2<double>> srcPoints, IReadOnlyList<Point2<double>> dstPoints)
         {
             if (srcPoints.Count < 4 || dstPoints.Count < 4)
@@ -107,7 +106,6 @@ namespace HomographySharp.Double
         /// <param name="dstPoints">need 4 or more points after translate</param>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must require 4 or more points</exception>
         /// <exception cref="ArgumentException">srcPoints and dstPoints must same num</exception>
-        /// <returns>Homography Matrix</returns>
         public static DoubleHomographyMatrix FindHomography(ReadOnlySpan<Point2<double>> srcPoints, ReadOnlySpan<Point2<double>> dstPoints)
         {
             if (srcPoints.Length < 4 || dstPoints.Length < 4)
