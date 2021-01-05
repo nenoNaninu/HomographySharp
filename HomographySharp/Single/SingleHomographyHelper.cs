@@ -9,7 +9,7 @@ namespace HomographySharp.Single
     internal static class SingleHomographyHelper
     {
         /// <summary>
-        /// Setting of coefficient matrix for dstX.
+        /// Set the coefficient matrix for dstX.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void SetCoefficientMatrixParametersForDstX(DenseMatrix matrix, float srcX, float srcY, float dstX, int rowIndex)
@@ -27,7 +27,7 @@ namespace HomographySharp.Single
         }
 
         /// <summary>
-        /// Setting of coefficient matrix for dstY.
+        /// Set the coefficient matrix for dstY.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void SetCoefficientMatrixParametersForDstY(DenseMatrix matrix, float srcX, float srcY, float dstY, int rowIndex)

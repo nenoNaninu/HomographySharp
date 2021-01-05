@@ -8,7 +8,7 @@ namespace HomographySharp.Double
     internal static class DoubleHomographyHelper
     {
         /// <summary>
-        /// Setting of coefficient matrix for dstX.
+        /// Set the coefficient matrix for dstX.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void SetCoefficientMatrixParametersForDstX(DenseMatrix matrix, double srcX, double srcY, double dstX, int rowIndex)
@@ -26,7 +26,7 @@ namespace HomographySharp.Double
         }
 
         /// <summary>
-        /// Setting of coefficient matrix for dstY.
+        /// Set the coefficient matrix for dstY.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void SetCoefficientMatrixParametersForDstY(DenseMatrix matrix, double srcX, double srcY, double dstY, int rowIndex)
