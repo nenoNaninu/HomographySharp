@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MathNet.Numerics" Version="4.12.*" />
+    <PackageReference Include="MathNet.Numerics" Version="4.15.*" />
   </ItemGroup>
 
 </Project>
