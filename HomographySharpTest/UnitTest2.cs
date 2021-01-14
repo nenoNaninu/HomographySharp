@@ -59,6 +59,52 @@ namespace Tests
             Console.WriteLine(homo);
         }
 
+        [Test]
+        public void FindHomographyTest01()
+        {
+            var srcList = new List<Point2<float>>(4);
+            var dstList = new List<Point2<float>>(4);
+
+            srcList.Add(new Point2<float>(-152, 394));
+            srcList.Add(new Point2<float>(218, 521));
+            srcList.Add(new Point2<float>(223, -331));
+            srcList.Add(new Point2<float>(-163, -219));
+
+            dstList.Add(new Point2<float>(-666, 431));
+            dstList.Add(new Point2<float>(500, 300));
+            dstList.Add(new Point2<float>(480, -308));
+            dstList.Add(new Point2<float>(-580, -280));
+
+            var srcArray = srcList.ToArray();
+            var dstArray = dstList.ToArray();
+
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+            
+            var homo = HomographyHelper.FindHomography(srcArray, dstArray);
+            Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
+
+            {
+                var result = homo.Translate(-152, 394);
+                Assert.IsTrue(Math.Abs(result.X - -666) < 0.001);
+                Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);
+            }
+
+            {
+                var result = homo.Translate(218, 521);
+                Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
+                Assert.IsTrue(Math.Abs(result.Y - 300) < 0.001);
+            }
+
+            {
+                var result = homo.Translate(223, -331);
+                Assert.IsTrue(Math.Abs(result.X - 480) < 0.001);
+                Assert.IsTrue(Math.Abs(result.Y - -308) < 0.001);
+            }
+
+            Console.WriteLine(homo);
+        }
+
 
         [Test]
         public void FindHomographyTest3()

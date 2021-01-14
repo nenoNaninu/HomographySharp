@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace HomographySharp.Single
 {
-    internal class HomographySingleMatrix : HomographyMatrix<float>
+    internal class SingleHomographyMatrix : HomographyMatrix<float>
     {
         private readonly float[] _elements;
 
-        internal HomographySingleMatrix(float[] elements)
+        internal SingleHomographyMatrix(float[] elements)
         {
             _elements = elements;
         }
@@ -16,6 +17,9 @@ namespace HomographySharp.Single
 
         public override ReadOnlySpan<float> ElementsAsSpan() => _elements;
 
+#if NET5_0 || NETCOREAPP3_1
+        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#endif
         public override Point2<float> Translate(float srcX, float srcY)
         {
             var dst1 = _elements[0] * srcX + _elements[1] * srcY + _elements[2];

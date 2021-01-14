@@ -10,7 +10,6 @@
     <Title>HomographySharp</Title>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MathNet.Numerics" Version="4.12.*" />
+    <PackageReference Include="MathNet.Numerics" Version="4.15.*" />
   </ItemGroup>
 
 </Project>
