@@ -10,6 +10,9 @@
     <Title>HomographySharp</Title>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Homography</PackageTags>
+    <Copyright>(c) nenoNaninu</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
