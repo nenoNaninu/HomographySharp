@@ -1,5 +1,5 @@
 # HomographySharp
-HomographySharp is a (C#/.NET Standard2.0,2.1) class library for finding and using homography matrics.
+HomographySharp is a (C#/.NET Standard2.0 and .NET 5) class library for finding and using homography matrics.
 
 # Install
 NuGet: [HomographySharp](https://www.nuget.org/packages/HomographySharp/)
