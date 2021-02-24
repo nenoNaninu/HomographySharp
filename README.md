@@ -20,7 +20,7 @@ var srcList = new List<Vector2>(4);
 var dstList = new List<Vector2>(4);
 
 srcList.Add(new Vector2(-152, 394));
-srcList.Add(new Vector2(218, 521));
+srcList.Add(new Vector2(218, 521)); 
 srcList.Add(new Vector2(223, -331));
 srcList.Add(new Vector2(-163, -219));
 
@@ -29,7 +29,7 @@ dstList.Add(new Vector2(500, 300));
 dstList.Add(new Vector2(480, -308));
 dstList.Add(new Vector2(-580, -280));
 
-// args type: T[], ReadOnlySpan, IReadOnlyList
+// args type: ReadOnlySpan, IReadOnlyList, T[]
 HomographyMatrix<float> homo = HomographyHelper.FindHomography(srcList, dstList);
 
 Point2<float> result = homo.Translate(-152, 394);
@@ -45,8 +45,8 @@ Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);  //true
 or
 ```c#
 //HomographySharp.Point2<T>
-var srcArray = new Point2<double>>[4]; // or Point2<float>
-var dstArray = new Point2<double>>[4];
+var srcArray = new Point2<double>[4]; // or Point2<float>
+var dstArray = new Point2<double>[4];
 
 srcArray[0] = new Point2<double>(10, 10);
 srcArray[1] = new Point2<double>(100, 10);
