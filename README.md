@@ -58,7 +58,7 @@ dstArray[1] = new Point2<double>(500, 11);
 dstArray[2] = new Point2<double>(500, 200);
 dstArray[3] = new Point2<double>(11, 200);
 
-var homo = HomographyHelper.FindHomography(srcList.AsSpan(), dstList.AsSpan());
+HomographyMatrix<double> homo = HomographyHelper.FindHomography(srcList.AsSpan(), dstList.AsSpan());
 
 Point2<double> result = homo.Translate(100, 10);
 
