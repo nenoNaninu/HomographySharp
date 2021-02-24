@@ -34,13 +34,5 @@ namespace HomographySharp
 
         public static HomographyMatrix<double> FindHomography(Point2<double>[] srcPoints, Point2<double>[] dstPoints)
             => DoubleHomographyHelper.FindHomography(new ReadOnlySpan<Point2<double>>(srcPoints), new ReadOnlySpan<Point2<double>>(dstPoints));
-
-        public static Point2<float> Translate(HomographyMatrix<float> homographyMatrix, float srcX, float srcY)
-            => homographyMatrix.Translate(srcX, srcY);
-
-        public static Point2<double> Translate(HomographyMatrix<double> homographyMatrix, double srcX, double srcY)
-            => homographyMatrix.Translate(srcX, srcY);
-
-        public static Vector2 AsVector2(this Point2<float> source) => new Vector2(source.X, source.Y);
     }
 }

@@ -15,7 +15,7 @@ namespace HomographyVisualizer
 {
     public class VisualizerViewModelReactive : INotifyPropertyChanged
     {
-        private Canvas _drawCanvas;
+        private readonly Canvas _drawCanvas;
 
         /// <summary>
         /// なにか汚されていたらtrue,まっさらだとfalse
@@ -42,8 +42,8 @@ namespace HomographyVisualizer
         private readonly IObservable<MouseButtonEventArgs> _mouseDown;
         private readonly IObservable<MouseEventArgs> _mouseMove;
 
-        private List<Line> _srcLines = new List<Line>(4);
-        private List<Line> _dstLines = new List<Line>(4);
+        private readonly List<Line> _srcLines = new List<Line>(4);
+        private readonly List<Line> _dstLines = new List<Line>(4);
 
         public VisualizerViewModelReactive(Canvas drawCanvas)
         {
@@ -92,10 +92,7 @@ namespace HomographyVisualizer
                 CreateDrawingStream(_dstPoints, _dstLines, Brushes.Crimson, Brushes.Coral);
             });
 
-            CreateTranslatePointCommand.Subscribe(() =>
-            {
-                CreateTranslatePoint();
-            });
+            CreateTranslatePointCommand.Subscribe(this.CreateTranslatePoint);
 
             ClearCommand.Subscribe(() =>
             {

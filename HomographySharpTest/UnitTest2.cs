@@ -112,18 +112,18 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var srcList = new List<Point2<float>>(4);
-            var dstList = new List<Point2<float>>(4);
+            var srcList = new Point2<float>[4];
+            var dstList = new Point2<float>[4];
 
-            srcList.Add(new Point2<float> ( 10, 10));
-            srcList.Add(new Point2<float> ( 100, 10));
-            srcList.Add(new Point2<float> ( 100, 150));
-            srcList.Add(new Point2<float> ( 10, 150));
+            srcList[0] = new Point2<float> ( 10, 10);
+            srcList[1] = new Point2<float> ( 100, 10);
+            srcList[2] = new Point2<float> ( 100, 150);
+            srcList[3] = new Point2<float> ( 10, 150);
 
-            dstList.Add(new Point2<float> ( 11, 11));
-            dstList.Add(new Point2<float> ( 500, 11));
-            dstList.Add(new Point2<float> ( 500, 200));
-            dstList.Add(new Point2<float> ( 11, 200));
+            dstList[0] = new Point2<float> ( 11, 11);
+            dstList[1] = new Point2<float> ( 500, 11);
+            dstList[2] = new Point2<float> ( 500, 200);
+            dstList[3] = new Point2<float> ( 11, 200);
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
             stopWatch.Stop();
