@@ -17,7 +17,7 @@ namespace HomographySharp.Single
 
         public override ReadOnlySpan<float> ElementsAsSpan() => _elements;
 
-#if NET5_0 || NETCOREAPP3_1
+#if NETCOREAPP
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
 #endif
         public override Point2<float> Translate(float srcX, float srcY)

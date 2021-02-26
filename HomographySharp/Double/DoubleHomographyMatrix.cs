@@ -17,7 +17,7 @@ namespace HomographySharp.Double
 
         public override ReadOnlySpan<double> ElementsAsSpan() => _elements;
 
-#if NET5_0 || NETCOREAPP3_1
+#if NETCOREAPP
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
 #endif
         public override Point2<double> Translate(double srcX, double srcY)

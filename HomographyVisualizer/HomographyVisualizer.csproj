@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="ReactiveProperty" Version="7.7.*" />
-    <PackageReference Include="HomographySharp" Version="2.0.1" />
+    <!--<PackageReference Include="HomographySharp" Version="2.0.1" />-->
   </ItemGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\HomographySharp\HomographySharp.csproj" />-->
+    <ProjectReference Include="..\HomographySharp\HomographySharp.csproj" />
   </ItemGroup>
 
 </Project>
