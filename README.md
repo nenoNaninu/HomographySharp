@@ -34,13 +34,15 @@ HomographyMatrix<float> homo = HomographyHelper.FindHomography(srcList, dstList)
 
 Point2<float> result = homo.Translate(-152, 394);
 
-// System.Drawing
-PointF pointf = result.AsPointF();
-// System.Numerics
-Vector2 vector2 = result.AsVector2();
-
 Assert.IsTrue(Math.Abs(result.X - -666) < 0.001); //true
 Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);  //true
+
+// System.Drawing.PointF
+PointF pointf = result.ToPointF();
+// System.Numerics.Vector2
+Vector2 vector2 = result.ToVector2();
+// MathNet.Numerics.LinearAlgebra.Matrix<T>
+Matrix<float> mat = homo.ToMathNetMatrix();
 ```
 or
 ```c#

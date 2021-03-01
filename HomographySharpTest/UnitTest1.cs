@@ -57,6 +57,7 @@ namespace Tests
             }
 
             Console.WriteLine(homo);
+            Console.WriteLine(homo.ToMathNetMatrix());
         }
 
         [Test]
