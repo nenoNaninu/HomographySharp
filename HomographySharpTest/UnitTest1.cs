@@ -66,9 +66,6 @@ namespace Tests
                     Assert.IsTrue(Math.Abs(mathNetMat[i, j] - homo[i, j]) < 0.001);
                 }
             }
-
-            //Console.WriteLine(homo[4, 4]);
-            //Console.WriteLine(homo.ToMathNetMatrix()[4, 4]);
         }
 
         [Test]
