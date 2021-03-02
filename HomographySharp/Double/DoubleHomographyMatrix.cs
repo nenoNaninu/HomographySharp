@@ -26,6 +26,23 @@ namespace HomographySharp.Double
         /// <inheritdoc/>
         public override ReadOnlySpan<double> ElementsAsSpan() => _elements;
 
+        public override int RowCount => 3;
+        public override int ColumnCount => 3;
+
+        public override double this[int row, int column]
+        {
+            get
+            {
+                if (0 <= row && row < 3 && 0 <= column && column < 3)
+                {
+                    return _elements[3 * row + column];
+                }
+
+                throw new ArgumentOutOfRangeException($"{nameof(row)} and {nameof(column)} must be greater than or equal to 0 and less than 3. The current arguments are {nameof(row)} = {row} and {nameof(column)} = {column}.");
+            }
+        }
+
+
 #if NETCOREAPP
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
 #endif
@@ -37,7 +54,7 @@ namespace HomographySharp.Double
 
             return new Point2<double>(dst1 / dst3, dst2 / dst3);
         }
-        
+
         public override Matrix<double> ToMathNetMatrix()
         {
             var mat = new DenseMatrix(3, 3);
@@ -72,8 +89,8 @@ namespace HomographySharp.Double
                 for (int i = 0; i < 3; i++)
                 {
                     var length1 = stringBuffer[i].Length;
-                    var length2 = stringBuffer[3 + i].Length;
-                    var length3 = stringBuffer[6 + i].Length;
+                    var length2 = stringBuffer[i + 3].Length;
+                    var length3 = stringBuffer[i + 6].Length;
                     paddingBuffer[i] = Math.Max(Math.Max(length1, length2), length3);
                 }
 

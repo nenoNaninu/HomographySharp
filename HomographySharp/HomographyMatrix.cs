@@ -18,6 +18,12 @@ namespace HomographySharp
         /// </summary>
         public abstract ReadOnlySpan<T> ElementsAsSpan();
 
+        public abstract T this[int row, int column] { get; }
+        
+        public abstract int RowCount { get; }
+        
+        public abstract int ColumnCount { get; }
+
         public abstract Matrix<T> ToMathNetMatrix();
 
         internal HomographyMatrix()

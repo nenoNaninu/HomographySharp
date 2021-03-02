@@ -56,8 +56,19 @@ namespace Tests
                 Assert.IsTrue(Math.Abs(result.Y - -308) < 0.001);
             }
 
-            Console.WriteLine(homo);
-            Console.WriteLine(homo.ToMathNetMatrix());
+
+            var mathNetMat = homo.ToMathNetMatrix();
+            
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    Assert.IsTrue(Math.Abs(mathNetMat[i, j] - homo[i, j]) < 0.001);
+                }
+            }
+
+            //Console.WriteLine(homo[4, 4]);
+            //Console.WriteLine(homo.ToMathNetMatrix()[4, 4]);
         }
 
         [Test]
