@@ -14,7 +14,7 @@ dotnet add package HomographySharp
 ```
 
 # Usage
-```c#
+```csharp
 //System.Numerics.Vector2
 var srcList = new List<Vector2>(4);
 var dstList = new List<Vector2>(4);
@@ -45,7 +45,7 @@ Vector2 vector2 = result.ToVector2();
 Matrix<float> mat = homo.ToMathNetMatrix();
 ```
 or
-```c#
+```csharp
 //HomographySharp.Point2<T>
 var srcArray = new Point2<double>[4]; // or Point2<float>
 var dstArray = new Point2<double>[4];
