@@ -27,6 +27,7 @@ namespace HomographySharp.Single
         public override ReadOnlySpan<float> ElementsAsSpan() => _elements;
 
         public override int RowCount => 3;
+        
         public override int ColumnCount => 3;
 
         public override float this[int row, int column]

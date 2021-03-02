@@ -27,6 +27,7 @@ namespace HomographySharp.Double
         public override ReadOnlySpan<double> ElementsAsSpan() => _elements;
 
         public override int RowCount => 3;
+        
         public override int ColumnCount => 3;
 
         public override double this[int row, int column]
