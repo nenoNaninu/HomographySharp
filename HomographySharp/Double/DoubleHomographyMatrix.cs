@@ -27,7 +27,7 @@ namespace HomographySharp.Double
         public override ReadOnlySpan<double> ElementsAsSpan() => _elements;
 
         public override int RowCount => 3;
-        
+
         public override int ColumnCount => 3;
 
         public override double this[int row, int column]
@@ -36,13 +36,12 @@ namespace HomographySharp.Double
             {
                 if (0 <= row && row < 3 && 0 <= column && column < 3)
                 {
-                    return _elements[3 * row + column];
+                    return _elements[row * 3 + column];
                 }
 
                 throw new ArgumentOutOfRangeException($"{nameof(row)} and {nameof(column)} must be greater than or equal to 0 and less than 3. The current arguments are {nameof(row)} = {row} and {nameof(column)} = {column}.");
             }
         }
-
 
 #if NETCOREAPP
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]

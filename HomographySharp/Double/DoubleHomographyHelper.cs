@@ -86,15 +86,15 @@ namespace HomographySharp.Double
             var parameterVec = inverseA * dstVec;
 
             var elements = new double[9];
-            
+
             elements[0] = parameterVec[0];
             elements[1] = parameterVec[1];
             elements[2] = parameterVec[2];
-            
+
             elements[3] = parameterVec[3];
             elements[4] = parameterVec[4];
             elements[5] = parameterVec[5];
-            
+
             elements[6] = parameterVec[6];
             elements[7] = parameterVec[7];
             elements[8] = 1;

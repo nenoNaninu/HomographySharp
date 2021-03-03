@@ -27,7 +27,7 @@ namespace HomographySharp.Single
         public override ReadOnlySpan<float> ElementsAsSpan() => _elements;
 
         public override int RowCount => 3;
-        
+
         public override int ColumnCount => 3;
 
         public override float this[int row, int column]
@@ -36,7 +36,7 @@ namespace HomographySharp.Single
             {
                 if (0 <= row && row < 3 && 0 <= column && column < 3)
                 {
-                    return _elements[3 * row + column];
+                    return _elements[row * 3 + column];
                 }
 
                 throw new ArgumentOutOfRangeException($"{nameof(row)} and {nameof(column)} must be greater than or equal to 0 and less than 3. The current arguments are {nameof(row)} = {row} and {nameof(column)} = {column}.");
@@ -54,7 +54,7 @@ namespace HomographySharp.Single
 
             return new Point2<float>(dst1 / dst3, dst2 / dst3);
         }
-        
+
         public override Matrix<float> ToMathNetMatrix()
         {
             var mat = new DenseMatrix(3, 3);
