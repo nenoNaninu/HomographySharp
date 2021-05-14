@@ -184,7 +184,7 @@ namespace HomographyVisualizer
         {
             try
             {
-                _homo = HomographyHelper.FindHomography(_srcPoints, _dstPoints);
+                _homo = HomographyHelper.Find(_srcPoints, _dstPoints);
             }
             catch (Exception e)
             {

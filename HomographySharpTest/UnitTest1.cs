@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using HomographySharp;
 using NUnit.Framework;
-using System.Text.Json;
 
 namespace Tests
 {
@@ -36,7 +35,7 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = HomographyHelper.Find(srcList, dstList);
 
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
@@ -88,7 +87,7 @@ namespace Tests
             dstList.Add(new Point2<double>(500, 200));
             dstList.Add(new Point2<double>(11, 200));
 
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = HomographyHelper.Find(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine($"=====test3 stop{stopWatch.ElapsedMilliseconds}=====");
 
@@ -140,7 +139,7 @@ namespace Tests
             dstList.Add(new Point2<double>(480, -308));
             dstList.Add(new Point2<double>(-580, -280));
 
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = HomographyHelper.Find(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
@@ -182,7 +181,7 @@ namespace Tests
             dstList.Add(new Point2<double>(480, -308));
             dstList.Add(new Point2<double>(-580, -280));
 
-            var homo = HomographyHelper.FindHomography(srcList, dstList);
+            var homo = HomographyHelper.Find(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine("setup!!!!!!!");
             //Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
