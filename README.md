@@ -14,7 +14,7 @@ dotnet add package HomographySharp
 ```
 
 # Usage
-## Find homography matrix
+## Find homography matrix.
 ```csharp
 //System.Numerics.Vector2
 var srcList = new List<Vector2>(4);
