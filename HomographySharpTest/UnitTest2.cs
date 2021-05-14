@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using HomographySharp;
 
 namespace Tests
@@ -36,6 +37,26 @@ namespace Tests
             stopWatch.Start();
 
             var homo = HomographyHelper.FindHomography(srcList, dstList);
+
+            var json = JsonSerializer.Serialize(homo);
+            try
+            {
+                var homo2 = JsonSerializer.Deserialize<HomographyMatrix<float>>(json);
+
+                Assert.IsTrue(homo.Elements.Count == homo2?.Elements.Count);
+
+                for (int i = 0; i < homo.Elements.Count; i++)
+                {
+                    Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
             {

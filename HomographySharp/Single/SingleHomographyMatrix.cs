@@ -14,7 +14,7 @@ namespace HomographySharp.Single
         /// Row-major order
         /// </summary>
         private readonly float[] _elements;
-
+        
         internal SingleHomographyMatrix(float[] elements)
         {
             _elements = elements;
