@@ -28,7 +28,7 @@ namespace HomographySharp
                 return new DoubleHomographyMatrix(elements);
             }
 
-            throw new JsonException("JSON structure is incorrect.");
+            throw new JsonException("JSON structure is not correct.");
         }
 
         private static T[] ReadElements<T>(ref Utf8JsonReader reader)
@@ -50,7 +50,7 @@ namespace HomographySharp
 
                         if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject)
                         {
-                            throw new JsonException("JSON structure is incorrect.");
+                            throw new JsonException("JSON structure is not correct.");
                         }
 
                         return elements;
@@ -58,7 +58,7 @@ namespace HomographySharp
                 }
             }
 
-            throw new JsonException("JSON structure is incorrect.");
+            throw new JsonException("JSON structure is not correct.");
         }
 
         public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
