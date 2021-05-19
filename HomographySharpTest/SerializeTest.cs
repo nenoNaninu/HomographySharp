@@ -33,7 +33,7 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var homo = HomographyHelper.Find(srcList, dstList);
+            var homo = Homography.Find(srcList, dstList);
 
             var json = JsonSerializer.Serialize(homo);
             try
@@ -74,7 +74,7 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var homo = HomographyHelper.Find(srcList, dstList);
+            var homo = Homography.Find(srcList, dstList);
 
             var json = JsonSerializer.Serialize(homo);
             try
@@ -117,7 +117,7 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var homo = HomographyHelper.Find(srcList, dstList);
+            var homo = Homography.Find(srcList, dstList);
 
             var chunk = new Chunk() { Id = Guid.NewGuid(), Homography = homo };
 
@@ -158,7 +158,7 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var homo = HomographyHelper.Find(srcList, dstList);
+            var homo = Homography.Find(srcList, dstList);
 
             var chunk = new Chunk() { Id = Guid.NewGuid(), Homography = homo };
 

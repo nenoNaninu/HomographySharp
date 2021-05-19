@@ -6,7 +6,7 @@ using MathNet.Numerics.LinearAlgebra.Single;
 
 namespace HomographySharp.Single
 {
-    internal static class SingleHomographyHelper
+    internal static class SingleHomography
     {
         /// <summary>
         /// Set the coefficient matrix for dstX.

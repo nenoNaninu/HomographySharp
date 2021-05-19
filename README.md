@@ -31,7 +31,7 @@ dstList.Add(new Vector2(480, -308));
 dstList.Add(new Vector2(-580, -280));
 
 // args type: ReadOnlySpan, IReadOnlyList, T[]
-HomographyMatrix<float> homo = HomographyHelper.Find(srcList, dstList);
+HomographyMatrix<float> homo = Homography.Find(srcList, dstList);
 
 Point2<float> result = homo.Translate(-152, 394);
 
@@ -61,7 +61,7 @@ dstArray[1] = new Point2<double>(500, 11);
 dstArray[2] = new Point2<double>(500, 200);
 dstArray[3] = new Point2<double>(11, 200);
 
-HomographyMatrix<double> homo = HomographyHelper.Find(srcList.AsSpan(), dstList.AsSpan());
+HomographyMatrix<double> homo = Homography.Find(srcList.AsSpan(), dstList.AsSpan());
 
 Point2<double> result = homo.Translate(100, 10);
 
@@ -73,7 +73,7 @@ Assert.IsTrue(Math.Abs(result.Y - 11) < 0.001);  //true
 ```cs
 using System.Text.Json;
 
-var homoMat = HomographyHelper.Find(srcList, dstList);
+var homoMat = Homography.Find(srcList, dstList);
 
 string json = JsonSerializer.Serialize(homo);
 
@@ -84,7 +84,7 @@ var homoMat2 = JsonSerializer.Deserialize<HomographyMatrix<double>>(json);
 ```cs
 HomographyMatrix<double> homoMat = ...;
 
-var newMat = HomographyHelper.Create(homoMat.ElementsAsSpan());
+var newMat = Homography.Create(homoMat.ElementsAsSpan());
 ```
 
 # Visualize App

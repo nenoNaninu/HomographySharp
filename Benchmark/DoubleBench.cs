@@ -28,7 +28,7 @@ namespace BenchmarkSpace
 
             for (int i = 0; i < 100000; i++)
             {
-                var homo = HomographyHelper.Find(srcList, dstList);
+                var homo = Homography.Find(srcList, dstList);
                 var result = homo.Translate(-152, 394);
             }
         }

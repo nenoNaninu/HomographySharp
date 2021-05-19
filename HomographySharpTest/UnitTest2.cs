@@ -36,7 +36,7 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var homo = HomographyHelper.Find(srcList, dstList);
+            var homo = Homography.Find(srcList, dstList);
 
             var json = JsonSerializer.Serialize(homo);
             try
@@ -102,7 +102,7 @@ namespace Tests
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var homo = HomographyHelper.Find(srcArray, dstArray);
+            var homo = Homography.Find(srcArray, dstArray);
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
             {
@@ -146,7 +146,7 @@ namespace Tests
             dstList[2] = new Point2<float>(500, 200);
             dstList[3] = new Point2<float>(11, 200);
 
-            var homo = HomographyHelper.Find(srcList, dstList);
+            var homo = Homography.Find(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine($"=====test3 stop{stopWatch.ElapsedMilliseconds}=====");
 
@@ -199,7 +199,7 @@ namespace Tests
             dstList.Add(new Point2<float>(480, -308));
             dstList.Add(new Point2<float>(-580, -280));
 
-            var homo = HomographyHelper.Find(srcList, dstList);
+            var homo = Homography.Find(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");
 
@@ -242,7 +242,7 @@ namespace Tests
             dstList.Add(new Point2<float>(480, -308));
             dstList.Add(new Point2<float>(-580, -280));
 
-            var homo = HomographyHelper.Find(srcList, dstList);
+            var homo = Homography.Find(srcList, dstList);
             stopWatch.Stop();
             Console.WriteLine("setup!!!!!!!");
             //Console.WriteLine($"=====test4 stop{stopWatch.ElapsedMilliseconds}=====");

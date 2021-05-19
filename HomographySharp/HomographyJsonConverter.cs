@@ -68,12 +68,14 @@ namespace HomographySharp
                 WriteCore(writer, options, singleHomographyMatrix.Elements);
                 return;
             }
-            
+
             if (value is HomographyMatrix<double> doubleHomographyMatrix)
             {
                 WriteCore(writer, options, doubleHomographyMatrix.Elements);
                 return;
             }
+
+            throw new JsonException($"{value.GetType()} is unsupported type.");
         }
 
         private static void WriteCore<T>(Utf8JsonWriter writer, JsonSerializerOptions options, IReadOnlyList<T> elements)

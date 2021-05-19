@@ -5,7 +5,7 @@ using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace HomographySharp.Double
 {
-    internal static class DoubleHomographyHelper
+    internal static class DoubleHomography
     {
         /// <summary>
         /// Set the coefficient matrix for dstX.
