@@ -10,6 +10,7 @@
         <Authors>nenoNaninu</Authors>
         <RepositoryUrl>https://github.com/nenoNaninu/HomographySharp</RepositoryUrl>
         <Title>HomographySharp</Title>
+        <Description>Class library for finding and using homography matrix.</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <RepositoryType>git</RepositoryType>
