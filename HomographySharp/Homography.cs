@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using System.Collections.Generic;
+using System.Linq;
 using HomographySharp.Double;
 using HomographySharp.Single;
 
@@ -36,6 +37,28 @@ namespace HomographySharp
             throw new ArgumentException("elements.Length must be 9.");
         }
 
+        public static HomographyMatrix<float> Create(IReadOnlyList<float> elements)
+        {
+            if (elements.Count == 9)
+            {
+                return new SingleHomographyMatrix(elements.ToArray());
+            }
+
+            throw new ArgumentException("elements.Count must be 9.");
+        }
+
+        public static HomographyMatrix<float> Create(float[] elements)
+        {
+            if (elements.Length == 9)
+            {
+                var array = new float[9];
+                Array.Copy(elements, array, 9);
+                return new SingleHomographyMatrix(array);
+            }
+
+            throw new ArgumentException("elements.Length must be 9.");
+        }
+
         public static HomographyMatrix<double> Find(IReadOnlyList<Point2<double>> srcPoints, IReadOnlyList<Point2<double>> dstPoints)
             => DoubleHomography.Find(srcPoints, dstPoints);
 
@@ -50,6 +73,28 @@ namespace HomographySharp
             if (elements.Length == 9)
             {
                 return new DoubleHomographyMatrix(elements.ToArray());
+            }
+
+            throw new ArgumentException("elements.Length must be 9.");
+        }
+
+        public static HomographyMatrix<double> Create(IReadOnlyList<double> elements)
+        {
+            if (elements.Count == 9)
+            {
+                return new DoubleHomographyMatrix(elements.ToArray());
+            }
+
+            throw new ArgumentException("elements.Count must be 9.");
+        }
+
+        public static HomographyMatrix<double> Create(double[] elements)
+        {
+            if (elements.Length == 9)
+            {
+                var array = new double[9];
+                Array.Copy(elements, array, 9);
+                return new DoubleHomographyMatrix(array);
             }
 
             throw new ArgumentException("elements.Length must be 9.");
