@@ -18,7 +18,7 @@ namespace HomographyVisualizer
         private readonly Canvas _drawCanvas;
 
         /// <summary>
-        /// なにか汚されていたらtrue,まっさらだとfalse
+        /// True if something is drawn, False if it is clean.
         /// </summary>
         private readonly ReactiveProperty<bool> _srcAreaDirty = new ReactiveProperty<bool>(false);
         private readonly ReactiveProperty<bool> _dstAreaDirty = new ReactiveProperty<bool>(false);
@@ -157,8 +157,7 @@ namespace HomographyVisualizer
                     latestLine.Y2 = firstPoint.Y;
                 });
 
-            //ドラッグする時の描画
-            //一度hot変換してrepeatしないと、マウスダウンを待ち受けるところからリピートしてしまう。
+            // Drawing when dragging
             var dragStream = _mouseDown
                 .SelectMany(_mouseMove).Publish();
             var disposable = dragStream.Connect();

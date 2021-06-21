@@ -13,8 +13,6 @@ namespace Tests
             FindHomographyTestForSetUp();
         }
 
-        //00と01は実行速度確認のために雑に置いている。
-        //遅いのはJITだから初回コンパイルで実行時間かかるからかなー。
 
         [Test]
         public void FindHomographyTest00()
