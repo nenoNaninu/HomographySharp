@@ -14,7 +14,7 @@ dotnet add package HomographySharp
 ```
 
 # Usage
-## Find homography matrix.
+## Find homography matrix
 ```csharp
 //System.Numerics.Vector2
 var srcList = new List<Vector2>(4);
@@ -69,7 +69,7 @@ Assert.IsTrue(Math.Abs(result.X - 500) < 0.001); //true
 Assert.IsTrue(Math.Abs(result.Y - 11) < 0.001);  //true
 ```
 
-## Json serialize support.
+## Json serialize support
 ```cs
 using System.Text.Json;
 
@@ -80,7 +80,7 @@ string json = JsonSerializer.Serialize(homo);
 var homoMat2 = JsonSerializer.Deserialize<HomographyMatrix<double>>(json);
 ```
 
-## Create homography matrix from raw array.
+## Create homography matrix from raw array
 ```cs
 HomographyMatrix<double> homoMat = ...;
 
