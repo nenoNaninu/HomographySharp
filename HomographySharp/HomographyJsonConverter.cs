@@ -7,7 +7,7 @@ using HomographySharp.Double;
 
 namespace HomographySharp
 {
-    public class HomographyJsonConverter : JsonConverter<object>
+    public sealed class HomographyJsonConverter : JsonConverter<object>
     {
         public override bool CanConvert(Type typeToConvert)
         {
@@ -48,7 +48,7 @@ namespace HomographySharp
                     {
                         var elements = JsonSerializer.Deserialize<T[]>(ref reader);
 
-                        if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject)
+                        if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject || elements is null)
                         {
                             throw new JsonException("JSON structure is not correct.");
                         }
