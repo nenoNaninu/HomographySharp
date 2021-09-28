@@ -2,20 +2,23 @@
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0;</TargetFrameworks>
-        <PackageId>HomographySharp</PackageId>
-        <AssemblyName>HomographySharp</AssemblyName>
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
-        <Version>3.0.1</Version>
-        <Authors>nenoNaninu</Authors>
-        <RepositoryUrl>https://github.com/nenoNaninu/HomographySharp</RepositoryUrl>
+
+        <!-- NuGet -->
+        <PackageId>HomographySharp</PackageId>
+        <AssemblyName>HomographySharp</AssemblyName>
         <Title>HomographySharp</Title>
         <Description>Class library for finding and using homography matrix.</Description>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>homography;math;numeric;matrix</PackageTags>
+        <Authors>nenoNaninu</Authors>
         <Copyright>(c) nenoNaninu</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Version>3.0.2</Version>
+        <RepositoryUrl>https://github.com/nenoNaninu/HomographySharp</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+        <PackageTags>homography;math;numeric;matrix</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
@@ -32,4 +35,7 @@
         <PackageReference Include="MathNet.Numerics" Version="4.15.*" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
 </Project>

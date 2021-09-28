@@ -127,7 +127,12 @@ namespace Tests
 
             var restore = JsonSerializer.Deserialize<Chunk>(json);
 
-            var homo2 = restore.Homography;
+            var homo2 = restore?.Homography;
+
+            if (homo2 is null)
+            {
+                Assert.IsNotNull(homo2);
+            }
 
             Assert.IsTrue(homo.Elements.Count == homo2?.Elements.Count);
 
@@ -168,7 +173,12 @@ namespace Tests
 
             var restore = JsonSerializer.Deserialize<Chunk>(json, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
-            var homo2 = restore.Homography;
+            var homo2 = restore?.Homography;
+
+            if (homo2 is null)
+            {
+                Assert.IsNotNull(homo2);
+            }
 
             Assert.IsTrue(homo.Elements.Count == homo2?.Elements.Count);
 
