@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using HomographySharp.Single;
 using HomographySharp.Double;
+using HomographySharp.Single;
 
 namespace HomographySharp
 {

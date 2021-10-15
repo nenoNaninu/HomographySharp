@@ -1,6 +1,6 @@
-﻿using System;
-using System.Numerics;
+using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using MathNet.Numerics.LinearAlgebra.Single;
 

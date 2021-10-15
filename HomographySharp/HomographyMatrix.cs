@@ -1,14 +1,16 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using MathNet.Numerics.LinearAlgebra;
 using System.Text.Json.Serialization;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace HomographySharp
 {
     [JsonConverter(typeof(HomographyJsonConverter))]
     public abstract class HomographyMatrix<T> where T : unmanaged, IEquatable<T>, IFormattable
     {
-        public abstract Point2<T> Translate(T srcX, T srcY);
+        internal HomographyMatrix()
+        {
+        }
 
         /// <summary>
         /// Row-major order
@@ -26,10 +28,8 @@ namespace HomographySharp
 
         public abstract int ColumnCount { get; }
 
-        public abstract Matrix<T> ToMathNetMatrix();
+        public abstract Point2<T> Translate(T srcX, T srcY);
 
-        internal HomographyMatrix()
-        {
-        }
+        public abstract Matrix<T> ToMathNetMatrix();
     }
 }

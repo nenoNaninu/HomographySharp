@@ -1,4 +1,4 @@
-﻿using BenchmarkDotNet.Running;
+using BenchmarkDotNet.Running;
 
 namespace BenchmarkSpace
 {
@@ -7,8 +7,8 @@ namespace BenchmarkSpace
     {
         static void Main(string[] args)
         {
-            var switcher = new BenchmarkSwitcher(new[]  
-            {  
+            var switcher = new BenchmarkSwitcher(new[]
+            {
                 typeof(DoubleBench),
                 typeof(SingleBench)
             });
