@@ -15,7 +15,7 @@ jobs:
   build-and-test:
 
     name: develop-build-and-test
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
