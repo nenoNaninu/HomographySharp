@@ -41,7 +41,7 @@ namespace HomographySharp
 
                     if (!string.Equals(property, "Elements", StringComparison.OrdinalIgnoreCase))
                     {
-                        throw new JsonException("A property named Elements is required to deserialize to HomographyMatrix<float>.");
+                        throw new JsonException("A property named Elements is required to deserialize to HomographyMatrix<T>.");
                     }
 
                     if (reader.Read())
@@ -51,6 +51,11 @@ namespace HomographySharp
                         if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject)
                         {
                             throw new JsonException("JSON structure is not correct.");
+                        }
+
+                        if(elements is null)
+                        {
+                            throw new JsonException("HomographyMatrix<T>.Elements is null.");
                         }
 
                         return elements;
