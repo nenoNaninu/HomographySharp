@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using HomographySharp;
+using NUnit.Framework;
 
 namespace Tests
 {

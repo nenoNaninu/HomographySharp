@@ -57,7 +57,7 @@ namespace Tests
 
 
             var mathNetMat = homo.ToMathNetMatrix();
-            
+
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)

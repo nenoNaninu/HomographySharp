@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using HomographySharp.Single;
 using HomographySharp.Double;
+using HomographySharp.Single;
 
 namespace HomographySharp
 {
-    public class HomographyJsonConverter : JsonConverter<object>
+    public sealed class HomographyJsonConverter : JsonConverter<object>
     {
         public override bool CanConvert(Type typeToConvert)
         {
@@ -48,12 +48,12 @@ namespace HomographySharp
                     {
                         var elements = JsonSerializer.Deserialize<T[]>(ref reader);
 
-                        if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject)
+                        if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject || elements is null)
                         {
                             throw new JsonException("JSON structure is not correct.");
                         }
 
-                        if(elements is null)
+                        if (elements is null)
                         {
                             throw new JsonException("HomographyMatrix<T>.Elements is null.");
                         }

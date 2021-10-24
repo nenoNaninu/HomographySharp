@@ -8,7 +8,7 @@ using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace HomographySharp.Double
 {
-    internal class DoubleHomographyMatrix : HomographyMatrix<double>
+    internal sealed class DoubleHomographyMatrix : HomographyMatrix<double>
     {
         /// <summary>
         /// Row-major order
@@ -48,9 +48,11 @@ namespace HomographySharp.Double
 #endif
         public override Point2<double> Translate(double srcX, double srcY)
         {
-            var dst1 = _elements[0] * srcX + _elements[1] * srcY + _elements[2];
-            var dst2 = _elements[3] * srcX + _elements[4] * srcY + _elements[5];
-            var dst3 = _elements[6] * srcX + _elements[7] * srcY + _elements[8];
+            var elements = _elements;
+
+            var dst1 = elements[0] * srcX + elements[1] * srcY + elements[2];
+            var dst2 = elements[3] * srcX + elements[4] * srcY + elements[5];
+            var dst3 = elements[6] * srcX + elements[7] * srcY + elements[8];
 
             return new Point2<double>(dst1 / dst3, dst2 / dst3);
         }
@@ -58,19 +60,21 @@ namespace HomographySharp.Double
         public override Matrix<double> ToMathNetMatrix()
         {
             var mat = new DenseMatrix(3, 3);
+
             var values = mat.Values;
+            var elements = _elements;
 
-            values[0] = _elements[0];
-            values[1] = _elements[3];
-            values[2] = _elements[6];
+            values[0] = elements[0];
+            values[1] = elements[3];
+            values[2] = elements[6];
 
-            values[3] = _elements[1];
-            values[4] = _elements[4];
-            values[5] = _elements[7];
+            values[3] = elements[1];
+            values[4] = elements[4];
+            values[5] = elements[7];
 
-            values[6] = _elements[2];
-            values[7] = _elements[5];
-            values[8] = _elements[8];
+            values[6] = elements[2];
+            values[7] = elements[5];
+            values[8] = elements[8];
             return mat;
         }
 
@@ -81,7 +85,7 @@ namespace HomographySharp.Double
 
             try
             {
-                for (int i = 0; i < 9; i++)
+                for (int i = 0; i < _elements.Length; i++)
                 {
                     stringBuffer[i] = _elements[i].ToString("G6");
                 }
@@ -95,6 +99,7 @@ namespace HomographySharp.Double
                 }
 
                 var stringBuilder = new StringBuilder();
+
                 for (int i = 0; i <= 6; i += 3)
                 {
                     stringBuilder.Append(stringBuffer[i].PadLeft(paddingBuffer[0]));

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -216,7 +216,7 @@ namespace HomographyVisualizer
             Canvas.SetLeft(srcEllipse, pointX - srcEllipse.Width / 2);
             Canvas.SetTop(srcEllipse, pointY - srcEllipse.Height / 2);
 
-            var result = _homo.Translate( pointX, pointY);
+            var result = _homo.Translate(pointX, pointY);
             Canvas.SetLeft(dstEllipse, result.X - srcEllipse.Width / 2);
             Canvas.SetTop(dstEllipse, result.Y - srcEllipse.Height / 2);
 
