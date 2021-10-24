@@ -53,7 +53,7 @@ namespace HomographySharp
                             throw new JsonException("JSON structure is not correct.");
                         }
 
-                        if(elements is null)
+                        if (elements is null)
                         {
                             throw new JsonException("HomographyMatrix<T>.Elements is null.");
                         }
