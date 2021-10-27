@@ -34,7 +34,9 @@ namespace HomographyVisualizer
         private readonly List<Point2<double>> _srcPoints = new List<Point2<double>>();
         private readonly List<Point2<double>> _dstPoints = new List<Point2<double>>();
 
+#pragma warning disable CS0067
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067
 
         private HomographyMatrix<double> _homo;
         private int _pointNum;
