@@ -21,9 +21,6 @@ jobs:
 
     - name: "dotnet build"
       run: dotnet build -c Release -p:Version=$Version ./HomographySharp/HomographySharp.csproj
-    
-    - name: "dotnet test"
-      run: dotnet test -c Release ./HomographySharpTest/HomographySharpTest.csproj
 
     - name: "dotnet pack"
       run: dotnet pack -c Release --no-build --include-symbols --output $GITHUB_WORKSPACE/artifacts -p:PackageVersion=$Version ./HomographySharp/HomographySharp.csproj
