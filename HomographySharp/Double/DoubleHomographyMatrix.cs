@@ -75,6 +75,7 @@ namespace HomographySharp.Double
             values[6] = elements[2];
             values[7] = elements[5];
             values[8] = elements[8];
+
             return mat;
         }
 
@@ -103,9 +104,9 @@ namespace HomographySharp.Double
                 for (int i = 0; i <= 6; i += 3)
                 {
                     stringBuilder.Append(stringBuffer[i].PadLeft(paddingBuffer[0]));
-                    stringBuilder.Append(", ");
+                    stringBuilder.Append(' ');
                     stringBuilder.Append(stringBuffer[i + 1].PadLeft(paddingBuffer[1]));
-                    stringBuilder.Append(", ");
+                    stringBuilder.Append(' ');
                     stringBuilder.Append(stringBuffer[i + 2].PadLeft(paddingBuffer[2]));
                     stringBuilder.Append(Environment.NewLine);
                 }
