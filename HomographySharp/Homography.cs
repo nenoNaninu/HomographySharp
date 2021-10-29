@@ -52,7 +52,6 @@ namespace HomographySharp
             if (elements.Length != 9)
             {
                 throw new ArgumentException("elements.Length must be 9.");
-
             }
 
             var array = new float[9];
