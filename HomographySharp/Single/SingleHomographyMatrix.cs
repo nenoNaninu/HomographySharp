@@ -104,9 +104,9 @@ namespace HomographySharp.Single
                 for (int i = 0; i <= 6; i += 3)
                 {
                     stringBuilder.Append(stringBuffer[i].PadLeft(paddingBuffer[0]));
-                    stringBuilder.Append(", ");
+                    stringBuilder.Append(' ');
                     stringBuilder.Append(stringBuffer[i + 1].PadLeft(paddingBuffer[1]));
-                    stringBuilder.Append(", ");
+                    stringBuilder.Append(' ');
                     stringBuilder.Append(stringBuffer[i + 2].PadLeft(paddingBuffer[2]));
                     stringBuilder.Append(Environment.NewLine);
                 }
