@@ -13,19 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HomographyVisualizer
-{
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
+namespace HomographyVisualizer;
 
-            var vm = new VisualizerViewModelReactive(drawCanvas);
-            DataContext = vm;
-        }
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+
+        var vm = new VisualizerViewModelReactive(drawCanvas);
+        DataContext = vm;
     }
 }
