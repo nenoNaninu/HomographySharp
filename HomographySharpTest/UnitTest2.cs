@@ -221,7 +221,7 @@ namespace Tests
             Console.WriteLine(homo);
         }
 
-        public void FindHomographyTestForSetUp()
+        public static void FindHomographyTestForSetUp()
         {
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();

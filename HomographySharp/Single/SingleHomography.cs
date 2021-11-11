@@ -60,19 +60,19 @@ namespace HomographySharp.Single
                 throw new ArgumentException("srcPoints and dstPoints must same num");
             }
 
-            //q(dst vector) = A(nx8 Matrix) * P(Homography Matrix parameter)
+            //q(dst vector) = A(nx8 coefficient matrix) * P(homography matrix parameter)
             //P = A^-1 * q
             //The parameters can be obtained above.
             int pointNum = srcPoints.Count;
-            DenseMatrix a = DenseMatrix.Create(pointNum * 2, 8, 0);
+            var coefficientMatrix = DenseMatrix.Create(pointNum * 2, 8, 0);
 
             for (int i = 0; i < pointNum; i++)
             {
                 var src = srcPoints[i];
                 var dst = dstPoints[i];
 
-                SetCoefficientMatrixParametersForDstX(a, src.X, src.Y, dst.X, 2 * i);
-                SetCoefficientMatrixParametersForDstY(a, src.X, src.Y, dst.Y, 2 * i + 1);
+                SetCoefficientMatrixParametersForDstX(coefficientMatrix, src.X, src.Y, dst.X, 2 * i);
+                SetCoefficientMatrixParametersForDstY(coefficientMatrix, src.X, src.Y, dst.Y, 2 * i + 1);
             }
 
             var dstVec = DenseVector.Create(pointNum * 2, 0);
@@ -83,9 +83,9 @@ namespace HomographySharp.Single
                 dstVec[i * 2 + 1] = dstPoints[i].Y;
             }
 
-            var inverseA = pointNum == 4 ? a.Inverse() : a.PseudoInverse();
+            var inverseCoefficientMatrix = pointNum == 4 ? coefficientMatrix.Inverse() : coefficientMatrix.PseudoInverse();
 
-            var parameterVec = inverseA * dstVec;
+            var parameterVec = inverseCoefficientMatrix * dstVec;
 
             var elements = new float[9];
 
@@ -119,19 +119,19 @@ namespace HomographySharp.Single
                 throw new ArgumentException("srcPoints and dstPoints must same num");
             }
 
-            //q(dst vector) = A(nx8 Matrix) * P(Homography Matrix parameter)
+            //q(dst vector) = A(nx8 coefficient matrix) * P(homography matrix parameter)
             //P = A^-1 * q
             //The parameters can be obtained above.
             int pointNum = srcPoints.Length;
-            DenseMatrix a = DenseMatrix.Create(pointNum * 2, 8, 0);
+            var coefficientMatrix = DenseMatrix.Create(pointNum * 2, 8, 0);
 
             for (int i = 0; i < pointNum; i++)
             {
                 var src = srcPoints[i];
                 var dst = dstPoints[i];
 
-                SetCoefficientMatrixParametersForDstX(a, src.X, src.Y, dst.X, 2 * i);
-                SetCoefficientMatrixParametersForDstY(a, src.X, src.Y, dst.Y, 2 * i + 1);
+                SetCoefficientMatrixParametersForDstX(coefficientMatrix, src.X, src.Y, dst.X, 2 * i);
+                SetCoefficientMatrixParametersForDstY(coefficientMatrix, src.X, src.Y, dst.Y, 2 * i + 1);
             }
 
             var dstVec = DenseVector.Create(pointNum * 2, 0);
@@ -142,9 +142,9 @@ namespace HomographySharp.Single
                 dstVec[i * 2 + 1] = dstPoints[i].Y;
             }
 
-            var inverseA = pointNum == 4 ? a.Inverse() : a.PseudoInverse();
+            var inverseCoefficientMatrix = pointNum == 4 ? coefficientMatrix.Inverse() : coefficientMatrix.PseudoInverse();
 
-            var parameterVec = inverseA * dstVec;
+            var parameterVec = inverseCoefficientMatrix * dstVec;
 
             var elements = new float[9];
 
@@ -178,19 +178,19 @@ namespace HomographySharp.Single
                 throw new ArgumentException("srcPoints and dstPoints must same num");
             }
 
-            //q(dst vector) = A(nx8 Matrix) * P(Homography Matrix parameter)
+            //q(dst vector) = A(nx8 coefficient matrix) * P(homography matrix parameter)
             //P = A^-1 * q
             //The parameters can be obtained above.
             int pointNum = srcPoints.Count;
-            DenseMatrix a = DenseMatrix.Create(pointNum * 2, 8, 0);
+            var coefficientMatrix = DenseMatrix.Create(pointNum * 2, 8, 0);
 
             for (int i = 0; i < pointNum; i++)
             {
                 var src = srcPoints[i];
                 var dst = dstPoints[i];
 
-                SetCoefficientMatrixParametersForDstX(a, src.X, src.Y, dst.X, 2 * i);
-                SetCoefficientMatrixParametersForDstY(a, src.X, src.Y, dst.Y, 2 * i + 1);
+                SetCoefficientMatrixParametersForDstX(coefficientMatrix, src.X, src.Y, dst.X, 2 * i);
+                SetCoefficientMatrixParametersForDstY(coefficientMatrix, src.X, src.Y, dst.Y, 2 * i + 1);
             }
 
             var dstVec = DenseVector.Create(pointNum * 2, 0);
@@ -201,9 +201,9 @@ namespace HomographySharp.Single
                 dstVec[i * 2 + 1] = dstPoints[i].Y;
             }
 
-            var inverseA = pointNum == 4 ? a.Inverse() : a.PseudoInverse();
+            var inverseCoefficientMatrix = pointNum == 4 ? coefficientMatrix.Inverse() : coefficientMatrix.PseudoInverse();
 
-            var parameterVec = inverseA * dstVec;
+            var parameterVec = inverseCoefficientMatrix * dstVec;
 
             var elements = new float[9];
 
@@ -237,19 +237,19 @@ namespace HomographySharp.Single
                 throw new ArgumentException("srcPoints and dstPoints must same num");
             }
 
-            //q(dst vector) = A(nx8 Matrix) * P(Homography Matrix parameter)
+            //q(dst vector) = A(nx8 coefficient matrix) * P(homography matrix parameter)
             //P = A^-1 * q
             //The parameters can be obtained above.
             int pointNum = srcPoints.Length;
-            DenseMatrix a = DenseMatrix.Create(pointNum * 2, 8, 0);
+            var coefficientMatrix = DenseMatrix.Create(pointNum * 2, 8, 0);
 
             for (int i = 0; i < pointNum; i++)
             {
                 var src = srcPoints[i];
                 var dst = dstPoints[i];
 
-                SetCoefficientMatrixParametersForDstX(a, src.X, src.Y, dst.X, 2 * i);
-                SetCoefficientMatrixParametersForDstY(a, src.X, src.Y, dst.Y, 2 * i + 1);
+                SetCoefficientMatrixParametersForDstX(coefficientMatrix, src.X, src.Y, dst.X, 2 * i);
+                SetCoefficientMatrixParametersForDstY(coefficientMatrix, src.X, src.Y, dst.Y, 2 * i + 1);
             }
 
             var dstVec = DenseVector.Create(pointNum * 2, 0);
@@ -260,9 +260,9 @@ namespace HomographySharp.Single
                 dstVec[i * 2 + 1] = dstPoints[i].Y;
             }
 
-            var inverseA = pointNum == 4 ? a.Inverse() : a.PseudoInverse();
+            var inverseCoefficientMatrix = pointNum == 4 ? coefficientMatrix.Inverse() : coefficientMatrix.PseudoInverse();
 
-            var parameterVec = inverseA * dstVec;
+            var parameterVec = inverseCoefficientMatrix * dstVec;
 
             var elements = new float[9];
 

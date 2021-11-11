@@ -20,19 +20,19 @@ namespace HomographyVisualizer
         /// <summary>
         /// True if something is drawn, False if it is clean.
         /// </summary>
-        private readonly ReactiveProperty<bool> _srcAreaDirty = new ReactiveProperty<bool>(false);
-        private readonly ReactiveProperty<bool> _dstAreaDirty = new ReactiveProperty<bool>(false);
+        private readonly ReactiveProperty<bool> _srcAreaDirty = new(false);
+        private readonly ReactiveProperty<bool> _dstAreaDirty = new(false);
 
         public ReactiveProperty<string> PointNumString { get; }
 
-        public ReactiveProperty<bool> EnableTextBox { get; } = new ReactiveProperty<bool>(true);
+        public ReactiveProperty<bool> EnableTextBox { get; } = new(true);
         public ReactiveCommand DrawSrcAreaCommand { get; }
         public ReactiveCommand DrawDstAreaCommand { get; }
         public ReactiveCommand CreateTranslatePointCommand { get; }
-        public ReactiveCommand ClearCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand ClearCommand { get; } = new();
 
-        private readonly List<Point2<double>> _srcPoints = new List<Point2<double>>();
-        private readonly List<Point2<double>> _dstPoints = new List<Point2<double>>();
+        private readonly List<Point2<double>> _srcPoints = new();
+        private readonly List<Point2<double>> _dstPoints = new();
 
 #pragma warning disable CS0067
         public event PropertyChangedEventHandler PropertyChanged;
@@ -44,8 +44,8 @@ namespace HomographyVisualizer
         private readonly IObservable<MouseButtonEventArgs> _mouseDown;
         private readonly IObservable<MouseEventArgs> _mouseMove;
 
-        private readonly List<Line> _srcLines = new List<Line>(4);
-        private readonly List<Line> _dstLines = new List<Line>(4);
+        private readonly List<Line> _srcLines = new(4);
+        private readonly List<Line> _dstLines = new(4);
 
         public VisualizerViewModelReactive(Canvas drawCanvas)
         {
@@ -110,7 +110,7 @@ namespace HomographyVisualizer
             });
         }
 
-        private Line CreateLine(double x0, double y0, double x1, double y1, double strokeThickness, Brush strokeBrush)
+        private static Line CreateLine(double x0, double y0, double x1, double y1, double strokeThickness, Brush strokeBrush)
         {
             return new Line
             {

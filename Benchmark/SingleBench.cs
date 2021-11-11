@@ -8,7 +8,7 @@ namespace BenchmarkSpace
     public class SingleBench
     {
         [Benchmark]
-        public void Bench()
+        public static void Bench()
         {
             var srcList = new List<Point2<float>>(4);
             var dstList = new List<Point2<float>>(4);
@@ -26,12 +26,12 @@ namespace BenchmarkSpace
             for (int i = 0; i < 100000; i++)
             {
                 var homo = Homography.Find(srcList, dstList);
-                var result = homo.Translate(-152f, 394f);
+                var _ = homo.Translate(-152f, 394f);
             }
         }
 
         [Benchmark]
-        public void Bench2()
+        public static void Bench2()
         {
             var srcList = new List<Point2<float>>(4);
             var dstList = new List<Point2<float>>(4);
@@ -50,7 +50,7 @@ namespace BenchmarkSpace
 
             for (int i = 0; i < 100000; i++)
             {
-                var result = homo.Translate(-152f, 394f);
+                var _ = homo.Translate(-152f, 394f);
             }
         }
     }
