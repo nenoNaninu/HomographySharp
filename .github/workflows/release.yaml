@@ -17,7 +17,7 @@ jobs:
         dotnet-version: '6.0.x'
 
     - name: "Get version from git tag"
-      run: echo "Version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+      run: echo "Version=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
     - name: "dotnet build"
       run: dotnet build -c Release -p:Version=$Version ./HomographySharp/HomographySharp.csproj
