@@ -60,9 +60,8 @@ internal static class SingleHomography
             throw new ArgumentException("srcPoints and dstPoints must same num");
         }
 
-        //q(dst vector) = A(nx8 coefficient matrix) * P(homography matrix parameter)
-        //P = A^-1 * q
-        //The parameters can be obtained above.
+        // q(dst vector) = A(nx8 coefficient matrix) * p(homography matrix parameter)
+        // p = A^-1 * q
         int pointNum = srcPoints.Count;
         var coefficientMatrix = DenseMatrix.Create(pointNum * 2, 8, 0);
 
@@ -75,17 +74,17 @@ internal static class SingleHomography
             SetCoefficientMatrixParametersForDstY(coefficientMatrix, src.X, src.Y, dst.Y, 2 * i + 1);
         }
 
-        var dstVector = DenseVector.Create(pointNum * 2, 0);
+        var dstVec = DenseVector.Create(pointNum * 2, 0);
 
         for (int i = 0; i < pointNum; i++)
         {
-            dstVector[i * 2] = dstPoints[i].X;
-            dstVector[i * 2 + 1] = dstPoints[i].Y;
+            dstVec[i * 2] = dstPoints[i].X;
+            dstVec[i * 2 + 1] = dstPoints[i].Y;
         }
 
         var inverseCoefficientMatrix = pointNum == 4 ? coefficientMatrix.Inverse() : coefficientMatrix.PseudoInverse();
 
-        var parameterVec = inverseCoefficientMatrix * dstVector;
+        var parameterVec = inverseCoefficientMatrix * dstVec;
 
         var elements = new float[9];
 
@@ -119,10 +118,10 @@ internal static class SingleHomography
             throw new ArgumentException("srcPoints and dstPoints must same num");
         }
 
-        //q(dst vector) = A(nx8 coefficient matrix) * P(homography matrix parameter)
-        //P = A^-1 * q
-        //The parameters can be obtained above.
         int pointNum = srcPoints.Length;
+
+        // q(dst vector) = A(nx8 coefficient matrix) * p(homography matrix parameter)
+        // p = A^-1 * q
         var coefficientMatrix = DenseMatrix.Create(pointNum * 2, 8, 0);
 
         for (int i = 0; i < pointNum; i++)
@@ -134,17 +133,17 @@ internal static class SingleHomography
             SetCoefficientMatrixParametersForDstY(coefficientMatrix, src.X, src.Y, dst.Y, 2 * i + 1);
         }
 
-        var dstVector = DenseVector.Create(pointNum * 2, 0);
+        var dstVec = DenseVector.Create(pointNum * 2, 0);
 
         for (int i = 0; i < pointNum; i++)
         {
-            dstVector[i * 2] = dstPoints[i].X;
-            dstVector[i * 2 + 1] = dstPoints[i].Y;
+            dstVec[i * 2] = dstPoints[i].X;
+            dstVec[i * 2 + 1] = dstPoints[i].Y;
         }
 
         var inverseCoefficientMatrix = pointNum == 4 ? coefficientMatrix.Inverse() : coefficientMatrix.PseudoInverse();
 
-        var parameterVec = inverseCoefficientMatrix * dstVector;
+        var parameterVec = inverseCoefficientMatrix * dstVec;
 
         var elements = new float[9];
 
@@ -178,10 +177,10 @@ internal static class SingleHomography
             throw new ArgumentException("srcPoints and dstPoints must same num");
         }
 
-        //q(dst vector) = A(nx8 coefficient matrix) * P(homography matrix parameter)
-        //P = A^-1 * q
-        //The parameters can be obtained above.
         int pointNum = srcPoints.Count;
+
+        // q(dst vector) = A(nx8 coefficient matrix) * p(homography matrix parameter)
+        // p = A^-1 * q
         var coefficientMatrix = DenseMatrix.Create(pointNum * 2, 8, 0);
 
         for (int i = 0; i < pointNum; i++)
@@ -193,17 +192,17 @@ internal static class SingleHomography
             SetCoefficientMatrixParametersForDstY(coefficientMatrix, src.X, src.Y, dst.Y, 2 * i + 1);
         }
 
-        var dstVector = DenseVector.Create(pointNum * 2, 0);
+        var dstVec = DenseVector.Create(pointNum * 2, 0);
 
         for (int i = 0; i < pointNum; i++)
         {
-            dstVector[i * 2] = dstPoints[i].X;
-            dstVector[i * 2 + 1] = dstPoints[i].Y;
+            dstVec[i * 2] = dstPoints[i].X;
+            dstVec[i * 2 + 1] = dstPoints[i].Y;
         }
 
         var inverseCoefficientMatrix = pointNum == 4 ? coefficientMatrix.Inverse() : coefficientMatrix.PseudoInverse();
 
-        var parameterVec = inverseCoefficientMatrix * dstVector;
+        var parameterVec = inverseCoefficientMatrix * dstVec;
 
         var elements = new float[9];
 
@@ -237,10 +236,10 @@ internal static class SingleHomography
             throw new ArgumentException("srcPoints and dstPoints must same num");
         }
 
-        //q(dst vector) = A(nx8 coefficient matrix) * P(homography matrix parameter)
-        //P = A^-1 * q
-        //The parameters can be obtained above.
         int pointNum = srcPoints.Length;
+
+        // q(dst vector) = A(nx8 coefficient matrix) * p(homography matrix parameter)
+        // p = A^-1 * q
         var coefficientMatrix = DenseMatrix.Create(pointNum * 2, 8, 0);
 
         for (int i = 0; i < pointNum; i++)
@@ -252,17 +251,17 @@ internal static class SingleHomography
             SetCoefficientMatrixParametersForDstY(coefficientMatrix, src.X, src.Y, dst.Y, 2 * i + 1);
         }
 
-        var dstVector = DenseVector.Create(pointNum * 2, 0);
+        var dstVec = DenseVector.Create(pointNum * 2, 0);
 
         for (int i = 0; i < pointNum; i++)
         {
-            dstVector[i * 2] = dstPoints[i].X;
-            dstVector[i * 2 + 1] = dstPoints[i].Y;
+            dstVec[i * 2] = dstPoints[i].X;
+            dstVec[i * 2 + 1] = dstPoints[i].Y;
         }
 
         var inverseCoefficientMatrix = pointNum == 4 ? coefficientMatrix.Inverse() : coefficientMatrix.PseudoInverse();
 
-        var parameterVec = inverseCoefficientMatrix * dstVector;
+        var parameterVec = inverseCoefficientMatrix * dstVec;
 
         var elements = new float[9];
 
