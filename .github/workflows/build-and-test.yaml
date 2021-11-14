@@ -2,31 +2,32 @@ name: build-and-test
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 env:
-  DOTNET_VERSION: '6.0.x' # The .NET SDK version to use
+  DOTNET_VERSION: "6.0.x"
+  DOTNET_NOLOGO: true
 
 jobs:
   build-and-test:
     name: build-and-test
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Install dependencies
-      run: dotnet restore
-      
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
