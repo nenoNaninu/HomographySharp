@@ -79,16 +79,22 @@ internal sealed class SingleHomographyMatrix : HomographyMatrix<float>
         return mat;
     }
 
-    public override string ToString()
+    public override string ToString() => this.ToString("G6", null);
+
+    public override string ToString(IFormatProvider? provider) => this.ToString("G6", provider);
+
+    public override string ToString(string? format) => this.ToString(format, null);
+
+    public override string ToString(string? format, IFormatProvider? provider)
     {
-        Span<int> paddingBuffer = stackalloc int[3];
+        Span<int> lengthBuffer = stackalloc int[3];
         string[] stringBuffer = ArrayPool<string>.Shared.Rent(9);
 
         try
         {
             for (int i = 0; i < _elements.Length; i++)
             {
-                stringBuffer[i] = _elements[i].ToString("G6");
+                stringBuffer[i] = _elements[i].ToString(format, provider);
             }
 
             for (int i = 0; i < 3; i++)
@@ -96,18 +102,19 @@ internal sealed class SingleHomographyMatrix : HomographyMatrix<float>
                 var length1 = stringBuffer[i].Length;
                 var length2 = stringBuffer[i + 3].Length;
                 var length3 = stringBuffer[i + 6].Length;
-                paddingBuffer[i] = Math.Max(Math.Max(length1, length2), length3);
+
+                lengthBuffer[i] = Math.Max(Math.Max(length1, length2), length3);
             }
 
             var stringBuilder = new StringBuilder();
 
             for (int i = 0; i <= 6; i += 3)
             {
-                stringBuilder.Append(stringBuffer[i].PadLeft(paddingBuffer[0]));
+                stringBuilder.Append(stringBuffer[i].PadLeft(lengthBuffer[0]));
                 stringBuilder.Append(' ');
-                stringBuilder.Append(stringBuffer[i + 1].PadLeft(paddingBuffer[1]));
+                stringBuilder.Append(stringBuffer[i + 1].PadLeft(lengthBuffer[1]));
                 stringBuilder.Append(' ');
-                stringBuilder.Append(stringBuffer[i + 2].PadLeft(paddingBuffer[2]));
+                stringBuilder.Append(stringBuffer[i + 2].PadLeft(lengthBuffer[2]));
                 stringBuilder.Append(Environment.NewLine);
             }
 
