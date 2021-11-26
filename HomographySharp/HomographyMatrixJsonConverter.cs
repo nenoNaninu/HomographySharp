@@ -7,7 +7,7 @@ using HomographySharp.Single;
 
 namespace HomographySharp;
 
-public sealed class HomographyJsonConverter : JsonConverter<object>
+public sealed class HomographyMatrixJsonConverter : JsonConverter<object>
 {
     public override bool CanConvert(Type typeToConvert)
     {
