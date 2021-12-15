@@ -27,7 +27,7 @@ jobs:
         run: dotnet build -c Release -p:Version=$Version ./HomographySharp/HomographySharp.csproj
 
       - name: "dotnet pack"
-        run: dotnet pack -c Release --no-build --output $GITHUB_WORKSPACE/artifacts -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:Version=$Version ./HomographySharp/HomographySharp.csproj
+        run: dotnet pack -c Release --no-build --output $GITHUB_WORKSPACE/artifacts -p:Version=$Version ./HomographySharp/HomographySharp.csproj
 
       - uses: actions/upload-artifact@v2
         with:
