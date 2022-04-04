@@ -31,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MathNet.Numerics" Version="4.15.*" />
+        <PackageReference Include="MathNet.Numerics" Version="5.0.*" />
     </ItemGroup>
 
     <ItemGroup>
