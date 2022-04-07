@@ -99,5 +99,5 @@ https://github.com/nenoNaninu/HomographySharp/tree/master/HomographyVisualizer
 
 ## Dependent Library 
 - [Math.NET Numerics](https://github.com/mathnet/mathnet-numerics)
-  - Copyright (c) 2002-2021 Math.NET  
+  - Copyright (c) 2002-2022 Math.NET  
   - Released under the [MIT/X11 License](https://github.com/mathnet/mathnet-numerics/blob/master/LICENSE.md)
