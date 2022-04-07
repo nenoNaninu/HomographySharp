@@ -2,7 +2,7 @@
 
 [![build-and-test](https://github.com/nenoNaninu/HomographySharp/actions/workflows/build-and-test.yaml/badge.svg)](https://github.com/nenoNaninu/HomographySharp/actions/workflows/build-and-test.yaml)
 
-HomographySharp is a (C#/.NET Standard2.0 and .NET 6) class library for finding and using homography matrix.
+HomographySharp is a C# class library for finding and using homography matrix.
 
 ## Install
 NuGet: [HomographySharp](https://www.nuget.org/packages/HomographySharp/)
