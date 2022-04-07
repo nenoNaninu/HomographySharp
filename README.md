@@ -4,7 +4,7 @@
 
 HomographySharp is a (C#/.NET Standard2.0 and .NET 6) class library for finding and using homography matrix.
 
-# Install
+## Install
 NuGet: [HomographySharp](https://www.nuget.org/packages/HomographySharp/)
 
 Package Manager
@@ -16,8 +16,8 @@ PM > Install-Package HomographySharp
 dotnet add package HomographySharp
 ```
 
-# Usage
-## Find homography matrix
+## Usage
+### Find homography matrix
 ```csharp
 //System.Numerics.Vector2
 var srcList = new List<Vector2>(4);
@@ -72,7 +72,7 @@ Assert.IsTrue(Math.Abs(result.X - 500) < 0.001); //true
 Assert.IsTrue(Math.Abs(result.Y - 11) < 0.001);  //true
 ```
 
-## Json serialize support
+### Json serialize support
 ```cs
 using System.Text.Json;
 
@@ -83,21 +83,21 @@ string json = JsonSerializer.Serialize(homo);
 var homoMat2 = JsonSerializer.Deserialize<HomographyMatrix<double>>(json);
 ```
 
-## Create homography matrix from raw array
+### Create homography matrix from raw array
 ```cs
 HomographyMatrix<double> homoMat = ...;
 
 var newMat = Homography.Create(homoMat.ElementsAsSpan());
 ```
 
-# Visualize App
+## Visualize App
 If you want to see how points are transformed by homography matrix, use this app.  
 https://github.com/nenoNaninu/HomographySharp/tree/master/HomographyVisualizer
 
 ![https://youtu.be/BNACz1SPbj8](https://user-images.githubusercontent.com/27144255/134869120-4b41a882-fddc-46ec-82b7-eaf11c19fafc.gif)
 
 
-# Dependent Library 
+## Dependent Library 
 - [Math.NET Numerics](https://github.com/mathnet/mathnet-numerics)
   - Copyright (c) 2002-2021 Math.NET  
   - Released under the [MIT/X11 License](https://github.com/mathnet/mathnet-numerics/blob/master/LICENSE.md)
