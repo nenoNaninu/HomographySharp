@@ -90,7 +90,7 @@ HomographyMatrix<double> homoMat = ...;
 var newMat = Homography.Create(homoMat.ElementsAsSpan());
 ```
 
-## Visualize App
+## Visualization App
 If you want to see how points are transformed by homography matrix, use this app.  
 https://github.com/nenoNaninu/HomographySharp/tree/master/HomographyVisualizer
 
