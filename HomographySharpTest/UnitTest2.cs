@@ -4,7 +4,7 @@ using System.Text.Json;
 using HomographySharp;
 using NUnit.Framework;
 
-namespace Tests;
+namespace HomographySharpTest;
 
 public class UnitTest2
 {
