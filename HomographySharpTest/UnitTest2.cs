@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json;
 using HomographySharp;
 using NUnit.Framework;
@@ -30,12 +31,12 @@ public class UnitTest2
         dstList.Add(new Point2<float>(480, -308));
         dstList.Add(new Point2<float>(-580, -280));
 
-        var stopWatch = new System.Diagnostics.Stopwatch();
+        var stopWatch = new Stopwatch();
         stopWatch.Start();
 
         var homo = Homography.Find(srcList, dstList);
 
-        var json = JsonSerializer.Serialize(homo);
+        string json = JsonSerializer.Serialize(homo);
         try
         {
             var homo2 = JsonSerializer.Deserialize<HomographyMatrix<float>>(json);
@@ -46,7 +47,6 @@ public class UnitTest2
             {
                 Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
             }
-
         }
         catch (Exception e)
         {
@@ -84,9 +84,9 @@ public class UnitTest2
         var dstList = new List<Point2<float>>(4);
 
         srcList.Add(new Point2<float>(-152, 394));
-        srcList.Add(new(218, 521));
-        srcList.Add(new(223, -331));
-        srcList.Add(new(-163, -219));
+        srcList.Add(new Point2<float>(218, 521));
+        srcList.Add(new Point2<float>(223, -331));
+        srcList.Add(new Point2<float>(-163, -219));
 
         dstList.Add(new Point2<float>(-666, 431));
         dstList.Add(new Point2<float>(500, 300));
@@ -96,7 +96,7 @@ public class UnitTest2
         var srcArray = srcList.ToArray();
         var dstArray = dstList.ToArray();
 
-        var stopWatch = new System.Diagnostics.Stopwatch();
+        var stopWatch = new Stopwatch();
         stopWatch.Start();
 
         var homo = Homography.Find(srcArray, dstArray);
@@ -127,16 +127,16 @@ public class UnitTest2
     [Test]
     public void FindHomographyTest3()
     {
-        var stopWatch = new System.Diagnostics.Stopwatch();
+        var stopWatch = new Stopwatch();
         stopWatch.Start();
 
         var srcList = new Point2<float>[4];
         var dstList = new Point2<float>[4];
 
         srcList[0] = new Point2<float>(10, 10);
-        srcList[1] = new(100, 10);
-        srcList[2] = new(100, 150);
-        srcList[3] = new(10, 150);
+        srcList[1] = new Point2<float>(100, 10);
+        srcList[2] = new Point2<float>(100, 150);
+        srcList[3] = new Point2<float>(10, 150);
 
         dstList[0] = new Point2<float>(11, 11);
         dstList[1] = new Point2<float>(500, 11);
@@ -180,7 +180,7 @@ public class UnitTest2
     [Test]
     public void FindHomographyTest4()
     {
-        var stopWatch = new System.Diagnostics.Stopwatch();
+        var stopWatch = new Stopwatch();
         stopWatch.Start();
 
         var srcList = new List<Point2<float>>(4);
@@ -223,7 +223,7 @@ public class UnitTest2
 
     public static void FindHomographyTestForSetUp()
     {
-        var stopWatch = new System.Diagnostics.Stopwatch();
+        var stopWatch = new Stopwatch();
         stopWatch.Start();
 
         var srcList = new List<Point2<float>>(4);
