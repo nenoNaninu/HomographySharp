@@ -27,7 +27,7 @@ public class SerializeTests
         var actual = Homography.Find(srcList, dstList);
 
         //When
-        var json = JsonSerializer.Serialize(actual);
+        string json = JsonSerializer.Serialize(actual);
         var expected = JsonSerializer.Deserialize<HomographyMatrix<double>>(json);
 
         //Then
@@ -55,7 +55,7 @@ public class SerializeTests
         var actual = Homography.Find(srcList, dstList);
 
         //When
-        var json = JsonSerializer.Serialize(actual);
+        string json = JsonSerializer.Serialize(actual);
         var expected = JsonSerializer.Deserialize<HomographyMatrix<float>>(json);
 
         //Then

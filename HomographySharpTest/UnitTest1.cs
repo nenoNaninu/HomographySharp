@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using HomographySharp;
 using NUnit.Framework;
 
@@ -30,7 +31,7 @@ public class Tests
         dstList.Add(new Point2<double>(480, -308));
         dstList.Add(new Point2<double>(-580, -280));
 
-        var stopWatch = new System.Diagnostics.Stopwatch();
+        var stopWatch = new Stopwatch();
         stopWatch.Start();
 
         var homo = Homography.Find(srcList, dstList);
@@ -70,7 +71,7 @@ public class Tests
     [Test]
     public void FindHomographyTest3()
     {
-        var stopWatch = new System.Diagnostics.Stopwatch();
+        var stopWatch = new Stopwatch();
         stopWatch.Start();
 
         var srcList = new List<Point2<double>>(4);
@@ -122,7 +123,7 @@ public class Tests
     [Test]
     public void FindHomographyTest4()
     {
-        var stopWatch = new System.Diagnostics.Stopwatch();
+        var stopWatch = new Stopwatch();
         stopWatch.Start();
 
         var srcList = new List<Point2<double>>(4);
@@ -164,7 +165,7 @@ public class Tests
 
     public static void FindHomographyTestForSetUp()
     {
-        var stopWatch = new System.Diagnostics.Stopwatch();
+        var stopWatch = new Stopwatch();
         stopWatch.Start();
 
         var srcList = new List<Point2<double>>(4);

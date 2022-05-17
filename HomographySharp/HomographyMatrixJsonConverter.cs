@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HomographySharp.Double;
@@ -16,71 +17,70 @@ public sealed class HomographyMatrixJsonConverter : JsonConverter<object>
 
     public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (typeToConvert == typeof(HomographyMatrix<float>))
-        {
-            float[] elements = ReadElements<float>(ref reader);
-            return new SingleHomographyMatrix(elements);
-        }
+        var genericTypeArgumentName = typeToConvert.GenericTypeArguments.FirstOrDefault()?.Name;
 
-        if (typeToConvert == typeof(HomographyMatrix<double>))
+        return genericTypeArgumentName switch
         {
-            double[] elements = ReadElements<double>(ref reader);
-            return new DoubleHomographyMatrix(elements);
-        }
-
-        throw new JsonException("JSON structure is not correct.");
+            "Single" => new SingleHomographyMatrix(ReadElements<float>(ref reader)),
+            "Float" => new SingleHomographyMatrix(ReadElements<float>(ref reader)),
+            "Double" => new DoubleHomographyMatrix(ReadElements<double>(ref reader)),
+            _ => throw new JsonException($"{genericTypeArgumentName} is not a valid generic type argument.")
+        };
     }
 
     private static T[] ReadElements<T>(ref Utf8JsonReader reader)
     {
-        if (reader.Read())
+        if (!reader.Read())
         {
-            if (reader.TokenType == JsonTokenType.PropertyName)
-            {
-                var property = reader.GetString();
-
-                if (!string.Equals(property, "Elements", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new JsonException("A property named Elements is required to deserialize to HomographyMatrix<T>.");
-                }
-
-                if (reader.Read())
-                {
-                    var elements = JsonSerializer.Deserialize<T[]>(ref reader);
-
-                    if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject || elements is null)
-                    {
-                        throw new JsonException("JSON structure is not correct.");
-                    }
-
-                    if (elements is null)
-                    {
-                        throw new JsonException("HomographyMatrix<T>.Elements is null.");
-                    }
-
-                    return elements;
-                }
-            }
+            throw new JsonException("JSON structure is not correct.");
         }
 
-        throw new JsonException("JSON structure is not correct.");
+        if (reader.TokenType != JsonTokenType.PropertyName)
+        {
+            throw new JsonException("JSON structure is not correct.");
+        }
+
+        var property = reader.GetString();
+
+        if (!string.Equals(property, "Elements", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new JsonException("A property named Elements is required to deserialize to HomographyMatrix<T>.");
+        }
+
+        if (!reader.Read())
+        {
+            throw new JsonException("JSON structure is not correct.");
+        }
+
+        var elements = JsonSerializer.Deserialize<T[]>(ref reader);
+
+        if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject || elements is null)
+        {
+            throw new JsonException("JSON structure is not correct.");
+        }
+
+        if (elements is null)
+        {
+            throw new JsonException("HomographyMatrix<T>.Elements is null.");
+        }
+
+        return elements;
+
     }
 
     public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
     {
-        if (value is HomographyMatrix<float> singleHomographyMatrix)
+        switch (value)
         {
-            WriteCore(writer, options, singleHomographyMatrix.Elements);
-            return;
+            case HomographyMatrix<float> singleHomographyMatrix:
+                WriteCore(writer, options, singleHomographyMatrix.Elements);
+                return;
+            case HomographyMatrix<double> doubleHomographyMatrix:
+                WriteCore(writer, options, doubleHomographyMatrix.Elements);
+                return;
+            default:
+                throw new JsonException($"{value.GetType()} is unsupported type.");
         }
-
-        if (value is HomographyMatrix<double> doubleHomographyMatrix)
-        {
-            WriteCore(writer, options, doubleHomographyMatrix.Elements);
-            return;
-        }
-
-        throw new JsonException($"{value.GetType()} is unsupported type.");
     }
 
     private static void WriteCore<T>(Utf8JsonWriter writer, JsonSerializerOptions options, IReadOnlyList<T> elements)
