@@ -28,42 +28,46 @@ public sealed class HomographyMatrixJsonConverter : JsonConverter<object>
             return new DoubleHomographyMatrix(elements);
         }
 
-        throw new JsonException("JSON structure is not correct.");
+        throw new JsonException("Invalid JSON");
     }
 
     private static T[] ReadElements<T>(ref Utf8JsonReader reader)
     {
-        if (reader.Read())
+        if (!reader.Read())
         {
-            if (reader.TokenType == JsonTokenType.PropertyName)
-            {
-                var property = reader.GetString();
-
-                if (!string.Equals(property, "Elements", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new JsonException("A property named Elements is required to deserialize to HomographyMatrix<T>.");
-                }
-
-                if (reader.Read())
-                {
-                    var elements = JsonSerializer.Deserialize<T[]>(ref reader);
-
-                    if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject || elements is null)
-                    {
-                        throw new JsonException("JSON structure is not correct.");
-                    }
-
-                    if (elements is null)
-                    {
-                        throw new JsonException("HomographyMatrix<T>.Elements is null.");
-                    }
-
-                    return elements;
-                }
-            }
+            throw new JsonException("Invalid JSON");
         }
 
-        throw new JsonException("JSON structure is not correct.");
+        if (reader.TokenType != JsonTokenType.PropertyName)
+        {
+            throw new JsonException("Invalid JSON");
+        }
+
+        var property = reader.GetString();
+
+        if (!string.Equals(property, "Elements", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new JsonException("A property named Elements is required to deserialize to HomographyMatrix<T>.");
+        }
+
+        if (!reader.Read())
+        {
+            throw new JsonException("Invalid JSON");
+        }
+
+        var elements = JsonSerializer.Deserialize<T[]>(ref reader);
+
+        if (!reader.Read() || reader.TokenType != JsonTokenType.EndObject)
+        {
+            throw new JsonException("Invalid JSON");
+        }
+
+        if (elements is null)
+        {
+            throw new JsonException("HomographyMatrix<T>.Elements is null.");
+        }
+
+        return elements;
     }
 
     public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
