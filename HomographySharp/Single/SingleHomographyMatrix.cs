@@ -26,6 +26,9 @@ internal sealed class SingleHomographyMatrix : HomographyMatrix<float>
     /// <inheritdoc/>
     public override ReadOnlySpan<float> ElementsAsSpan() => _elements;
 
+    /// <inheritdoc/>
+    public override ReadOnlyMemory<float> ElementsAsMemory() => _elements;
+
     public override int RowCount => 3;
 
     public override int ColumnCount => 3;
