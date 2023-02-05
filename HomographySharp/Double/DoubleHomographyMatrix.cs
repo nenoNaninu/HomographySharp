@@ -26,6 +26,9 @@ internal sealed class DoubleHomographyMatrix : HomographyMatrix<double>
     /// <inheritdoc/>
     public override ReadOnlySpan<double> ElementsAsSpan() => _elements;
 
+    /// <inheritdoc/>
+    public override ReadOnlyMemory<double> ElementsAsMemory() => _elements;
+
     public override int RowCount => 3;
 
     public override int ColumnCount => 3;

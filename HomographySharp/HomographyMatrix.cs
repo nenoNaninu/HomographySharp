@@ -17,11 +17,6 @@ public abstract class HomographyMatrix<T> where T : unmanaged, IEquatable<T>, IF
     /// </summary>
     public abstract IReadOnlyList<T> Elements { get; }
 
-    /// <summary>
-    /// Row-major order
-    /// </summary>
-    public abstract ReadOnlySpan<T> ElementsAsSpan();
-
     public abstract T this[int row, int column] { get; }
 
     public abstract int RowCount { get; }
@@ -31,6 +26,16 @@ public abstract class HomographyMatrix<T> where T : unmanaged, IEquatable<T>, IF
     public abstract Point2<T> Translate(T srcX, T srcY);
 
     public abstract Matrix<T> ToMathNetMatrix();
+
+    /// <summary>
+    /// Row-major order
+    /// </summary>
+    public abstract ReadOnlySpan<T> ElementsAsSpan();
+
+    /// <summary>
+    /// Row-major order
+    /// </summary>
+    public abstract ReadOnlyMemory<T> ElementsAsMemory();
 
     public abstract string ToString(IFormatProvider? provider);
 
