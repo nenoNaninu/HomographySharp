@@ -9,7 +9,7 @@ on:
     - cron: "0 0 * * *"
 
 env:
-  DOTNET_VERSION: "6.0.x"
+  DOTNET_VERSION: "8.0.x"
   DOTNET_NOLOGO: true
 
 jobs:
@@ -17,9 +17,9 @@ jobs:
     name: build-and-test
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
