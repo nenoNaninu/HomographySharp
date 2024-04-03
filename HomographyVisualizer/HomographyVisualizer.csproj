@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="ReactiveProperty" Version="9.3.*" />
-        <PackageReference Include="HomographySharp" Version="3.3.0" />
+        <PackageReference Include="ReactiveProperty" />
+        <PackageReference Include="HomographySharp" />
     </ItemGroup>
 
     <!--<ItemGroup>
