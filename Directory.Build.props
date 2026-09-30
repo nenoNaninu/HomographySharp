@@ -1,5 +1,10 @@
 <Project>
     <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>false</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+
+        <!-- xUnit.v3 -->
         <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
     </PropertyGroup>
 </Project>

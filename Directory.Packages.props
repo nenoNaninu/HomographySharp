@@ -5,11 +5,11 @@
         <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
     </PropertyGroup>
     <ItemGroup>
-        <PackageVersion Include="System.Memory" Version="4.5.5" />
-        <PackageVersion Include="System.Numerics.Vectors" Version="4.5.0" />
-        <PackageVersion Include="System.Text.Json" Version="8.0.3" />
+        <PackageVersion Include="System.Memory" Version="4.6.3" />
+        <PackageVersion Include="System.Numerics.Vectors" Version="4.6.1" />
+        <PackageVersion Include="System.Text.Json" Version="10.0.12" />
         <PackageVersion Include="MathNet.Numerics" Version="5.0.0" />
-        <PackageVersion Include="BenchmarkDotNet" Version="0.13.12" />
+        <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
         <PackageVersion Include="ReactiveProperty" Version="9.5.0" />
         <PackageVersion Include="HomographySharp" Version="3.3.0" />
         <PackageVersion Include="xunit.v3" Version="4.0.1" />
