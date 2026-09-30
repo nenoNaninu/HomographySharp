@@ -35,10 +35,9 @@ public class VisualizerViewModelReactive : INotifyPropertyChanged
     private readonly List<Point2<double>> _dstPoints = new();
 
 #pragma warning disable CS0067
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 #pragma warning restore CS0067
 
-    private HomographyMatrix<double> _homo;
     private int _pointNum;
 
     private readonly IObservable<MouseButtonEventArgs> _mouseDown;
@@ -105,7 +104,6 @@ public class VisualizerViewModelReactive : INotifyPropertyChanged
             _dstPoints.Clear();
             _srcLines.Clear();
             _dstLines.Clear();
-            _homo = null;
             EnableTextBox.Value = true;
         });
     }
@@ -183,9 +181,11 @@ public class VisualizerViewModelReactive : INotifyPropertyChanged
 
     public void CreateTranslatePoint()
     {
+        HomographyMatrix<double> homo;
+
         try
         {
-            _homo = Homography.Find(_srcPoints, _dstPoints);
+            homo = Homography.Find(_srcPoints, _dstPoints);
         }
         catch (Exception e)
         {
@@ -218,7 +218,7 @@ public class VisualizerViewModelReactive : INotifyPropertyChanged
         Canvas.SetLeft(srcEllipse, pointX - srcEllipse.Width / 2);
         Canvas.SetTop(srcEllipse, pointY - srcEllipse.Height / 2);
 
-        var result = _homo.Translate(pointX, pointY);
+        var result = homo.Translate(pointX, pointY);
         Canvas.SetLeft(dstEllipse, result.X - srcEllipse.Width / 2);
         Canvas.SetTop(dstEllipse, result.Y - srcEllipse.Height / 2);
 
@@ -250,7 +250,7 @@ public class VisualizerViewModelReactive : INotifyPropertyChanged
                 var newPoint = x.GetPosition(_drawCanvas);
                 Canvas.SetLeft(srcEllipse, newPoint.X - srcEllipse.Width / 2);
                 Canvas.SetTop(srcEllipse, newPoint.Y - srcEllipse.Height / 2);
-                var newResult = _homo.Translate(newPoint.X, newPoint.Y);
+                var newResult = homo.Translate(newPoint.X, newPoint.Y);
                 Canvas.SetLeft(dstEllipse, newResult.X - srcEllipse.Width / 2);
                 Canvas.SetTop(dstEllipse, newResult.Y - srcEllipse.Height / 2);
             });
