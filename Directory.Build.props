@@ -3,8 +3,15 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>false</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
+    </PropertyGroup>
 
-        <!-- xUnit.v3 -->
+    <!-- xUnit.v3 -->
+    <PropertyGroup>
         <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+    </PropertyGroup>
+
+    <!-- release -->
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     </PropertyGroup>
 </Project>
