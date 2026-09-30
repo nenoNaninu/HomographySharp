@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Benchmark/Benchmark.csproj" />
+  <Project Path="HomographySharp/HomographySharp.csproj" />
+  <Project Path="HomographySharpTest/HomographySharpTest.csproj" />
+  <Project Path="HomographyVisualizer/HomographyVisualizer.csproj" />
+</Solution>
