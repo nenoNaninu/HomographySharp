@@ -2,19 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using HomographySharp;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests;
 
 public class UnitTest2
 {
-    [SetUp]
-    public void Setup()
+    public UnitTest2()
     {
         FindHomographyTestForSetUp();
     }
 
-    [Test]
+    [Fact]
     public void FindHomographyTest00()
     {
         var srcList = new List<Point2<float>>(4);
@@ -40,11 +39,11 @@ public class UnitTest2
         {
             var homo2 = JsonSerializer.Deserialize<HomographyMatrix<float>>(json);
 
-            Assert.IsTrue(homo.Elements.Count == homo2?.Elements.Count);
+            Assert.True(homo.Elements.Count == homo2?.Elements.Count);
 
             for (int i = 0; i < homo.Elements.Count; i++)
             {
-                Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
+                Assert.True(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
             }
 
         }
@@ -58,26 +57,26 @@ public class UnitTest2
 
         {
             var result = homo.Translate(-152, 394);
-            Assert.IsTrue(Math.Abs(result.X - -666) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);
+            Assert.True(Math.Abs(result.X - -666) < 0.001);
+            Assert.True(Math.Abs(result.Y - 431) < 0.001);
         }
 
         {
             var result = homo.Translate(218, 521);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 300) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 300) < 0.001);
         }
 
         {
             var result = homo.Translate(223, -331);
-            Assert.IsTrue(Math.Abs(result.X - 480) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - -308) < 0.001);
+            Assert.True(Math.Abs(result.X - 480) < 0.001);
+            Assert.True(Math.Abs(result.Y - -308) < 0.001);
         }
 
         Console.WriteLine(homo);
     }
 
-    [Test]
+    [Fact]
     public void FindHomographyTest01()
     {
         var srcList = new List<Point2<float>>(4);
@@ -104,27 +103,27 @@ public class UnitTest2
 
         {
             var result = homo.Translate(-152, 394);
-            Assert.IsTrue(Math.Abs(result.X - -666) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);
+            Assert.True(Math.Abs(result.X - -666) < 0.001);
+            Assert.True(Math.Abs(result.Y - 431) < 0.001);
         }
 
         {
             var result = homo.Translate(218, 521);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 300) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 300) < 0.001);
         }
 
         {
             var result = homo.Translate(223, -331);
-            Assert.IsTrue(Math.Abs(result.X - 480) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - -308) < 0.001);
+            Assert.True(Math.Abs(result.X - 480) < 0.001);
+            Assert.True(Math.Abs(result.Y - -308) < 0.001);
         }
 
         Console.WriteLine(homo);
     }
 
 
-    [Test]
+    [Fact]
     public void FindHomographyTest3()
     {
         var stopWatch = new System.Diagnostics.Stopwatch();
@@ -151,14 +150,14 @@ public class UnitTest2
 
         {
             var result = homo.Translate(100, 10);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 11) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 11) < 0.001);
         }
 
         {
             var result = homo.Translate(100, 150);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 200) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 200) < 0.001);
         }
 
 
@@ -172,12 +171,12 @@ public class UnitTest2
             Console.WriteLine("dstx" + dstx);
             Console.WriteLine("dsty" + dsty);
 
-            Assert.IsTrue(Math.Abs(result.X - dstx) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - dsty) < 0.001);
+            Assert.True(Math.Abs(result.X - dstx) < 0.001);
+            Assert.True(Math.Abs(result.Y - dsty) < 0.001);
         }
     }
 
-    [Test]
+    [Fact]
     public void FindHomographyTest4()
     {
         var stopWatch = new System.Diagnostics.Stopwatch();
@@ -202,26 +201,26 @@ public class UnitTest2
 
         {
             var result = homo.Translate(-152, 394);
-            Assert.IsTrue(Math.Abs(result.X - -666) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);
+            Assert.True(Math.Abs(result.X - -666) < 0.001);
+            Assert.True(Math.Abs(result.Y - 431) < 0.001);
         }
 
         {
             var result = homo.Translate(218, 521);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 300) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 300) < 0.001);
         }
 
         {
             var result = homo.Translate(223, -331);
-            Assert.IsTrue(Math.Abs(result.X - 480) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - -308) < 0.001);
+            Assert.True(Math.Abs(result.X - 480) < 0.001);
+            Assert.True(Math.Abs(result.Y - -308) < 0.001);
         }
 
         Console.WriteLine(homo);
     }
 
-    public static void FindHomographyTestForSetUp()
+    private static void FindHomographyTestForSetUp()
     {
         var stopWatch = new System.Diagnostics.Stopwatch();
         stopWatch.Start();
@@ -246,20 +245,20 @@ public class UnitTest2
 
         {
             var result = homo.Translate(-152, 394);
-            Assert.IsTrue(Math.Abs(result.X - -666) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);
+            Assert.True(Math.Abs(result.X - -666) < 0.001);
+            Assert.True(Math.Abs(result.Y - 431) < 0.001);
         }
 
         {
             var result = homo.Translate(218, 521);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 300) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 300) < 0.001);
         }
 
         {
             var result = homo.Translate(223, -331);
-            Assert.IsTrue(Math.Abs(result.X - 480) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - -308) < 0.001);
+            Assert.True(Math.Abs(result.X - 480) < 0.001);
+            Assert.True(Math.Abs(result.Y - -308) < 0.001);
         }
     }
 }
