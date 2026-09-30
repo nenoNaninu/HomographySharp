@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
 using HomographySharp;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests;
 
 public class SerializeTest
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
-    [Test]
+    [Fact]
     public void Double()
     {
         var srcList = new List<Point2<double>>(4);
@@ -40,11 +35,11 @@ public class SerializeTest
         {
             var homo2 = JsonSerializer.Deserialize<HomographyMatrix<double>>(json);
 
-            Assert.IsTrue(homo.Elements.Count == homo2?.Elements.Count);
+            Assert.True(homo.Elements.Count == homo2?.Elements.Count);
 
             for (int i = 0; i < homo.Elements.Count; i++)
             {
-                Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
+                Assert.True(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
             }
 
         }
@@ -55,7 +50,7 @@ public class SerializeTest
         }
     }
 
-    [Test]
+    [Fact]
     public void Single()
     {
         var srcList = new List<Point2<float>>(4);
@@ -81,23 +76,23 @@ public class SerializeTest
         {
             var homo2 = JsonSerializer.Deserialize<HomographyMatrix<float>>(json);
 
-            Assert.IsTrue(homo.Elements.Count == homo2?.Elements.Count);
+            Assert.True(homo.Elements.Count == homo2?.Elements.Count);
 
             for (int i = 0; i < homo.Elements.Count; i++)
             {
-                Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
+                Assert.True(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
             }
 
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            Assert.IsTrue(false);
+            Assert.Fail();
             throw;
         }
     }
 
-    [Test]
+    [Fact]
     public void ChunkTest()
     {
 
@@ -131,19 +126,19 @@ public class SerializeTest
 
         if (homo2 is null)
         {
-            Assert.IsNotNull(homo2);
+            Assert.NotNull(homo2);
         }
 
-        Assert.IsTrue(homo.Elements.Count == homo2?.Elements.Count);
+        Assert.True(homo.Elements.Count == homo2?.Elements.Count);
 
         for (int i = 0; i < homo.Elements.Count; i++)
         {
-            Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
+            Assert.True(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
         }
     }
 
 
-    [Test]
+    [Fact]
     public void ChunkTestCamelCase()
     {
 
@@ -177,14 +172,14 @@ public class SerializeTest
 
         if (homo2 is null)
         {
-            Assert.IsNotNull(homo2);
+            Assert.NotNull(homo2);
         }
 
-        Assert.IsTrue(homo.Elements.Count == homo2?.Elements.Count);
+        Assert.True(homo.Elements.Count == homo2?.Elements.Count);
 
         for (int i = 0; i < homo.Elements.Count; i++)
         {
-            Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
+            Assert.True(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
         }
     }
 }

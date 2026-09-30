@@ -1,20 +1,19 @@
 using System;
 using System.Collections.Generic;
 using HomographySharp;
-using NUnit.Framework;
+using Xunit;
 
 namespace Tests;
 
 public class Tests
 {
-    [SetUp]
-    public void Setup()
+    public Tests()
     {
         FindHomographyTestForSetUp();
     }
 
 
-    [Test]
+    [Fact]
     public void FindHomographyTest00()
     {
         var srcList = new List<Point2<double>>(4);
@@ -39,20 +38,20 @@ public class Tests
 
         {
             var result = homo.Translate(-152, 394);
-            Assert.IsTrue(Math.Abs(result.X - -666) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);
+            Assert.True(Math.Abs(result.X - -666) < 0.001);
+            Assert.True(Math.Abs(result.Y - 431) < 0.001);
         }
 
         {
             var result = homo.Translate(218, 521);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 300) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 300) < 0.001);
         }
 
         {
             var result = homo.Translate(223, -331);
-            Assert.IsTrue(Math.Abs(result.X - 480) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - -308) < 0.001);
+            Assert.True(Math.Abs(result.X - 480) < 0.001);
+            Assert.True(Math.Abs(result.Y - -308) < 0.001);
         }
 
 
@@ -62,12 +61,12 @@ public class Tests
         {
             for (int j = 0; j < 3; j++)
             {
-                Assert.IsTrue(Math.Abs(mathNetMat[i, j] - homo[i, j]) < 0.001);
+                Assert.True(Math.Abs(mathNetMat[i, j] - homo[i, j]) < 0.001);
             }
         }
     }
 
-    [Test]
+    [Fact]
     public void FindHomographyTest3()
     {
         var stopWatch = new System.Diagnostics.Stopwatch();
@@ -93,14 +92,14 @@ public class Tests
 
         {
             var result = homo.Translate(100, 10);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 11) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 11) < 0.001);
         }
 
         {
             var result = homo.Translate(100, 150);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 200) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 200) < 0.001);
         }
 
 
@@ -114,12 +113,12 @@ public class Tests
             Console.WriteLine("dstx" + dstx);
             Console.WriteLine("dsty" + dsty);
 
-            Assert.IsTrue(Math.Abs(result.X - dstx) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - dsty) < 0.001);
+            Assert.True(Math.Abs(result.X - dstx) < 0.001);
+            Assert.True(Math.Abs(result.Y - dsty) < 0.001);
         }
     }
 
-    [Test]
+    [Fact]
     public void FindHomographyTest4()
     {
         var stopWatch = new System.Diagnostics.Stopwatch();
@@ -143,26 +142,26 @@ public class Tests
 
         {
             var result = homo.Translate(-152, 394);
-            Assert.IsTrue(Math.Abs(result.X - -666) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);
+            Assert.True(Math.Abs(result.X - -666) < 0.001);
+            Assert.True(Math.Abs(result.Y - 431) < 0.001);
         }
 
         {
             var result = homo.Translate(218, 521);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 300) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 300) < 0.001);
         }
 
         {
             var result = homo.Translate(223, -331);
-            Assert.IsTrue(Math.Abs(result.X - 480) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - -308) < 0.001);
+            Assert.True(Math.Abs(result.X - 480) < 0.001);
+            Assert.True(Math.Abs(result.Y - -308) < 0.001);
         }
 
         Console.WriteLine(homo);
     }
 
-    public static void FindHomographyTestForSetUp()
+    private static void FindHomographyTestForSetUp()
     {
         var stopWatch = new System.Diagnostics.Stopwatch();
         stopWatch.Start();
@@ -186,26 +185,26 @@ public class Tests
 
         {
             var result = homo.Translate(-152, 394);
-            Assert.IsTrue(Math.Abs(result.X - -666) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 431) < 0.001);
+            Assert.True(Math.Abs(result.X - -666) < 0.001);
+            Assert.True(Math.Abs(result.Y - 431) < 0.001);
         }
 
         {
             var result = homo.Translate(218, 521);
-            Assert.IsTrue(Math.Abs(result.X - 500) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - 300) < 0.001);
+            Assert.True(Math.Abs(result.X - 500) < 0.001);
+            Assert.True(Math.Abs(result.Y - 300) < 0.001);
         }
 
         {
             var result = homo.Translate(223, -331);
-            Assert.IsTrue(Math.Abs(result.X - 480) < 0.001);
-            Assert.IsTrue(Math.Abs(result.Y - -308) < 0.001);
+            Assert.True(Math.Abs(result.X - 480) < 0.001);
+            Assert.True(Math.Abs(result.Y - -308) < 0.001);
         }
 
         //Console.WriteLine(homo);
     }
 
-    [Test]
+    [Fact]
     public void Copy()
     {
         var srcList = new List<Point2<double>>(4);
@@ -226,11 +225,11 @@ public class Tests
 
         for (int i = 0; i < homo.Elements.Count; i++)
         {
-            Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
+            Assert.True(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
         }
     }
 
-    [Test]
+    [Fact]
     public void Copy2()
     {
         var srcList = new List<Point2<double>>(4);
@@ -251,11 +250,11 @@ public class Tests
 
         for (int i = 0; i < homo.Elements.Count; i++)
         {
-            Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
+            Assert.True(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
         }
     }
 
-    [Test]
+    [Fact]
     public void Copy3()
     {
         var srcList = new List<Point2<double>>(4);
@@ -276,31 +275,7 @@ public class Tests
 
         for (int i = 0; i < homo.Elements.Count; i++)
         {
-            Assert.IsTrue(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
+            Assert.True(Math.Abs(homo.Elements[i] - homo2.Elements[i]) < 0.001);
         }
     }
-
-    //[Test]
-    //public void ToStringTest()
-    //{
-    //    var srcList = new List<Point2<double>>(4);
-    //    var dstList = new List<Point2<double>>(4);
-
-    //    srcList.Add(new Point2<double>(-152, 394));
-    //    srcList.Add(new Point2<double>(218, 521));
-    //    srcList.Add(new Point2<double>(223, -331));
-    //    srcList.Add(new Point2<double>(-163, -219));
-    //    dstList.Add(new Point2<double>(-666, 431));
-    //    dstList.Add(new Point2<double>(500, 300));
-    //    dstList.Add(new Point2<double>(480, -308));
-    //    dstList.Add(new Point2<double>(-580, -280));
-
-    //    var homo = Homography.Find(srcList, dstList);
-
-    //    var str = homo.ToString();
-    //    Console.WriteLine(str);
-
-    //    var str2 = homo.ToMathNetMatrix().ToString();
-    //    Console.WriteLine(str2);
-    //}
 }
