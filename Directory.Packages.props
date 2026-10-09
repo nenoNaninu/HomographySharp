@@ -12,6 +12,6 @@
         <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
         <PackageVersion Include="ReactiveProperty" Version="9.5.0" />
         <PackageVersion Include="HomographySharp" Version="3.3.0" />
-        <PackageVersion Include="xunit.v3" Version="4.0.1" />
+        <PackageVersion Include="xunit.v3" Version="4.0.2" />
     </ItemGroup>
 </Project>
