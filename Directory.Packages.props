@@ -7,7 +7,7 @@
     <ItemGroup>
         <PackageVersion Include="System.Memory" Version="4.6.3" />
         <PackageVersion Include="System.Numerics.Vectors" Version="4.6.1" />
-        <PackageVersion Include="System.Text.Json" Version="10.0.12" />
+        <PackageVersion Include="System.Text.Json" Version="10.0.13" />
         <PackageVersion Include="MathNet.Numerics" Version="5.0.0" />
         <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
         <PackageVersion Include="ReactiveProperty" Version="9.5.0" />
